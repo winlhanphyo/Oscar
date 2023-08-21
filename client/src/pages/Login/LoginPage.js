@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import Header from '../../components/Header/Header';
@@ -158,7 +158,7 @@ const LoginPage = () => {
                     Submit
                   </button>
                   <a href="login-forget.html" class="flex-l-m stext-103 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Forget Your Password?</a><hr />
-                  <a href="create-account.html" class ="flex-c-m stext-101 size-121 p-lr-15 trans-04 pointer text-dark">Create Account</a>
+                  <Link to="/create/account" class ="flex-c-m stext-101 size-121 p-lr-15 trans-04 pointer text-dark">Create Account</Link>
                 </form>
               </div>
             </div>

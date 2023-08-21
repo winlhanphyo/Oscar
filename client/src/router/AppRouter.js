@@ -35,8 +35,8 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/payment/success" component={PaymentSuccessPage} />
         <PublicRoute path="/work" component={WorkPage} />
         <PublicRoute path="/product/:id" component={ProductDetailPage} />
-        <PublicRoute path="/product" component={ProductPage} />
-        <PublicRoute path="/client/login" component={LoginPage} />
+        <PublicRoute path="/shop" component={ProductPage} />
+        <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/home" component={HomePage} />
         {/* <PublicRoute path="/admin/user/create" component={CreatePage} />
         <PrivateRoute path="/admin/user/:id/update" component={CreatePage} />

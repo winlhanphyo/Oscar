@@ -120,7 +120,7 @@ const ProductPage = () => {
         <div class="container">
           <div class="flex-w flex-sb-m p-b-52">
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-              <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+              <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*" onClick={() => getProductList()}>
                 All Items
               </button>
 
@@ -131,23 +131,7 @@ const ProductPage = () => {
                   </button>
                 )
               })
-
               }
-              {/* <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-                Item Two
-              </button>
-
-              <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-                Item Three
-              </button>
-
-              <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-                Item Four
-              </button>
-
-              <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-                Item Five
-              </button> */}
             </div>
 
             <div class="flex-w flex-c-m m-tb-10">
@@ -346,30 +330,30 @@ const ProductPage = () => {
               return (
                 <>
                   <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/* <!-- Block2 --> */}
-              <div class="block2">
-                <div class="block2-pic hov-img0">
-                  <img src={imageURL + data.image} alt="IMG-PRODUCT" />
+                    {/* <!-- Block2 --> */}
+                    <div class="block2">
+                      <div class="block2-pic hov-img0">
+                        <img src={imageURL + data.image} alt="IMG-PRODUCT" />
 
-                  <a href="product-detail.html" target="_blank" class ="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
-                  {data.name}
-                  </a>
-                </div>
+                        <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+                          {data.name}
+                        </a>
+                      </div>
 
-                <div class="block2-txt flex-w flex-t p-t-14">
-                  <div class="block2-txt-child1 flex-col-l ">
-                    <p class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">Art Item</p>
-                    <span class="stext-105 cl3">
-                      {data.price}
-                    </span>
+                      <div class="block2-txt flex-w flex-t p-t-14">
+                        <div class="block2-txt-child1 flex-col-l ">
+                          <p class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">Art Item</p>
+                          <span class="stext-105 cl3">
+                            {data.price}
+                          </span>
+                        </div>
+
+                        <div class="block2-txt-child2 flex-r p-t-3">
+                          <i class="zmdi zmdi-check-circle dis-block trans-04 zmdi-hc-lg text-primary"></i>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-
-                  <div class="block2-txt-child2 flex-r p-t-3">
-                    <i class="zmdi zmdi-check-circle dis-block trans-04 zmdi-hc-lg text-primary"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
                 </>
               )
             })

@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const utils = require('../utils');
 const Product = require("../models/Product");
+const mongoose = require('mongoose');
 
 const getProduct = async (
   req,
@@ -158,33 +159,18 @@ const getProductWithCategoryId = async (req, res) => {
     const page = req.query.page || 0;
     const productPerPage = req.query.size || 5;
     const name = req.query.name || null;
-    let condition = { deleted_at: null };
-
-    let aggregatePipeline = [];
+    let condition = { deleted_at: null, category: new mongoose.Types.ObjectId(catId) };
     if (name) {
-      aggregatePipeline.push({
-        $match: [{
-          "category._id": mongoose.Types.ObjectId(catId)
-        }]
-      });
+      condition.category = new mongoose.Types.ObjectId(catId);
     };
-    const product = await Product.aggregate([
-      { $match: condition },
-      ...aggregatePipeline,
-      { $skip: page * productPerPage },
-      { $limit: Number(productPerPage) },
-      { $lookup: { from: 'categories', localField: 'category', foreignField: '_id', as: 'category' } },
-    ]);
 
-    const productCount = await Product.aggregate([
-      { $match: condition },
-      ...aggregatePipeline,
-      { $count: 'count' }
-    ]);
+    const product = await Product.find(condition).skip(page * productPerPage).limit(productPerPage)
+    .populate('category').populate('created_user_id').populate('updated_user_id');
+    const productCount = await Product.find(condition).count();
 
     return res.json({
       data: product,
-      count: productCount[0].count,
+      count: productCount,
       offset: page || 0,
       status: 1
     });
