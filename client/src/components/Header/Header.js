@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import $ from "jquery";
 import { imageURL } from '../../utils/constants/constant';
 import styles from './Header.module.scss';
 import axios from '../../axios/index';
@@ -13,6 +14,12 @@ const Header = () => {
     lineHeight: '5rem', // Adjust the line height as needed
     color: 'black'
   };
+
+  const searchModal = () => {
+    // console.log('show modal search');
+    // $('.modal-search-header').addClass('show-modal-search');
+    // $(".js-show-modal-search").css('opacity','0');
+  }
 
   return (
     <>
@@ -32,7 +39,7 @@ const Header = () => {
               {/* <!-- Menu desktop --> */}
               <div class="menu-desktop">
                 <ul class="main-menu">
-                  <li class="active-menu">
+                  <li className={window.location.href.indexOf("home") !== -1 ? "active-menu" : ""}>
                     <Link to="/home">Home <i class="fa fa-angle-down p-l-7" aria-hidden="true"></i></Link>
                     {/* <ul class="sub-menu">
 									<li><a href="index1.html">Artista One</a></li>
@@ -40,7 +47,7 @@ const Header = () => {
 									<li><a href="index3.html">Artista Three</a></li>
 								</ul> */}
                   </li>
-                  <li>
+                  <li className={window.location.href.indexOf("shop") !== -1 ? "active-menu" : ""}>
                     <Link to="/shop">Shop <i class="fa fa-angle-down p-l-7" aria-hidden="true"></i></Link>
                     {/* <ul class="sub-menu">
 									<li><a href="product.html">Item One</a></li>
@@ -48,11 +55,11 @@ const Header = () => {
 									<li><a href="product.html">Item Three</a></li>
 								</ul> */}
                   </li>
-                  <li>
+                  <li className={window.location.href.indexOf("about") !== -1 ? "active-menu" : ""}>
                     <Link to="/about">About</Link>
                   </li>
 
-                  <li>
+                  <li className={window.location.href.indexOf("contact") !== -1 ? "active-menu" : ""}>
                     <Link to="/contact">Contact</Link>
                   </li>
                 </ul>
@@ -61,7 +68,7 @@ const Header = () => {
               {/* <!-- Icon header --> */}
               <div class="wrap-icon-header flex-w flex-r-m h-full">
                 <div class="flex-c-m h-full p-r-24">
-                  <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
+                  <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={() => searchModal}>
                     <i class="zmdi zmdi-search"></i>
                   </div>
                 </div>
@@ -158,7 +165,7 @@ const Header = () => {
         </div>
 
         {/* <!-- Modal Search --> */}
-        <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+        <div className={`modal-search-header flex-c-m trans-04 js-hide-modal-search ${styles.modalSearch}`}>
           <div class="container-search-header">
             <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
               <img src="images/icons/icon-close2.png" alt="CLOSE" />

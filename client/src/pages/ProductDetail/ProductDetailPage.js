@@ -1,9 +1,25 @@
 import React from 'react';
+import swal from 'sweetalert';
+import { useParams } from 'react-router-dom';
+import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import axios from '../../axios/index';
 
 const ProductDetailPage = () => {
+  const param = useParams();
+  const [product, setProduct] = React.useState();
+
+  React.useEffect(() => {
+    let id = param['id'];
+    console.log('id', id);
+    axios.get(`/product/${id}`).then((dist) => {
+      console.log(dist);
+      setProduct(dist?.data?.data);
+    });
+  }, []);
+
   return (
     <>
       <Header />
@@ -23,7 +39,7 @@ const ProductDetailPage = () => {
           </a>
 
           <span class="stext-109 cl4">
-            Item One
+            {product?.name}
           </span>
         </div>
       </div>
@@ -35,7 +51,7 @@ const ProductDetailPage = () => {
             <div class="col-md-6 col-lg-7 p-b-30">
               <div class="blog-item">
                 <div class="hov-img0">
-                  <img src="poto/j2.jpg" alt="IMG-BLOG" class="img-fluid rounded text-center" />
+                  <img src={imageURL + product?.image} alt="IMG-BLOG" class="img-fluid rounded text-center" />
                 </div>
               </div>
             </div>
@@ -43,11 +59,11 @@ const ProductDetailPage = () => {
             <div class="col-md-6 col-lg-5 p-b-30">
               <div class="p-r-50 p-t-5 p-lr-0-lg">
                 <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                  Item One
+                  {product?.name}
                 </h4>
 
                 <span class="mtext-106 cl2">
-                  $58.79
+                  ${product?.price}
                 </span>
 
                 <p class="stext-102 cl3 p-t-23">
@@ -71,7 +87,7 @@ const ProductDetailPage = () => {
                     </div>
 
                     <div class="size-206 respon6-next stext-110">
-                      Category One
+                      {product?.category?.name}
                     </div>
                   </div>
 
@@ -81,7 +97,7 @@ const ProductDetailPage = () => {
                     </div>
 
                     <div class="size-206 respon6-next stext-110">
-                      Available
+                      {product?.status === "available" ? "Available" : "Not Available"}
                     </div>
                   </div>
                   <hr />
@@ -190,7 +206,7 @@ const ProductDetailPage = () => {
                         {/* <!-- Review --> */}
                         <div class="flex-w flex-t p-b-68">
                           <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                            <img src="poto/j3.jpg" alt="AVATAR" />
+                            <img src={imageURL + product?.image} alt="AVATAR" />
                           </div>
 
                           <div class="size-207">

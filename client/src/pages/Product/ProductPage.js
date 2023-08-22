@@ -1,6 +1,6 @@
 import React from 'react';
-import moment from 'moment';
 import swal from 'sweetalert';
+import { Link } from 'react-router-dom';
 import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
@@ -8,6 +8,7 @@ import Footer from '../../components/Footer/Footer';
 import axios from '../../axios/index';
 
 const ProductPage = () => {
+  const [activeProduct, setActiveProduct] = React.useState("all");
   const [categoryList, setCategoryList] = React.useState([]);
   const [productList, setProductList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
@@ -49,6 +50,7 @@ const ProductPage = () => {
    * @param {*} offsetData 
    */
   const getProductWithCategoryList = (catId, offsetData = 0) => {
+    setActiveProduct(catId);
     let params = {
       size: 5,
       page: offsetData
@@ -71,6 +73,7 @@ const ProductPage = () => {
    * @param {*} offsetData 
    */
   const getProductList = (offsetData = 0) => {
+    setActiveProduct("all");
     let params = {
       size: 5,
       page: offsetData
@@ -120,13 +123,16 @@ const ProductPage = () => {
         <div class="container">
           <div class="flex-w flex-sb-m p-b-52">
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-              <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*" onClick={() => getProductList()}>
+              <button className={activeProduct === "all" ?
+                "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" : "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"}
+                data-filter="*" onClick={() => getProductList()}>
                 All Items
               </button>
 
               {categoryList.map((data) => {
                 return (
-                  <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women" onClick={() => getProductWithCategoryList(data._id)}>
+                  <button className={activeProduct === data._id ?
+                  "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" : "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"} data-filter=".women" onClick={() => getProductWithCategoryList(data._id)}>
                     {data.name}
                   </button>
                 )
@@ -335,14 +341,14 @@ const ProductPage = () => {
                       <div class="block2-pic hov-img0">
                         <img src={imageURL + data.image} alt="IMG-PRODUCT" />
 
-                        <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+                        <Link to={`/product/${data._id}`} target="_blank" class="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
                           {data.name}
-                        </a>
+                        </Link>
                       </div>
 
                       <div class="block2-txt flex-w flex-t p-t-14">
                         <div class="block2-txt-child1 flex-col-l ">
-                          <p class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">Art Item</p>
+                          <p class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">{data.name}</p>
                           <span class="stext-105 cl3">
                             {data.price}
                           </span>
@@ -362,23 +368,30 @@ const ProductPage = () => {
           </div>
 
           {/* <!-- Pagination --> */}
+
           <div class="flex-w w-full p-t-10 m-lr--7 flex-c-m">
-            <a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7">
+            <a className={Number(offset) === 0 ? "flex-c-m how-pagination1 trans-04 m-all-7 disabled" : "flex-c-m how-pagination1 trans-04 m-all-7"}
+             onClick={() => paginateClick("prev")}>
               <i class="fa fa-long-arrow-left"></i>
             </a>
-            <a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">
-              1
-            </a>
-            <a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7">
-              2
-            </a>
-            <a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7">
-              3
-            </a>
-            <a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7">
+
+            {paginateCount?.map((dist) => {
+              return (
+                <>
+                  <li className={Number(dist - 1) === Number(offset) ? "flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1" : "flex-c-m how-pagination1 trans-04 m-all-7"}
+                  onClick={() => paginateClick(null, dist)}>
+                    <a class="page-link">{dist}</a></li>
+                </>
+              )
+            })}
+
+            <a
+              className={totalCount <= ((Number(offset) + 1) * 5) ? "flex-c-m how-pagination1 trans-04 m-all-7 disabled" : "flex-c-m how-pagination1 trans-04 m-all-7"}
+              onClick={() => paginateClick("next")}>
               <i class="fa fa-long-arrow-right"></i>
             </a>
           </div>
+
         </div>
       </div>
 

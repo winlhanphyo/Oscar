@@ -1,13 +1,12 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
 import { LOGIN_SUCCESS } from "../../store/actions/types";
-// import styles from './LoginPage.module.scss';
 import axios from '../../axios/index';
+import styles from './LoginPage.module.scss';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const LoginPage = () => {
@@ -49,6 +48,7 @@ const LoginPage = () => {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
+    console.log('change', name, value);
     let preFormData = formData;
     preFormData[name] = value;
     setFormData({ ...preFormData });
@@ -72,8 +72,10 @@ const LoginPage = () => {
     const value = event.target.value;
     const error = validation(value, name);
     let preErrorForm = errorForm;
+    console.log('blur error', error);
     if (error) {
       preErrorForm[name] = error;
+      console.log('preError', preErrorForm);
       setErrorForm({
         ...preErrorForm
       });
@@ -92,8 +94,6 @@ const LoginPage = () => {
         const { data } = response;
         const token = data.token;
         const { user } = data;
-        console.log('token', response);
-        /** store logged in user's info to local storage */
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -111,7 +111,7 @@ const LoginPage = () => {
             },
           }
         });
-        history.push('/admin/events');
+        history.push('/home');
       }
     }).catch((error) => {
       setLoading(false);
@@ -141,20 +141,40 @@ const LoginPage = () => {
           <div class="container">
             <div class="flex-w flex-tr flex-c-m">
               <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <h4 class="mtext-105 cl2 txt-center p-b-30">
                     Login
                   </h4>
 
-                  <div class="bor8 m-b-20 how-pos4-parent">
-                    <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="username" placeholder="User Name" />
+                  <div className={errorForm?.email ? `bor8 m-b-20 how-pos4-parent is-invalid` : `bor8 m-b-20 how-pos4-parent`}>
+                    <input 
+                      className={`stext-111 cl2 plh3 size-116 p-l-62 p-r-30`}
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur} />
                     <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
                   </div>
-                  <div class="bor8 m-b-30 how-pos4-parent">
-                    <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="password" name="password" placeholder="Password" />
+                  {errorForm.email ? (
+                          <div className="invalid-form">{errorForm.email}</div>) : ''}
+
+                  <div className={errorForm?.password ? `bor8 m-b-20 how-pos4-parent is-invalid` : `bor8 m-b-20 how-pos4-parent`}>
+                    <input
+                      className={`stext-111 cl2 plh3 size-116 p-l-62 p-r-30`}
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur} />
                     <i class="zmdi zmdi-eye how-pos4 pointer-none"></i>
                   </div>
-                  <button class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+
+                  {errorForm.password ? (
+                          <div className="invalid-form">{errorForm.password}</div>) : ''}
+                  <button disabled={disabledLoginBtn} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                     Submit
                   </button>
                   <a href="login-forget.html" class="flex-l-m stext-103 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Forget Your Password?</a><hr />

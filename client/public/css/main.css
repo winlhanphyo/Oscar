@@ -375,6 +375,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  text-decoration: none;
 }
 
 .header-v3 .main-menu > li > a {
@@ -439,8 +440,9 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /*---------------------------------------------*/
 .main-menu > li:hover > a {
-  text-decoration: none;
+  /* text-decoration: none; */
   color: #7dd8b3;
+  text-decoration: underline;
 }
 
 .main-menu > li:hover > .sub-menu {
@@ -780,6 +782,11 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
 }
 
 /*---------------------------------------------*/

@@ -15,3 +15,11 @@ code {
   color: white;
   background: #07b53b ;
 }
+
+.invalid-form {
+  color: red;
+  margin-bottom: 20px;
+}
+.is-invalid {
+  margin-bottom: 0px !important;
+}

@@ -112,6 +112,7 @@
     /*==================================================================
     [ Show / hide modal search ]*/
     $('.js-show-modal-search').on('click', function(){
+        console.log('show modal search');
         $('.modal-search-header').addClass('show-modal-search');
         $(this).css('opacity','0');
     });
