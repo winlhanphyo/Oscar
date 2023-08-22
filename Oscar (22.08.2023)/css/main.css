@@ -34,6 +34,21 @@ Paragrap        : 18px/1.6 '', Arial, sans-serif;
 Input, textarea : 14px/1.6 '', Arial, sans-serif;
 -------------------------------------------------------------------*/
 
+/* ---------- Custom ------------------------*/
+.over-image {
+  position: absolute;
+  top: 30px;
+  left: 122vh;
+z-index: 1;
+  }
+
+  .text-end{
+    text-align: end;
+  }
+
+  .text-start{
+    text-align: start;
+  }
 
 
 /*//////////////////////////////////////////////////////////////////
@@ -2648,6 +2663,7 @@ input.num-product::-webkit-inner-spin-button {
 .bg8 {background-color: #f3f3f3;}
 .bg9 {background-color: rgba(255,255,255,0.9);}
 .bg10 {background-color: #f6f6f6;}
+.bg11 {background-color: #efefef;;}
 
 /*---------------------------------------------*/
 .bg-overlay1::before {
