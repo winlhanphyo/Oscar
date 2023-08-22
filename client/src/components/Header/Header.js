@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import $ from "jquery";
 import { imageURL } from '../../utils/constants/constant';
 import styles from './Header.module.scss';
 import axios from '../../axios/index';
