@@ -65,24 +65,23 @@ const ShoppingCartPage = () => {
       </div>
 
       {/* <!-- Shoping Cart --> */}
-      
-	<form class="bg0 p-t-75 p-b-50">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 m-lr-auto m-b-50">
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<tr class="table_head">
-									<th class="column-1">Product</th>
-									<th class="column-2"></th>
-									<th class="column-3">Price</th>
-									<th class="column-4">Quantity</th>
-									<th class="column-5">Total</th>
-									<th class="column-3"></th>
-								</tr>
+      <form class="bg0 p-t-75 p-b-85">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 col-xl-12 m-lr-auto m-b-50">
+              <div class="m-l-25 m-r--38 m-lr-0-xl">
+                <div class="wrap-table-shopping-cart">
+                  <table class="table-shopping-cart">
+                    <tr class="table_head">
+                      <th class="column-1">Product</th>
+                      <th class="column-2"></th>
+                      <th class="column-3">Price</th>
+                      <th class="column-4">Quantity</th>
+                      <th class="column-5">Total</th>
+                      <th class="column-3"></th>
+                    </tr>
 
-								{
+                    {
                     cartData?.length > 0 ?
                     cartData?.map((data, index) => {
                       return (<>
@@ -138,7 +137,6 @@ const ShoppingCartPage = () => {
           </div>
         </div>
       </form>
-                    
 
 
       <Footer />
