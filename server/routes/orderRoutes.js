@@ -10,6 +10,8 @@ router
   .post(
     [
       check("customer").notEmpty().withMessage("User Id must not be empty"),
+      check("firstName").notEmpty().withMessage("First Name must not be empty"),
+      check("lastName").notEmpty().withMessage("Last Name must not be empty"),
       check("country").notEmpty().withMessage("Country must not be empty"),
       check("address").notEmpty().withMessage("Address must not be empty"),
       check("city").notEmpty().withMessage("City must not be empty"),
@@ -24,6 +26,8 @@ router
   .get(orderController.findOrder)
   .post(
     [
+        check("firstName").notEmpty().withMessage("First Name must not be empty"),
+        check("lastName").notEmpty().withMessage("Last Name must not be empty"),
         check("country").notEmpty().withMessage("Country must not be empty"),
         check("address").notEmpty().withMessage("Address must not be empty"),
         check("city").notEmpty().withMessage("City must not be empty"),

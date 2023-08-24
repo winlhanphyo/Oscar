@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-import { useDispatch } from "react-redux";
 import swal from 'sweetalert';
 import styles from './ForgetPassword.module.scss';
 import axios from "../../axios/index";
@@ -12,33 +11,40 @@ const ForgetPassword = () => {
   const [formData, setFormData] = React.useState({
     email: '',
   });
-  const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(true);
   const [errorForm, setErrorForm] = React.useState({
     email: '',
   });
   const history = useHistory();
-  const dispatch = useDispatch();
-  let validation = (value, name) => {
-    if (name == 'email') {
-      if (!value) {
-        return 'Email is required';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        return 'Email Format is required';
+
+  const validation = (error=true) => {
+    let preErrorForm = errorForm;
+    let validate = true;
+    let value = formData.email;
+    if (!value) {
+      validate = false;
+      if (error) {
+        preErrorForm.email = 'Email is required';
       }
-      return '';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+      validate = false;
+      if (error) {
+        preErrorForm.email = 'Email Format is required';
+      }
     }
+    setErrorForm({ ...preErrorForm });
+    return validate;
   }
 
   /**
    * handle textbox change register button disabled enabled.
    */
-  const handleChange = (event) => {
+   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     let preFormData = formData;
     preFormData[name] = value;
     setFormData({ ...preFormData });
-    const error = validation(value, name);
+    const error = validation(false);
     let preErrorForm = errorForm;
     if (!error) {
       preErrorForm[name] = error;
@@ -46,61 +52,43 @@ const ForgetPassword = () => {
         ...preErrorForm
       });
     }
-    if (!error && formData.email) {
-      setDisabledLoginBtn(false);
-    } else {
-      setDisabledLoginBtn(true);
-    }
   };
 
-  const handleBlur = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    const error = validation(value, name);
-    let preErrorForm = errorForm;
-    if (error) {
-      preErrorForm[name] = error;
-      setErrorForm({
-        ...preErrorForm
-      });
-    }
-  }
-
-  const handleSubmit = (event) => {
+  const handleClick = (event) => {
     event.preventDefault();
-    setDisabledLoginBtn(true);
     setLoading(true);
-    if (formData) {
-      axios.post('/forget-password', formData).then(response => {
-        setDisabledLoginBtn(false);
+
+    const validate = validation();
+    if (validate) {
+      axios.post('/forget-password', formData).then((response) => {
+        console.log(response);
         setLoading(false);
-        if (response.status === 200) {
-          alert('Reset Password Link was successfully sent to your email.');
-        }
-      }).catch(error => {
-        setDisabledLoginBtn(false);
+        swal("Success", "Password Reset link is sent to your email successfully", "success").then(() => {
+          let preFormData = formData;
+          preFormData.email = "";
+          setFormData({ ...preFormData });
+        });
+      }).catch((error) => {
         setLoading(false);
-        if (error.response.status === 422) {
-          swal("Oops!", "Email does not exist! Please try again.", "error");
-          setFormData({ email: '' });
-        }
-      })
+        swal("Oops!", "Email does not exists", "error");
+        console.log(error);
+      });
     } else {
-      swal("Oops!", "Email is wrong", "error");
+      setLoading(false);
     }
   }
 
   return (
     <Fragment>
       <video autoPlay loop muted className={loading ? styles.backdrop + ' shadow ' + styles.videoBg : styles.videoBg}>
-        <source src='../../../login/phone_using.mp4' type='video/mp4'></source>
+        <source src='../../../login/login.mp4' type='video/mp4'></source>
       </video>
 
       {loading && <LoadingSpinner text="Sending email... " />}
 
       <div className={loading ? styles.container + ' shadow ' + styles.backdrop : styles.container}>
         <p className={styles.forgetPasswordTtl}>Forgot your password?</p>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               required
@@ -109,7 +97,6 @@ const ForgetPassword = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              onBlur={handleBlur}
               className={styles.formControl}
               isValid={!errorForm.email}
               isInvalid={errorForm.email}
@@ -118,7 +105,7 @@ const ForgetPassword = () => {
               <span className='text-danger mt-4'>{errorForm.email}</span>) : ''}
           </Form.Group>
           <div className="d-flex justify-content-around mt-5">
-            <Button disabled={disabledLoginBtn} type="submit" className={styles.forgetBtn}>
+            <Button onClick={handleClick} className={styles.forgetBtn}>
               Submit
             </Button>
           </div>

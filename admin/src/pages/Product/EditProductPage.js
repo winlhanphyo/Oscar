@@ -13,12 +13,14 @@ const EditProductPage = () => {
   const [preview, setPreview] = React.useState(null);
   const [errorForm, setErrorForm] = React.useState({
     name: "",
+    description: "",
     category: "",
     price: "",
     count: ""
   });
   const [formData, setFormData] = React.useState({
     name: "",
+    description: "",
     category: "",
     price: "",
     count: "",
@@ -30,6 +32,7 @@ const EditProductPage = () => {
     axios.get(`/product/${id}`).then((dist) => {
       setFormData({
         name: dist?.data?.data?.name,
+        description: dist?.data?.data?.description,
         category: dist?.data?.data?.category?._id,
         price: dist?.data?.data?.price,
         count: dist?.data?.data?.count,
@@ -60,6 +63,7 @@ const EditProductPage = () => {
   const validation = () => {
     const errorMsg = {
       name: "Product Name is required",
+      description: "Product Description is required",
       category: "Category is required",
       price: "Price is required",
       count: "Count is required"
@@ -86,9 +90,10 @@ const EditProductPage = () => {
     console.log('validate', validate);
     if (validate) {
       let id = param['id'];
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("admin"));
       let formParam = new FormData();
       formParam.append('name', formData.name);
+      formParam.append('description', formData.description);
       formParam.append('price', formData.price);
       formParam.append('count', formData.count);
       if (formData?.image) {
@@ -156,9 +161,16 @@ const EditProductPage = () => {
                     <form class="forms-sample">
                       <div class="form-group">
                         <label for="name">Product Name</label>
-                        <input type="text" name="name" className={errorForm?.name ? `form-control is-invalid` : `form-control`} value={formData.name} onChange={handleChange} id="name" placeholder="product name" />
+                        <input type="text" name="name" className={errorForm?.name ? `form-control is-invalid` : `form-control`} value={formData.name} onChange={handleChange} id="name" placeholder="Product Name" />
                         {errorForm.name ? (
                           <div class="invalid-feedback">{errorForm.name}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="name">Description</label>
+                        <textarea className={errorForm?.description ? `form-control is-invalid` : `form-control`} id="description" rows="3" name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
+                        {errorForm.description ? (
+                          <div class="invalid-feedback">{errorForm.description}</div>) : ''}
                       </div>
 
                       <div class="form-group">

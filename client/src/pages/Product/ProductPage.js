@@ -355,7 +355,11 @@ const ProductPage = () => {
                         </div>
 
                         <div class="block2-txt-child2 flex-r p-t-3">
-                          <i class="zmdi zmdi-check-circle dis-block trans-04 zmdi-hc-lg text-primary"></i>
+                          {data.status === 'available' && data?.count > 0 ?
+                            <i class="zmdi zmdi-check-circle dis-block trans-04 zmdi-hc-lg text-primary"></i>
+                            :
+                            <i class="zmdi zmdi-minus-circle dis-block trans-04 zmdi-hc-lg text-danger"></i>
+                          }
                         </div>
                       </div>
                     </div>

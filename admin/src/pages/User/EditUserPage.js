@@ -58,7 +58,7 @@ const EditUserPage = () => {
     const validate = validation();
     if (validate) {
       let id = param['id'];
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("admin"));
       const data = {
         firstName: formData.firstName,
         lastName: formData.lastName,

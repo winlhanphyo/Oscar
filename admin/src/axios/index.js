@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getToken = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("admin"));
 
   if (user && user.accessToken) {
     return "Bearer " + user.accessToken;

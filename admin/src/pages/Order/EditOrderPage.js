@@ -78,7 +78,7 @@ const EditOrderPage = () => {
     console.log('validate', validate);
     if (validate) {
       let id = param['id'];
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("admin"));
       const data = {
         country: formData.country,
         company: formData.company,

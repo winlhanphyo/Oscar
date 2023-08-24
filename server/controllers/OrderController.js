@@ -62,13 +62,13 @@ const getOrder = async (
 const findOrder = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id)
-    .populate([{
-      path: 'orderDetail',
-      populate: {
+      .populate([{
+        path: 'orderDetail',
+        populate: {
           path: 'product',
           // model: 'product',
-      }
-  }]).populate('customer').populate('created_user_id').populate('updated_user_id');
+        }
+      }]).populate('customer').populate('created_user_id').populate('updated_user_id');
     if (!order) {
       const error = Error("Not Found!");
       error.statusCode = 404;
@@ -94,20 +94,22 @@ const createOrder = async (req, res) => {
     }
     const orderData = req.body;
     const orderDetailData = await OrderDetail.insertMany(orderData.orderDetail);
-    for (let i= 0; i < orderDetailData.length; i++) {
+    const productList = [];
+    for (let i = 0; i < orderDetailData.length; i++) {
       const dist = orderDetailData[i];
       const product = await Product.findById(dist.product);
-      if (dist?.qty) {
-        product.count = Number(product.count) - Number(dist.qty);
-        const response = await product.save();
-      }
+      productList.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: product.name,
+          },
+          unit_amount: product.price * 100,
+        },
+        quantity: dist.qty,
+      });
     }
-    const orderDetailIds = orderDetailData.map((data) => data.id);
-    orderData.orderDetail = orderDetailIds;
-    const result = await Order.insertMany(orderData);
-    return await res
-      .status(201)
-      .json({ message: "Created Successfully!", data: result, status: 1 });
+    checkOut(productList, orderData, orderDetailData, res);
   } catch (err) {
     res.send("An error occured" + err.toString());
     res.status(400).json({
@@ -118,6 +120,22 @@ const createOrder = async (req, res) => {
     // logger.postLogger.log('warn', 'Error Create Post') 
     // logger.postInfoLogger.log('info', 'Error Create Order')
   }
+}
+
+const orderCreateData = async (orderData, orderDetailData, session, res) => {
+  for (let i = 0; i < orderDetailData.length; i++) {
+    const param = orderDetailData[i];
+    const product = await Product.findById(param.product);
+    if (param?.qty) {
+      product.count = Number(product.count) - Number(param.qty);
+      const response = await product.save();
+    }
+  }
+
+  const orderDetailIds = orderDetailData.map((data) => data.id);
+  orderData.orderDetail = orderDetailIds;
+  const result = await Order.insertMany(orderData);
+  res.json({ id: session.id });
 }
 
 const updateOrder = async (req, res) => {
@@ -139,6 +157,8 @@ const updateOrder = async (req, res) => {
       error.statusCode = 404;
       throw error;
     }
+    req.body?.firstName ? order.firstName = req.body.firstName : null;
+    req.body?.lastName ? order.lastName = req.body.lastName : null;
     req.body?.country ? order.country = req.body.country : null;
     req.body?.company ? order.company = req.body.company : null;
     req.body?.address ? order.address = req.body.address : null;
@@ -178,5 +198,35 @@ const deleteOrder = async (req, res) => {
     // logger.postErrorLogger.log('error', 'Error Delete Order')
   }
 };
+
+
+const checkOut = async (productList, orderData, orderDetailData, res) => {
+  try {
+    console.log('product', productList);
+    const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: productList,
+      mode: "payment",
+      // shipping_address_collection: {
+      //   allowed_countries: ['US', 'SG', "IT"],
+      // },
+      // custom_text: {
+      //   shipping_address: {
+      //     message: 'Please note that we can\'t guarantee 2-day delivery for PO boxes at this time.',
+      //   },
+      //   submit: {
+      //     message: 'We\'ll email you instructions on how to get started.',
+      //   },
+      // },
+      success_url: "http://localhost:3100/payment/success",
+      cancel_url: "http://localhost:3100/payment/cancel",
+    });
+    orderCreateData(orderData, orderDetailData, session, res);
+  } catch (err) {
+    console.log('Stripe API Error', err);
+    res.status(400).json({ msg: err.toString() });
+  }
+}
 
 module.exports = { getOrder, findOrder, createOrder, deleteOrder, updateOrder };

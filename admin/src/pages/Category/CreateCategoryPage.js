@@ -32,7 +32,7 @@ const CreateCategoryPage = () => {
       });
     }
     if (!error) {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("admin"));
       const data = {
         name: formData.name,
         created_user_id: user._id

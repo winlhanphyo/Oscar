@@ -124,7 +124,8 @@ const forgetPassword = async (req, res) => {
       }).save();
     }
     const link = `${process.env.BASE_URL}/admin/forget-password-update/${user._id}/${token.token}`;
-    const mail = await utils.sendEmail(user.email, "Password reset", link);
+    const msg = `Here is the password reset link \n ${link}`;
+    const mail = await utils.sendEmail(user.email, "Oscar Password Reset", msg);
 
     res.status(200).json({
       message: "Password reset link sent to your email account."

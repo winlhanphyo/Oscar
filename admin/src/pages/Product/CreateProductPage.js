@@ -10,6 +10,7 @@ const CreateProductPage = () => {
   const [preview, setPreview] = React.useState(null);
   const [errorForm, setErrorForm] = React.useState({
     name: "",
+    description: "",
     category: "",
     price: "",
     count: "",
@@ -17,6 +18,7 @@ const CreateProductPage = () => {
   });
   const [formData, setFormData] = React.useState({
     name: "",
+    description: "",
     category: "",
     price: "",
     count: "",
@@ -70,9 +72,10 @@ const CreateProductPage = () => {
     e.preventDefault();
     const validate = validation();
     if (validate) {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("admin"));
       let formParam = new FormData();
       formParam.append('name', formData.name);
+      formParam.append('description', formData.description);
       formParam.append('price', formData.price);
       formParam.append('count', formData.count);
       formParam.append('image', formData.image);
@@ -147,6 +150,13 @@ const CreateProductPage = () => {
                         <input type="text" name="name" className={errorForm?.name ? `form-control is-invalid` : `form-control`} value={formData.name} onChange={handleChange} id="name" placeholder="product name"/>
                         {errorForm.name ? (
                           <div class="invalid-feedback">{errorForm.name}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea className={errorForm?.description ? `form-control is-invalid` : `form-control`} id="description" rows="3" name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
+                        {errorForm.description ? (
+                          <div class="invalid-feedback">{errorForm.description}</div>) : ''}
                       </div>
 
                       <div class="form-group">
