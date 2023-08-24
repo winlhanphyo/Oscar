@@ -4,6 +4,8 @@ import { imageURL } from '../../utils/constants/constant';
 import styles from './Header.module.scss';
 import axios from '../../axios/index';
 
+
+
 const Header = () => {
   const [value, setValue] = React.useState(0);
   const history = useHistory();
@@ -74,7 +76,7 @@ const Header = () => {
 
                 <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
                   <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="3">
-                    <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
+                    <Link to="/cart"><i class="zmdi zmdi-shopping-cart text-dark"></i></Link>
                   </div>
                 </div>
                 <div class="flex-c-m h-full p-l-18 p-r-25">
@@ -101,20 +103,20 @@ const Header = () => {
           {/* <!-- Icon header --> */}
           <div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
             <div class="flex-c-m h-full p-r-10">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
-                <i class="zmdi zmdi-search"></i>
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
+              <i class="zmdi zmdi-search"></i>
+            </div>
+            </div>
+
+            <div class="flex-c-m h-full p-lr-10 bor5">
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="3">
+                <i class="zmdi zmdi-shopping-cart"></i>
               </div>
             </div>
 
             <div class="flex-c-m h-full p-lr-10 bor5">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-                <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
-              </div>
-            </div>
-
-            <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
               <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
-                <Link to="/login"><i class="zmdi zmdi-account-o text-dark"></i></Link>
+                <a href="login.html" alt="Login"><i class="zmdi zmdi-account-o text-dark"></i></a>
               </div>
             </div>
           </div>

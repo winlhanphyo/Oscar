@@ -124,78 +124,36 @@ const CreateAccountPage = () => {
       </section>
 
       {/* <!-- Content page --> */}
-      <section class="bg0 p-t-104 p-b-116">
-        <div class="container">
-          <div class="flex-w flex-tr flex-c-m">
-            <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-              <form onSubmit={handleSubmit}>
-
-                <div className={errorForm?.firstName ? `bor8 m-b-20 how-pos4-parent is-invalid` : `bor8 m-b-20 how-pos4-parent`}>
-                    <input 
-                      className={`stext-111 cl2 plh3 size-116 p-l-62 p-r-30`}
-                      type="text"
-                      name="firstName"
-                      placeholder="First Name"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
-                  <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
-                </div>
-                {errorForm.firstName ? (
-                  <div className="invalid-form">{errorForm.firstName}</div>) : ''}
-
-                <div className={errorForm?.lastName ? `bor8 m-b-20 how-pos4-parent is-invalid` : `bor8 m-b-20 how-pos4-parent`}>
-                    <input 
-                      className={`stext-111 cl2 plh3 size-116 p-l-62 p-r-30`}
-                      type="text"
-                      name="lastName"
-                      placeholder="Last Name"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
-                  <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
-                </div>
-                {errorForm.lastName ? (
-                          <div className="invalid-form">{errorForm.lastName}</div>) : ''}
-
-                <div className={errorForm?.email ? `bor8 m-b-20 how-pos4-parent is-invalid` : `bor8 m-b-20 how-pos4-parent`}>
-                    <input 
-                      className={`stext-111 cl2 plh3 size-116 p-l-62 p-r-30`}
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
-                    <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
-                  </div>
-                  {errorForm.email ? (
-                          <div className="invalid-form">{errorForm.email}</div>) : ''}
-
-                  <div className={errorForm?.password ? `bor8 m-b-20 how-pos4-parent is-invalid` : `bor8 m-b-20 how-pos4-parent`}>
-                    <input
-                      className={`stext-111 cl2 plh3 size-116 p-l-62 p-r-30`}
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
-                    <i class="zmdi zmdi-eye how-pos4 pointer-none"></i>
-                  </div>
-
-                  {errorForm.password ? (
-                          <div className="invalid-form">{errorForm.password}</div>) : ''}
-                
-                <button disabled={disabledRegisterBtn} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-                  Create
-                </button>
-                <Link to="/login" class="flex-l-m stext-101 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Cancel</Link>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section class="bg0 p-t-50 p-b-50">
+		<div class="container">
+			<div class="flex-w flex-tr flex-c-m">
+				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+					<form>
+						<div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="firstname" placeholder="First Name"/>
+							<i class="zmdi zmdi-account how-pos4 pointer-none"></i>
+						</div>
+                        <div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="lastname" placeholder="Last Name"/>
+							<i class="zmdi zmdi-account how-pos4 pointer-none"></i>
+						</div>
+						<div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="email" placeholder="Email"/>
+							<i class="zmdi zmdi-email how-pos4 pointer-none"></i>
+						</div>
+                        <div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="password" name="password" placeholder="Password"/>
+							<i class="zmdi zmdi-eye how-pos4 pointer-none"></i>
+						</div>
+						<button class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+							Create
+						</button>
+						<a href="login.html" class="flex-l-m stext-101 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">cancel</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>	
 
 
       <Footer />

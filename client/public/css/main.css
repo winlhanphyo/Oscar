@@ -34,6 +34,21 @@ Paragrap        : 18px/1.6 '', Arial, sans-serif;
 Input, textarea : 14px/1.6 '', Arial, sans-serif;
 -------------------------------------------------------------------*/
 
+/* ---------- Custom ------------------------*/
+.over-image {
+  position: absolute;
+  top: 30px;
+  left: 122vh;
+z-index: 1;
+  }
+
+  .text-end{
+    text-align: end;
+  }
+
+  .text-start{
+    text-align: start;
+  }
 
 
 /*//////////////////////////////////////////////////////////////////
@@ -375,7 +390,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
-  text-decoration: none;
 }
 
 .header-v3 .main-menu > li > a {
@@ -440,9 +454,8 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /*---------------------------------------------*/
 .main-menu > li:hover > a {
-  /* text-decoration: none; */
+  text-decoration: none;
   color: #7dd8b3;
-  text-decoration: underline;
 }
 
 .main-menu > li:hover > .sub-menu {
@@ -734,7 +747,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .main-menu-m {
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: #7dd8b3;
+  background-color: #1b2430;
 }
 
 .main-menu-m > li > a {
@@ -784,14 +797,9 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   transform: rotate(90deg);
 }
 
-a.disabled {
-  pointer-events: none;
-  cursor: default;
-}
-
 /*---------------------------------------------*/
 .sub-menu-m {
-  background-color: #fff;
+  background-color: #efefef;
   padding: 10px 15px 10px 32px;
   display: none;
 }
@@ -2646,7 +2654,7 @@ input.num-product::-webkit-inner-spin-button {
 ==================================================================*/
 .bg-none {background-color: transparent;}
 .bg0 {background-color: #fff;}
-.bg1 {background-color: #7ed8b4;}
+.bg1 {background-color: #d8d8d8;}
 .bg2 {background-color: #e6e6e6;}
 .bg3 {background-color: #222;}
 .bg5 {background-color: rgba(0,0,0,0.5);}
@@ -2655,6 +2663,7 @@ input.num-product::-webkit-inner-spin-button {
 .bg8 {background-color: #f3f3f3;}
 .bg9 {background-color: rgba(255,255,255,0.9);}
 .bg10 {background-color: #f6f6f6;}
+.bg11 {background-color: #efefef;;}
 
 /*---------------------------------------------*/
 .bg-overlay1::before {
@@ -2733,6 +2742,10 @@ input.num-product::-webkit-inner-spin-button {
 
 .bor12 {
   border-bottom: 1px dashed #d9d9d9;
+}
+
+.bor121 {
+  border-bottom: 1px solid #2e2626;
 }
 
 .bor13 {
