@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import swal from 'sweetalert';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
@@ -22,7 +23,7 @@ const CreateAccountPage = () => {
   });
   const history = useHistory();
 
-  let validation = () => {
+  let validation = (error=true) => {
     const keys = ["firstName", "lastName", "email", "password"];
     let preErrorForm = errorForm;
     let validate = true;
@@ -31,28 +32,40 @@ const CreateAccountPage = () => {
       if (dist == 'email') {
         if (!value) {
           validate = false;
-          preErrorForm[dist] = 'Email is required';
+          if (error) {
+            preErrorForm[dist] = 'Email is required';
+          }
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
           validate = false;
-          preErrorForm[dist] = 'Email Format is required';
+          if (error) {
+            preErrorForm[dist] = 'Email Format is required';
+          }
         }
       } else if (dist == 'password') {
         if (!value) {
           validate = false;
-          preErrorForm[dist] = 'Password is required';
+          if (error) {
+            preErrorForm[dist] = 'Password is required';
+          }
         } else if (value.length > 10) {
           validate = false;
-          preErrorForm[dist] = 'Password is greater than 10';
+          if (error) {
+            preErrorForm[dist] = 'Password is greater than 10';
+          }
         }
       } else if (dist == 'firstName') {
         if (!value) {
           validate = false;
-          preErrorForm[dist] = "First Name is required";
+          if (error) {
+            preErrorForm[dist] = "First Name is required";
+          }
         }
       } else if (dist == 'lastName') {
         if (!value) {
           validate = false;
-          preErrorForm[dist] = "Last Name is required";
+          if (error) {
+            preErrorForm[dist] = "Last Name is required";
+          }
         }
       }
     });
@@ -66,11 +79,10 @@ const CreateAccountPage = () => {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log('change', name, value);
     let preFormData = formData;
     preFormData[name] = value;
     setFormData({ ...preFormData });
-    const error = validation(value, name);
+    const error = validation(false);
     let preErrorForm = errorForm;
     if (!error) {
       preErrorForm[name] = error;
@@ -87,10 +99,11 @@ const CreateAccountPage = () => {
     const validate = validation();
     if (validate) {
       axios.post('/signup', formData).then((response) => {
-        console.log(response);
         setLoading(false);
         if (response.status === 200) {
-          history.push('/login');
+          swal("Success", "User Signup successfully", "success").then(() => {
+            history.push('/login');
+          });
         }
       }).catch((error) => {
         setLoading(false);

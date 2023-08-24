@@ -3,7 +3,7 @@ import { Switch, Redirect, withRouter, matchPath } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import LoginPage from "../pages/Login/LoginPage";
-import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
+import ForgetPasswordPage from "../pages/ForgetPassword/ForgetPasswordPage";
 import PasswordChangeForm from "../pages/PasswordChangeForm/PasswordChangeForm";
 import UserPage from "../pages/User/UserPage";
 import HomePage from "../pages/Home/HomePage";
@@ -38,6 +38,7 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/shop" component={ProductPage} />
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/home" component={HomePage} />
+        <PublicRoute path="/forgetpassword" component={ForgetPasswordPage} />
         {/* <PublicRoute path="/admin/user/create" component={CreatePage} />
         <PrivateRoute path="/admin/user/:id/update" component={CreatePage} />
         <PrivateRoute path="/admin/:id/profile" component={ProfilePage} /> */}

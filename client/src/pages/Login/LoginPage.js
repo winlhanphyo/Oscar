@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
+import swal from 'sweetalert';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
@@ -22,7 +23,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
 
-  const validation = () => {
+  const validation = (error=true) => {
     const keys = ["email", "password"];
 
     let preErrorForm = errorForm;
@@ -32,19 +33,27 @@ const LoginPage = () => {
       if (dist == 'email') {
         if (!value) {
           validate = false;
-          preErrorForm[dist] = 'Email is required';
+          if (error) {
+            preErrorForm[dist] = 'Email is required';
+          }
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
           validate = false;
-          preErrorForm[dist] = 'Email Format is required';
+          if (error) {
+            preErrorForm[dist] = 'Email Format is required';
+          }
         }
       }
       if (dist == 'password') {
         if (!value) {
           validate = false;
-          preErrorForm[dist] = 'Password is required';
+          if (error) {
+            preErrorForm[dist] = 'Password is required';
+          }
         } else if (value.length > 10) {
           validate = false;
-          preErrorForm[dist] = 'Password is greater than 10';
+          if (error) {
+            preErrorForm[dist] = 'Password is greater than 10';
+          }
         }
       }
     });
@@ -53,7 +62,7 @@ const LoginPage = () => {
   }
 
   /**
-   * handle textbox change register button disabled enabled.
+   * handle textbox change register button.
    */
   const handleChange = (event) => {
     const name = event.target.name;
@@ -61,7 +70,7 @@ const LoginPage = () => {
     let preFormData = formData;
     preFormData[name] = value;
     setFormData({ ...preFormData });
-    const error = validation(value, name);
+    const error = validation(false);
     let preErrorForm = errorForm;
     if (!error) {
       preErrorForm[name] = error;
@@ -105,7 +114,7 @@ const LoginPage = () => {
         }
       }).catch((error) => {
         setLoading(false);
-        alert("Email or Password name is incorrect.");
+        swal("Oops!", "Email or Password name is incorrect.");
         console.log(error);
       });
     } else {
@@ -166,7 +175,7 @@ const LoginPage = () => {
                   <button class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                     Submit
                   </button>
-                  <a href="login-forget.html" class="flex-l-m stext-103 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Forget Your Password?</a><hr />
+                  <Link to="/forgetpassword" class="flex-l-m stext-103 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Forget Your Password?</Link><hr />
                   <Link to="/create/account" class ="flex-c-m stext-101 size-121 p-lr-15 trans-04 pointer text-dark">Create Account</Link>
                 </form>
               </div>

@@ -14,7 +14,6 @@ const LoginPage = () => {
     email: '',
     password: ''
   });
-  const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(true);
   const [errorForm, setErrorForm] = React.useState({
     email: '',
     password: ''
@@ -22,35 +21,54 @@ const LoginPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  let validation = (value, name)=>{
-    if(name == 'email'){
-      if(!value){
-        return 'Email is required';
-      }else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)){
-        return 'Email Format is required';
+  const validation = (error=true) => {
+    const keys = ["email", "password"];
+
+    let preErrorForm = errorForm;
+    let validate = true;
+    keys.map((dist) => {
+      let value = formData[dist];
+      if (dist == 'email') {
+        if (!value) {
+          validate = false;
+          if (error) {
+            preErrorForm[dist] = 'Email is required';
+          }
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+          validate = false;
+          if (error) {
+            preErrorForm[dist] = 'Email Format is required';
+          }
+        }
       }
-      return '';
-    }
-    if(name == 'password'){
-      if(!value){
-        return 'Password is required';
-      } else if(value.length > 10){
-        return 'Password is greater than 10';
+      if (dist == 'password') {
+        if (!value) {
+          validate = false;
+          if (error) {
+            preErrorForm[dist] = 'Password is required';
+          }
+        } else if (value.length > 10) {
+          validate = false;
+          if (error) {
+            preErrorForm[dist] = 'Password is greater than 10';
+          }
+        }
       }
-      return '';
-    }
+    });
+    setErrorForm({ ...preErrorForm });
+    return validate;
   }
 
   /**
-   * handle textbox change register button disabled enabled.
+   * handle textbox change register button.
    */
-  const handleChange = (event) => {
+   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     let preFormData = formData;
     preFormData[name] = value;
-    setFormData({...preFormData});
-    const error = validation(value, name);
+    setFormData({ ...preFormData });
+    const error = validation(false);
     let preErrorForm = errorForm;
     if (!error) {
       preErrorForm[name] = error;
@@ -58,74 +76,54 @@ const LoginPage = () => {
         ...preErrorForm
       });
     }
-    if(!error && formData.email && formData.password){
-      setDisabledLoginBtn(false);
-    }else{
-      setDisabledLoginBtn(true);
-    }
   };
-
-  const handleBlur = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    const error = validation(value, name);
-    let preErrorForm = errorForm;
-    if (error) {
-      preErrorForm[name] = error;
-      setErrorForm({
-        ...preErrorForm
-      });
-    }
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    setDisabledLoginBtn(true);
-    const param = {
-      email: formData.email,
-      password: formData.password,
-      type: "Admin"
-    };
-    axios.post('/login', param).then((response) => {
-      setLoading(false);
-      setDisabledLoginBtn(false);
-      if(response.status === 200) {
-        const { data } = response;
-        const token = data.token;
-        const { user } = data;
-        /** store logged in user's info to local storage */
-        localStorage.setItem(
-          "admin",
-          JSON.stringify({
-            accessToken: token,
-            ...user
-          })
-        );
-        /** store logged in user's info to App State */
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: {
-            user: {
+
+    const validate = validation();
+    if (validate) {
+      axios.post('/login', formData).then((response) => {
+        console.log(response);
+        setLoading(false);
+        if (response.status === 200) {
+          const { data } = response;
+          const token = data.token;
+          const { user } = data;
+          localStorage.setItem(
+            "admin",
+            JSON.stringify({
               accessToken: token,
-              ...formData
-            },
-          }
-        });
-        window.location.href="/admin/home";
-      }
-    }).catch((error) => {
+              ...user
+            })
+          );
+          /** store logged in user's info to App State */
+          dispatch({
+            type: LOGIN_SUCCESS,
+            payload: {
+              user: {
+                accessToken: token,
+                ...formData
+              },
+            }
+          });
+          history.push('/home');
+        }
+      }).catch((error) => {
+        setLoading(false);
+        swal("Oops!", "Email or Password name is incorrect.");
+        console.log(error);
+      });
+    } else {
       setLoading(false);
-      setDisabledLoginBtn(false);
-      swal("Oops!", "Username and password is incorrect", "error");
-      console.log(error);
-    });
+    }
   }
 
   return (
     <Fragment>
       <video autoPlay loop muted className={loading ? styles.backdrop + ' shadow ' + styles.videoBg : styles.videoBg}>
-        <source src='../../../login/phone_using.mp4' type='video/mp4'></source>
+        <source src='../../../login/login.mp4' type='video/mp4'></source>
       </video>
 
       {loading && <LoadingSpinner text="Logging in..." />}
@@ -141,7 +139,6 @@ const LoginPage = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              onBlur={handleBlur}
               className={styles.formControl}
               isValid={!errorForm.email}
               isInvalid={errorForm.email}
@@ -158,7 +155,6 @@ const LoginPage = () => {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              onBlur={handleBlur}
               className={styles.formControl}
               isValid={!errorForm.password}
               isInvalid={errorForm.password}
@@ -170,7 +166,7 @@ const LoginPage = () => {
             <a href="/admin/forget-password" className={styles.forgotPwd}>Forgot Password?</a>
           </div>
           <div className="d-flex justify-content-around mt-5">
-            <Button disabled={disabledLoginBtn} type="submit" className={styles.loginBtn}>
+            <Button  className={styles.loginBtn}>
               Log In
             </Button>
           </div>
