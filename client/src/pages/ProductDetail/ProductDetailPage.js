@@ -42,7 +42,7 @@ const ProductDetailPage = () => {
     axios.get(`/product/${id}`).then((dist) => {
       console.log('CART', dist?.data?.data);
       if (dist?.data?.data?.count > 0 && dist?.data?.data?.status === "available") {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart") || "[]");
         if (cart?.length > 0) {
           console.log('CART', cart);
           const data = cart?.find((c) => c.id === id);
@@ -90,74 +90,55 @@ const ProductDetailPage = () => {
 
       {/* <!-- Product Detail --> */}
       <section class="sec-product-detail bg0 p-t-65 p-b-60">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-lg-7 p-b-30">
-					<div class="blog-item">
-						<div class="hov-img0">
-							<img src="poto/a1.jpg" alt="IMG-BLOG" class="img-fluid rounded text-center"/>
-						</div>
-					</div>
-				</div>
-					
-				<div class="col-md-6 col-lg-5 p-b-30">
-					<div class="p-r-50 p-t-5 p-lr-0-lg">
-						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-							Item One
-						</h4>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-7 p-b-30">
+              <div class="blog-item">
+                <div class="hov-img0">
+                  <img src={imageURL + product?.image} alt="IMG-BLOG" class="img-fluid rounded text-center" />
+                </div>
+              </div>
+            </div>
 
-						<span class="mtext-106 cl2">
-							$58.79
-						</span>
-						
-						<div class="p-t-33">
-							<div class="flex-w flex-r-m p-b-10">
-								<div class="size-205 flex-l-m stext-301">
-									Artista Name
-								</div>
+            <div class="col-md-6 col-lg-5 p-b-30">
+              <div class="p-r-50 p-t-5 p-lr-0-lg">
+                <h4 class="mtext-105 cl2 js-name-detail p-b-14">
+                  {product?.name}
+                </h4>
+
+                <span class="mtext-106 cl2">
+                  ${product?.price}
+                </span>
 
                 <p class="stext-102 cl3 p-t-23">
                   {product?.description}
                 </p>
 
-							<div class="flex-w flex-l-m p-b-10">
-								<div class="size-205 flex-c-m stext-301">
-									Category
-								</div>
+                <div class="p-t-33">
+                  <div class="flex-w flex-r-m p-b-10">
+                    <div class="size-205 flex-l-m respon6 stext-301">
+                      Artista Name
+                    </div>
 
-								<div class="size-206 stext-110">
-									Category One
-								</div>
-							</div>
+                    <div class="size-206 respon6-next stext-110">
+                      Item One
+                    </div>
+                  </div>
 
-							<div class="flex-w flex-l-m p-b-10">
-								<div class="size-205 flex-c-m stext-301">
-									Status
-								</div>
-								<div class="size-206 stext-110">
-									Available
-								</div>
-							</div>
-							<hr/>
-							<div class="flex-w flex-r-m p-b-10">
-								<div class="size-204 flex-w flex-m respon6-next">
-									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-										Add to cart
-									</button>
-								</div>
-							</div>	
-						</div>
+                  <div class="flex-w flex-l-m p-b-10">
+                    <div class="size-205 flex-c-m respon6 stext-301">
+                      Category
+                    </div>
 
-						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-							<div class="flex-m bor9 p-r-10 m-r-11">
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-									<i class="zmdi zmdi-favorite"></i>
-								</a>
-							</div>
+                    <div class="size-206 respon6-next stext-110">
+                      {product?.category?.name}
+                    </div>
+                  </div>
 
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
-								<i class="fa fa-facebook"></i>
-							</a>
+                  <div class="flex-w flex-l-m p-b-10">
+                    <div class="size-205 flex-c-m respon6 stext-301">
+                      Status
+                    </div>
 
                     <div class="size-206 respon6-next stext-110">
                       {product?.status === "available" ? "Available" : "Not Available"}
@@ -177,164 +158,181 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
 
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-								<i class="fa fa-google-plus"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
+                <div class="flex-w flex-m p-l-100 p-t-40 respon7">
+                  <div class="flex-m bor9 p-r-10 m-r-11">
+                    <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
+                      <i class="zmdi zmdi-favorite"></i>
+                    </a>
+                  </div>
 
-			<div class="bor10 m-t-50 p-t-43 p-b-40">
-				<div class="tab01">
-					<ul class="nav nav-tabs" role="tablist">
-						<li class="nav-item p-b-10">
-							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
-						</li>
+                  <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
+                    <i class="fa fa-facebook"></i>
+                  </a>
 
-						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
-						</li>
+                  <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
+                    <i class="fa fa-twitter"></i>
+                  </a>
 
-						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
-						</li>
-					</ul>
+                  <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
+                    <i class="fa fa-google-plus"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-					<div class="tab-content p-t-43">
-						<div class="tab-pane fade show active" id="description" role="tabpanel">
-							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
-									Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
-								</p>
-							</div>
-						</div>
+          <div class="bor10 m-t-50 p-t-43 p-b-40">
+            {/* <!-- Tab01 --> */}
+            <div class="tab01">
+              {/* <!-- Nav tabs --> */}
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item p-b-10">
+                  <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
+                </li>
 
-						<div class="tab-pane fade" id="information" role="tabpanel">
-							<div class="row">
-								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-									<ul class="p-lr-28 p-lr-15-sm">
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Date Of Art
-											</span>
+                <li class="nav-item p-b-10">
+                  <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
+                </li>
 
-											<span class="stext-102 cl6 size-206">
-												11-03-2021
-											</span>
-										</li>
+                <li class="nav-item p-b-10">
+                  <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
+                </li>
+              </ul>
 
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Dimensions
-											</span>
+              {/* <!-- Tab panes --> */}
+              <div class="tab-content p-t-43">
+                <div class="tab-pane fade show active" id="description" role="tabpanel">
+                  <div class="how-pos2 p-lr-15-md">
+                    <p class="stext-102 cl6">
+                      Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
+                    </p>
+                  </div>
+                </div>
 
-											<span class="stext-102 cl6 size-206">
-												110 x 33 x 100 cm
-											</span>
-										</li>
+                <div class="tab-pane fade" id="information" role="tabpanel">
+                  <div class="row">
+                    <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+                      <ul class="p-lr-28 p-lr-15-sm">
+                        <li class="flex-w flex-t p-b-7">
+                          <span class="stext-102 cl3 size-205">
+                            Date Of Art
+                          </span>
 
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Art Idea
-											</span>
+                          <span class="stext-102 cl6 size-206">
+                            11-03-2021
+                          </span>
+                        </li>
 
-											<span class="stext-102 cl6 size-206">
-												Personal
-											</span>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+                        <li class="flex-w flex-t p-b-7">
+                          <span class="stext-102 cl3 size-205">
+                            Dimensions
+                          </span>
 
-						<div class="tab-pane fade" id="reviews" role="tabpanel">
-							<div class="row">
-								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-									<div class="p-b-30 m-lr-15-sm">
-										<div class="flex-w flex-t p-b-68">
-											<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-												<img src="poto/a6.jpg" alt="AVATAR"/>
-											</div>
+                          <span class="stext-102 cl6 size-206">
+                            110 x 33 x 100 cm
+                          </span>
+                        </li>
 
-											<div class="size-207">
-												<div class="flex-w flex-sb-m p-b-17">
-													<span class="mtext-107 cl2 p-r-20">
-														Oscar D. CHAVARRIA
-													</span>
+                        <li class="flex-w flex-t p-b-7">
+                          <span class="stext-102 cl3 size-205">
+                            Art Idea
+                          </span>
 
-													<span class="fs-18 cl11">
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star-half"></i>
-													</span>
-												</div>
+                          <span class="stext-102 cl6 size-206">
+                            Personal
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
 
-												<p class="stext-102 cl6">
-													Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
-												</p>
-											</div>
-										</div>
-										
-										<form class="w-full">
-											<h5 class="mtext-108 cl2 p-b-7">
-												Add a review
-											</h5>
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                  <div class="row">
+                    <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+                      <div class="p-b-30 m-lr-15-sm">
+                        {/* <!-- Review --> */}
+                        <div class="flex-w flex-t p-b-68">
+                          <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+                            <img src={imageURL + product?.image} alt="AVATAR" />
+                          </div>
 
-											<p class="stext-102 cl6">
-												Your email address will not be published. Required fields are marked *
-											</p>
+                          <div class="size-207">
+                            <div class="flex-w flex-sb-m p-b-17">
+                              <span class="mtext-107 cl2 p-r-20">
+                                Ariana Grande
+                              </span>
 
-											<div class="flex-w flex-m p-t-50 p-b-23">
-												<span class="stext-102 cl3 m-r-16">
-													Your Rating
-												</span>
+                              <span class="fs-18 cl11">
+                                <i class="zmdi zmdi-star"></i>
+                                <i class="zmdi zmdi-star"></i>
+                                <i class="zmdi zmdi-star"></i>
+                                <i class="zmdi zmdi-star"></i>
+                                <i class="zmdi zmdi-star-half"></i>
+                              </span>
+                            </div>
 
-												<span class="wrap-rating fs-18 cl11 pointer">
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<input class="dis-none" type="number" name="rating"/>
-												</span>
-											</div>
+                            <p class="stext-102 cl6">
+                              Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+                            </p>
+                          </div>
+                        </div>
 
-											<div class="row p-b-25">
-												<div class="col-12 p-b-5">
-													<label class="stext-102 cl3" for="review">Your review</label>
-													<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
-												</div>
+                        {/* <!-- Add review --> */}
+                        <form class="w-full">
+                          <h5 class="mtext-108 cl2 p-b-7">
+                            Add a review
+                          </h5>
 
-												<div class="col-sm-6 p-b-10 p-t-20">
-													<div class="bor8 m-b-20 how-pos4-parent">
-														<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="name" name="yourname" placeholder="Your Name"/>
-														<i class="zmdi zmdi-account how-pos4 pointer-none"></i>
-													</div>
-												</div>
+                          <p class="stext-102 cl6">
+                            Your email address will not be published. Required fields are marked *
+                          </p>
 
-												<div class="col-sm-6 p-b-10 p-t-20">
-													<div class="bor8 m-b-20 how-pos4-parent">
-														<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="email" placeholder="Email"/>
-														<i class="zmdi zmdi-email how-pos4 pointer-none"></i>
-													</div>
-												</div>
-											</div>
+                          <div class="flex-w flex-m p-t-50 p-b-23">
+                            <span class="stext-102 cl3 m-r-16">
+                              Your Rating
+                            </span>
 
-											<button class="flex-c-m stext-101 cl0 size-112 bg1 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-												Submit
-											</button>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-	</section>
+                            <span class="wrap-rating fs-18 cl11 pointer">
+                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
+                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
+                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
+                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
+                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
+                              <input class="dis-none" type="number" name="rating" />
+                            </span>
+                          </div>
+
+                          <div class="row p-b-25">
+                            <div class="col-12 p-b-5">
+                              <label class="stext-102 cl3" htmlFor="review">Your review</label>
+                              <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
+                            </div>
+
+                            <div class="col-sm-6 p-b-10 p-t-20">
+                              <label class="stext-102 cl3" htmlFor="name">Name</label>
+                              <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name" />
+                            </div>
+
+                            <div class="col-sm-6 p-b-10 p-t-20">
+                              <label class="stext-102 cl3" htmlFor="email">Email</label>
+                              <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email" />
+                            </div>
+                          </div>
+
+                          <button class="flex-c-m stext-101 cl0 size-112 bg1 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Submit
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* <!-- Related Products --> */}
       <section class="sec-relate-product bg0 p-t-20 p-b-105">
