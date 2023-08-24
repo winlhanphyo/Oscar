@@ -1,10 +1,51 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
 
-
 const ShoppingCartPage = () => {
+  const [cartData, setCartData] = React.useState(null);
+  const [totalAmount, setTotalAmount] = React.useState(0);
+
+  React.useEffect(() => {
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+      cart = JSON.parse(cart);
+      setCartData(cart);
+      let total = 0;
+      cart.map((data) => {
+        total += Number(data.price) * Number(data.quantity);
+      });
+      setTotalAmount(total);
+    }
+  }, []);
+
+  const removeProduct = (index) => {
+    let preCartData = cartData;
+    preCartData.splice(index, 1);
+    setCartData([...preCartData]);
+    localStorage.setItem("cart", preCartData);
+  }
+
+  const changeQuantity = (event, index) => {
+    let value = (event?.target?.value) ? event.target.value : event;
+    console.log('value', value, index);
+    if (Number(value) > 0) {
+      let preCartData = cartData;
+      preCartData[index].quantity = value;
+      setCartData([...preCartData]);
+      localStorage.setItem("cart", JSON.stringify(preCartData));
+
+      let total = 0;
+      preCartData.map((data) => {
+        total += Number(data.price) * Number(data.quantity);
+      });
+      setTotalAmount(total);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -40,100 +81,56 @@ const ShoppingCartPage = () => {
                       <th class="column-3"></th>
                     </tr>
 
-                    <tr class="table_row">
+                    {
+                    cartData?.length > 0 ?
+                    cartData?.map((data, index) => {
+                      return (<>
+                      <tr key={index} class="table_row">
                       <td class="column-1">
                         <div class="how-itemcart1">
-                          <img src="poto/a1.jpg" alt="IMG" class="img-thumbnail img-fluid" />
+                          <img src={imageURL + data?.image} alt="IMG" class="img-thumbnail img-fluid" />
                         </div>
                       </td>
-                      <td class="column-2">Item One</td>
-                      <td class="column-3">$ 36.00</td>
+                      <td class="column-2">{data?.name}</td>
+                      <td class="column-3">$ {data?.price}</td>
                       <td class="column-4">
                         <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                          <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                          <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onClick={() => changeQuantity(Number(cartData[index].quantity) - 1, index)}>
                             <i class="fs-16 zmdi zmdi-minus"></i>
                           </div>
 
-                          <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1" />
+                          <input class="mtext-104 cl3 txt-center num-product" type="number" onChange={(e) => changeQuantity(e, index)} name="num-product1" value={data?.quantity} />
 
-                          <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                          <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onClick={() => changeQuantity(Number(cartData[index].quantity) + 1, index)}>
                             <i class="fs-16 zmdi zmdi-plus"></i>
                           </div>
                         </div>
                       </td>
-                      <td class="column-5">$ 36.00</td>
+                      <td class="column-5">$ {data?.price}</td>
                       <td class="column-3">
-                        <button class="flex-c-m stext-101 cl0 size-104 bor2 hov-btn2 p-lr-15 hov-btn3 trans-04 text-danger">
+                        <button class="flex-c-m stext-101 cl0 size-104 bor2 hov-btn2 p-lr-15 hov-btn3 trans-04 text-danger" onClick={() => removeProduct(index)}>
                           <i class="fa fa-trash fa-2x "></i>
                         </button>
                       </td>
                     </tr>
-
-                    <tr class="table_row">
-                      <td class="column-1">
-                        <div class="how-itemcart1">
-                          <img src="poto/a2.jpg" alt="IMG" class="img-thumbnail img-fluid" />
+                      </>)
+                      })
+                      :
+                      (
+                        <div>
+                          Cart Data is empty
                         </div>
-                      </td>
-                      <td class="column-2">Item Two</td>
-                      <td class="column-3">$ 16.00</td>
-                      <td class="column-4">
-                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                          <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                            <i class="fs-16 zmdi zmdi-minus"></i>
-                          </div>
+                      )}
 
-                          <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1" />
-
-                          <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                            <i class="fs-16 zmdi zmdi-plus"></i>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="column-5">$ 16.00</td>
-                      <td class="column-3">
-                        <button class="flex-c-m stext-101 cl0 size-104 bor2 hov-btn3 p-lr-15 trans-04 text-danger">
-                          <i class="fa fa-trash fa-2x"></i>
-                        </button>
-                      </td>
-                    </tr>
-
-                    <tr class="table_row">
-                      <td class="column-1">
-                        <div class="how-itemcart1">
-                          <img src="poto/a3.jpg" alt="IMG" class="img-thumbnail img-fluid" />
-                        </div>
-                      </td>
-                      <td class="column-2">Item Three</td>
-                      <td class="column-3">$ 16.00</td>
-                      <td class="column-4">
-                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                          <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                            <i class="fs-16 zmdi zmdi-minus"></i>
-                          </div>
-
-                          <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1" />
-
-                          <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                            <i class="fs-16 zmdi zmdi-plus"></i>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="column-5">$ 16.00</td>
-                      <td class="column-3">
-                        <button class="flex-c-m stext-101 cl0 size-104 bor2 hov-btn3 p-lr-15 trans-04 text-danger">
-                          <i class="fa fa-trash fa-2x"></i>
-                        </button>
-                      </td>
-                    </tr>
                   </table>
                 </div>
                 <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                  <a href="checkout.html" class="flex-c-m stext-101 cl5 size-103 bg1 bor1 hov-btn1 p-lr-15 trans-04">CheckOut</a>
-                  <a href="product-detail.html" class="flex-c-m stext-101 cl5 size-104 p-lr-15 trans-04 bor121">Continue Shopping <i class="zmdi zmdi-long-arrow-right m-l-10"></i></a>
-                  <div class="flex-r-m mtext-101 cl2 size-119 p-lr-15 trans-04 m-tb-10">
-                    Total Amount : $78.00
-                  </div>
+                  {cartData?.length > 0 && 
+                  <Link to="/checkout" class="flex-c-m stext-101 cl5 size-103 bg1 bor1 hov-btn1 p-lr-15 trans-04">CheckOut</Link>}
+                  <Link to="/shop" class="flex-c-m stext-101 cl5 size-104 p-lr-15 trans-04 bor121">Continue Shopping <i class="zmdi zmdi-long-arrow-right m-l-10"></i></Link>
+                  {cartData?.length > 0 && <div class="flex-r-m mtext-101 cl2 size-119 p-lr-15 trans-04 m-tb-10">
+                    Total Amount : $ {totalAmount}
+                  </div>}
                 </div>
               </div>
             </div>

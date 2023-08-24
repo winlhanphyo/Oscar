@@ -3,7 +3,7 @@ import Sidebar from "../../components/Header/Sidebar";
 import styles from "./ProfilePage.module.scss";
 
 const ProfilePage = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("admin"));
 
   const handleUpdate = () => {
     window.location.href = '/admin/user/' + user._id + '/edit';

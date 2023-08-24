@@ -10,6 +10,7 @@ router
   .post(
     [
       check("name").notEmpty().withMessage("Product Name must not be empty"),
+      check("description").notEmpty().withMessage("Description must not be empty"),
       check("category").notEmpty().withMessage("Category Id must not be empty"),
       check("price").notEmpty().withMessage("Price must not be empty"),
       check("count").notEmpty().withMessage("Count must not be empty"),
@@ -22,7 +23,8 @@ router
   .get(productController.findProduct)
   .post(
     [
-      check("name").notEmpty().withMessage("Name must not be empty")
+      check("name").notEmpty().withMessage("Name must not be empty"),
+      check("description").notEmpty().withMessage("Description must not be empty"),
     ],
     productController.updateProduct)
   .delete(productController.deleteProduct)

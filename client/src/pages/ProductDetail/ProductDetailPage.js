@@ -1,6 +1,6 @@
 import React from 'react';
 import swal from 'sweetalert';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
@@ -9,16 +9,60 @@ import axios from '../../axios/index';
 
 const ProductDetailPage = () => {
   const param = useParams();
+  const history = useHistory();
   const [product, setProduct] = React.useState();
 
   React.useEffect(() => {
     let id = param['id'];
-    console.log('id', id);
     axios.get(`/product/${id}`).then((dist) => {
-      console.log(dist);
+      console.log("dist", dist?.data?.data);
       setProduct(dist?.data?.data);
     });
   }, []);
+
+  const addNewProduct = (dist, cart) => {
+    const param = {
+      id: dist?.data.data._id,
+      name: dist?.data.data.name,
+      price: dist?.data.data.price,
+      count: dist?.data.data.count,
+      image: dist?.data.data.image,
+      status: dist?.data?.data?.status,
+      quantity: 1
+    };
+    cart.push(param);
+    console.log('cart', cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    history.push("/cart");
+  }
+
+  const addToCart = () => {
+    let id = param['id'];
+    console.log('addToCart', id);
+    axios.get(`/product/${id}`).then((dist) => {
+      console.log('CART', dist?.data?.data);
+      if (dist?.data?.data?.count > 0 && dist?.data?.data?.status === "available") {
+        let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        if (cart?.length > 0) {
+          console.log('CART', cart);
+          const data = cart?.find((c) => c.id === id);
+          console.log('data', data);
+          if (data) {
+            swal("Success", "Product is already added", "success").then(() => {
+              history.push("/cart");
+            });
+          } else {
+            addNewProduct(dist, cart);
+          }
+        } else {
+          addNewProduct(dist, cart);
+        }
+
+      } else {
+        swal("Oops!", "Product is out of stock", "error");
+      }
+    });
+  }
 
   return (
     <>
@@ -67,7 +111,7 @@ const ProductDetailPage = () => {
                 </span>
 
                 <p class="stext-102 cl3 p-t-23">
-                  Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
+                  {product?.description}
                 </p>
 
                 <div class="p-t-33">
@@ -103,9 +147,13 @@ const ProductDetailPage = () => {
                   <hr />
                   <div class="flex-w flex-r-m p-b-10">
                     <div class="size-204 flex-w flex-m respon6-next">
-                      <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                      {product?.status === "available" &&
+                      <button
+                        onClick={addToCart}
+                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                         Add to cart
                       </button>
+                      }
                     </div>
                   </div>
                 </div>
