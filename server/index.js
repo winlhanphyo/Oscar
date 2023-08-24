@@ -15,6 +15,7 @@ const authenticate = require('./config/authenticate');
 const authRoute = require("./routes/authRoutes");
 const categoryRoute = require("./routes/categoryRoutes");
 const productRoute = require("./routes/productRoutes");
+const contactRoute = require("./routes/contactRoutes");
 const userRoute = require("./routes/userRoutes");
 const orderRoute = require("./routes/orderRoutes");
 
@@ -191,6 +192,7 @@ mongoose.connect("mongodb://localhost:27017/Oscar", {
   
   app.use('/api/category', categoryRoute);
   app.use('/api/product', productRoute);
+  app.use('/api/contact', contactRoute);
   app.use('/api/user', authenticate, userRoute);
   app.use('/api/order', authenticate, orderRoute);
   app.use("/api", authRoute);

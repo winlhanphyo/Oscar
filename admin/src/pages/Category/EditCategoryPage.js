@@ -47,7 +47,7 @@ const EditCategoryPage = () => {
     }
     if (!error) {
       let id = param['id'];
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("admin"));
       const data = {
         name: formData.name,
         updated_user_id: user._id

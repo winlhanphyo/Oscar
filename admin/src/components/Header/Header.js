@@ -8,7 +8,7 @@ import axios from '../../axios/index';
 const Header = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const storageData = JSON.parse(localStorage.getItem("user"));
+  const storageData = JSON.parse(localStorage.getItem("admin"));
 
   const currentUser = {
     id : storageData._id,
@@ -20,7 +20,7 @@ const Header = () => {
   const handleLogout = () => {
     axios.get("/logout").then(response => {
       console.log(response);
-      localStorage.removeItem("user");
+      localStorage.removeItem("admin");
 
       dispatch({
         type: LOGOUT
@@ -151,7 +151,7 @@ const Header = () => {
             </li> */}
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                <img src="/images/faces/face5.jpg" alt="profile" />
+                <img src="/images/faces/user-icon.jpg" alt="profile" />
                 <span class="nav-profile-name">{`${currentUser.firstName} ${currentUser.lastName}`}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">

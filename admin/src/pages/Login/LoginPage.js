@@ -96,7 +96,7 @@ const LoginPage = () => {
         const { user } = data;
         /** store logged in user's info to local storage */
         localStorage.setItem(
-          "user",
+          "admin",
           JSON.stringify({
             accessToken: token,
             ...user
@@ -112,7 +112,7 @@ const LoginPage = () => {
             },
           }
         });
-        window.location.href="/admin/";
+        window.location.href="/admin/home";
       }
     }).catch((error) => {
       setLoading(false);

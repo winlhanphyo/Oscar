@@ -1,16 +1,86 @@
 import React from 'react';
+import swal from 'sweetalert';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import axios from '../../axios/index';
 
 const ContactPage = () => {
+  const [errorForm, setErrorForm] = React.useState({
+    email: "",
+    msg: ""
+  });
+  const [formData, setFormData] = React.useState({
+    email: "",
+    msg: ""
+  });
+  const history = useHistory();
+
+  const validation = () => {
+    const errorMsg = {
+      email: "Email is required",
+      msg: "Message is required"
+    };
+
+    let preErrorForm = errorForm;
+    let validate = true;
+    Object.keys(errorMsg).map((dist) => {
+      console.log('validate', formData[dist]);
+      if (!formData[dist]) {
+        preErrorForm[dist] = errorMsg[dist];
+        validate = false;
+      } else {
+        preErrorForm[dist] = null;
+      }
+    });
+    console.log('preErrorForm', preErrorForm);
+    setErrorForm({ ...preErrorForm });
+    return validate;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validate = validation();
+    if (validate) {
+      axios.post("/contact", formData).then((dist) => {
+        console.log("Created Product")
+        swal("Success", "Thank you for contact mail", "success").then(() => {
+          history.push("/home");
+        });
+      }).catch((err) => {
+        swal("Oops!", err.toString(), "error");
+      })
+    }
+  }
+
+  /**
+  * handle textbox change contact page.
+  */
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    let preFormData = formData;
+    const preErrorForm = errorForm;
+    preFormData[name] = value;
+    setFormData({ ...preFormData });
+
+    if (preFormData[name] && preErrorForm[name]) {
+      preErrorForm[name] = null;
+    }
+    setErrorForm({
+      ...preErrorForm
+    });
+  };
+
+
   return (
     <>
       <Header />
       <Cart />
 
       {/* <!-- Title page --> */}
-      <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{ backgroundImage: "url('poto/a1.jpg')"}}>
+      <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{ backgroundImage: "url('poto/a1.jpg')" }}>
         <h2 class="ltext-105 cl0 txt-center">
           Contact
         </h2>
@@ -26,16 +96,25 @@ const ContactPage = () => {
                   Send Us A Message
                 </h4>
 
-                <div class="bor8 m-b-20 how-pos4-parent">
-                  <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address" />
+                <div className={errorForm?.email ? "bor8 m-b-20 how-pos4-parent is-invalid" : "bor8 m-b-20 how-pos4-parent"}>
+                  <input
+                    className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                    name="email" onChange={handleChange} placeholder="Your Email Address" />
                   <i class="zmdi zmdi-email how-pos4 pointer-none"></i>
                 </div>
+                {errorForm.email ? (
+                  <div class="invalid-form">{errorForm.email}</div>) : ''}
 
-                <div class="bor8 m-b-30">
-                  <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?"></textarea>
+                <div className={errorForm?.msg ? "bor8 m-b-30 is-invalid" : "bor8 m-b-30"}>
+                  <textarea
+                    className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25"
+                    name="msg" onChange={handleChange}
+                    value={formData.msg} placeholder="How Can We Help?"></textarea>
                 </div>
+                {errorForm.msg ? (
+                  <div class="invalid-form">{errorForm.msg}</div>) : ''}
 
-                <button class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                <button onClick={handleSubmit} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                   Submit
                 </button>
               </form>

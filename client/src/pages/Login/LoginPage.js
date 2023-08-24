@@ -6,7 +6,6 @@ import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
 import { LOGIN_SUCCESS } from "../../store/actions/types";
 import axios from '../../axios/index';
-import styles from './LoginPage.module.scss';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const LoginPage = () => {
@@ -15,7 +14,6 @@ const LoginPage = () => {
     email: '',
     password: ''
   });
-  const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(true);
   const [errorForm, setErrorForm] = React.useState({
     email: '',
     password: ''
@@ -23,23 +21,35 @@ const LoginPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  let validation = (value, name) => {
-    if (name == 'email') {
-      if (!value) {
-        return 'Email is required';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        return 'Email Format is required';
+
+  const validation = () => {
+    const keys = ["email", "password"];
+
+    let preErrorForm = errorForm;
+    let validate = true;
+    keys.map((dist) => {
+      let value = formData[dist];
+      if (dist == 'email') {
+        if (!value) {
+          validate = false;
+          preErrorForm[dist] = 'Email is required';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+          validate = false;
+          preErrorForm[dist] = 'Email Format is required';
+        }
       }
-      return '';
-    }
-    if (name == 'password') {
-      if (!value) {
-        return 'Password is required';
-      } else if (value.length > 10) {
-        return 'Password is greater than 10';
+      if (dist == 'password') {
+        if (!value) {
+          validate = false;
+          preErrorForm[dist] = 'Password is required';
+        } else if (value.length > 10) {
+          validate = false;
+          preErrorForm[dist] = 'Password is greater than 10';
+        }
       }
-      return '';
-    }
+    });
+    setErrorForm({ ...preErrorForm });
+    return validate;
   }
 
   /**
@@ -48,7 +58,6 @@ const LoginPage = () => {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log('change', name, value);
     let preFormData = formData;
     preFormData[name] = value;
     setFormData({ ...preFormData });
@@ -60,66 +69,48 @@ const LoginPage = () => {
         ...preErrorForm
       });
     }
-    if (!error && formData.email && formData.password) {
-      setDisabledLoginBtn(false);
-    } else {
-      setDisabledLoginBtn(true);
-    }
   };
-
-  const handleBlur = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    const error = validation(value, name);
-    let preErrorForm = errorForm;
-    console.log('blur error', error);
-    if (error) {
-      preErrorForm[name] = error;
-      console.log('preError', preErrorForm);
-      setErrorForm({
-        ...preErrorForm
-      });
-    }
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    setDisabledLoginBtn(true);
-    axios.post('/login', formData).then((response) => {
-      console.log(response);
-      setLoading(false);
-      setDisabledLoginBtn(false);
-      if (response.status === 200) {
-        const { data } = response;
-        const token = data.token;
-        const { user } = data;
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            accessToken: token,
-            ...user
-          })
-        );
-        /** store logged in user's info to App State */
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: {
-            user: {
-              accessToken: token,
-              ...formData
-            },
-          }
-        });
-        history.push('/home');
-      }
-    }).catch((error) => {
-      setLoading(false);
-      setDisabledLoginBtn(false);
-      alert("Email or Password name is incorrect.");
-      console.log(error);
-    });
 
+    const validate = validation();
+    if (validate) {
+      axios.post('/login', formData).then((response) => {
+        console.log(response);
+        setLoading(false);
+        if (response.status === 200) {
+          const { data } = response;
+          const token = data.token;
+          const { user } = data;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              accessToken: token,
+              ...user
+            })
+          );
+          /** store logged in user's info to App State */
+          dispatch({
+            type: LOGIN_SUCCESS,
+            payload: {
+              user: {
+                accessToken: token,
+                ...formData
+              },
+            }
+          });
+          history.push('/home');
+        }
+      }).catch((error) => {
+        setLoading(false);
+        alert("Email or Password name is incorrect.");
+        console.log(error);
+      });
+    } else {
+      setLoading(false);
+    }
   }
 
   return (
@@ -153,8 +144,7 @@ const LoginPage = () => {
                       name="email"
                       placeholder="Email"
                       value={formData.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
+                      onChange={handleChange} />
                     <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
                   </div>
                   {errorForm.email ? (
@@ -167,14 +157,13 @@ const LoginPage = () => {
                       name="password"
                       placeholder="Password"
                       value={formData.password}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
+                      onChange={handleChange}/>
                     <i class="zmdi zmdi-eye how-pos4 pointer-none"></i>
                   </div>
 
                   {errorForm.password ? (
                           <div className="invalid-form">{errorForm.password}</div>) : ''}
-                  <button disabled={disabledLoginBtn} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                  <button class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                     Submit
                   </button>
                   <a href="login-forget.html" class="flex-l-m stext-103 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Forget Your Password?</a><hr />

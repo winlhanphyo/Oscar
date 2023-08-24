@@ -66,6 +66,7 @@ const createProduct = async (req, res) => {
     console.log('image', image);
     const productData = {
       name: req.body.name,
+      description: req.body.description,
       category: req.body.category,
       price: req.body.price,
       count: req.body.count,
@@ -117,6 +118,7 @@ const updateProduct = async (req, res) => {
       }
     }
     product.name = req.body.name;
+    product.description = req.body.description;
     product.category = req.body.category;
     product.price = req.body.price;
     product.count = req.body.count;

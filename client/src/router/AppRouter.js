@@ -30,7 +30,7 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/cart" component={ShoppingCartPage} />
         <PublicRoute path="/about" component={AboutPage} />
         <PublicRoute path="/contact" component={ContactPage} />
-        <PublicRoute path="/checkout" component={CheckoutPage} />
+        <PrivateRoute path="/checkout" component={CheckoutPage} />
         <PublicRoute path="/payment/cancel" component={PaymentCancelPage} />
         <PublicRoute path="/payment/success" component={PaymentSuccessPage} />
         <PublicRoute path="/work" component={WorkPage} />

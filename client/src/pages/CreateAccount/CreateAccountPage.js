@@ -14,7 +14,6 @@ const CreateAccountPage = () => {
     email: '',
     password: ''
   });
-  const [disabledRegisterBtn, setDisabledRegisterBtn] = React.useState(true);
   const [errorForm, setErrorForm] = React.useState({
     firstName: '',
     lastName: '',
@@ -23,32 +22,42 @@ const CreateAccountPage = () => {
   });
   const history = useHistory();
 
-  let validation = (value, name) => {
-    if (name == 'email') {
-      if (!value) {
-        return 'Email is required';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        return 'Email Format is required';
+  let validation = () => {
+    const keys = ["firstName", "lastName", "email", "password"];
+    let preErrorForm = errorForm;
+    let validate = true;
+    keys.map((dist) => {
+      let value = formData[dist];
+      if (dist == 'email') {
+        if (!value) {
+          validate = false;
+          preErrorForm[dist] = 'Email is required';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+          validate = false;
+          preErrorForm[dist] = 'Email Format is required';
+        }
+      } else if (dist == 'password') {
+        if (!value) {
+          validate = false;
+          preErrorForm[dist] = 'Password is required';
+        } else if (value.length > 10) {
+          validate = false;
+          preErrorForm[dist] = 'Password is greater than 10';
+        }
+      } else if (dist == 'firstName') {
+        if (!value) {
+          validate = false;
+          preErrorForm[dist] = "First Name is required";
+        }
+      } else if (dist == 'lastName') {
+        if (!value) {
+          validate = false;
+          preErrorForm[dist] = "Last Name is required";
+        }
       }
-      return '';
-    } else if (name == 'password') {
-      if (!value) {
-        return 'Password is required';
-      } else if (value.length > 10) {
-        return 'Password is greater than 10';
-      }
-      return '';
-    } else if (name == 'firstName') {
-      if (!value) {
-        return "First Name is required";
-      }
-      return '';
-    } else if (name == 'lastName') {
-      if (!value) {
-        return "Last Name is required";
-      }
-      return '';
-    }
+    });
+    setErrorForm({ ...preErrorForm });
+    return validate;
   }
 
   /**
@@ -69,46 +78,26 @@ const CreateAccountPage = () => {
         ...preErrorForm
       });
     }
-    if (!error && formData.email && formData.password) {
-      setDisabledRegisterBtn(false);
-    } else {
-      setDisabledRegisterBtn(true);
-    }
   };
-
-  const handleBlur = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    const error = validation(value, name);
-    let preErrorForm = errorForm;
-    console.log('blur error', error);
-    if (error) {
-      preErrorForm[name] = error;
-      console.log('preError', preErrorForm);
-      setErrorForm({
-        ...preErrorForm
-      });
-    }
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    setDisabledRegisterBtn(true);
-    axios.post('/signup', formData).then((response) => {
-      console.log(response);
-      setLoading(false);
-      setDisabledRegisterBtn(false);
-      if (response.status === 200) {
-        history.push('/login');
-      }
-    }).catch((error) => {
-      setLoading(false);
-      setDisabledRegisterBtn(false);
-      alert("Email or Password name is incorrect.");
-      console.log(error);
-    });
 
+    const validate = validation();
+    if (validate) {
+      axios.post('/signup', formData).then((response) => {
+        console.log(response);
+        setLoading(false);
+        if (response.status === 200) {
+          history.push('/login');
+        }
+      }).catch((error) => {
+        setLoading(false);
+        alert("Email or Password name is incorrect.");
+        console.log(error);
+      });
+    }
   }
 
   return (
@@ -137,8 +126,7 @@ const CreateAccountPage = () => {
                       name="firstName"
                       placeholder="First Name"
                       value={formData.firstName}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
+                      onChange={handleChange} />
                   <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
                 </div>
                 {errorForm.firstName ? (
@@ -151,8 +139,7 @@ const CreateAccountPage = () => {
                       name="lastName"
                       placeholder="Last Name"
                       value={formData.lastName}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
+                      onChange={handleChange} />
                   <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
                 </div>
                 {errorForm.lastName ? (
@@ -165,8 +152,7 @@ const CreateAccountPage = () => {
                       name="email"
                       placeholder="Email"
                       value={formData.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
+                      onChange={handleChange}/>
                     <i class="zmdi zmdi-account how-pos4 pointer-none"></i>
                   </div>
                   {errorForm.email ? (
@@ -179,16 +165,15 @@ const CreateAccountPage = () => {
                       name="password"
                       placeholder="Password"
                       value={formData.password}
-                      onChange={handleChange}
-                      onBlur={handleBlur} />
+                      onChange={handleChange}/>
                     <i class="zmdi zmdi-eye how-pos4 pointer-none"></i>
                   </div>
 
                   {errorForm.password ? (
                           <div className="invalid-form">{errorForm.password}</div>) : ''}
                 
-                <button disabled={disabledRegisterBtn} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-                  Create
+                <button class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                  SignUp
                 </button>
                 <Link to="/login" class="flex-l-m stext-101 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Cancel</Link>
               </form>

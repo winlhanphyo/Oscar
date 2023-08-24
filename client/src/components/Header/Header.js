@@ -133,11 +133,11 @@ const Header = () => {
           <ul class="main-menu-m">
             <li>
               <Link to="/home">Home</Link>
-              <ul class="sub-menu-m">
+              {/* <ul class="sub-menu-m">
                 <li><a href="index1.html">Artista One</a></li>
                 <li><a href="index2.html">Artista Two</a></li>
                 <li><a href="index3.html">Artista Three</a></li>
-              </ul>
+              </ul> */}
               <span class="arrow-main-menu-m">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
               </span>
