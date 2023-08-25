@@ -1,6 +1,7 @@
 import React from 'react';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
+import $ from 'jquery';
 import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
@@ -113,6 +114,41 @@ const ProductPage = () => {
     }
   };
 
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      const value = e.target.value;
+      axios.get("/product", {
+        params: {
+          size: 5,
+          page: 0,
+          name: value,
+        }
+      }).then((dist) => {
+        setProductList(dist?.data?.data);
+        setOffset(dist?.data?.offset);
+        setTotalCount(dist?.data?.count);
+        const page = dist?.data?.count / 5;
+        const count = [];
+        for (let i = 0; i < page; i++) {
+          count.push(i + 1);
+        }
+        setPaginateCount(count);
+      }).catch((err) => {
+        swal("Oops!", err.toString(), "error");
+      });
+    }
+  }
+
+  const showSearch = () => {
+    $(this).toggleClass('show-search');
+    $('.panel-search').slideToggle(400);
+
+    if($('.js-show-filter').hasClass('show-filter')) {
+        $('.js-show-filter').removeClass('show-filter');
+        $('.panel-filter').slideUp(400);
+    } 
+  }
+
   return (
     <>
       <Header />
@@ -147,7 +183,7 @@ const ProductPage = () => {
                 Filter
               </div>
 
-              <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+              <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search" onClick={showSearch}>
                 <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
                 <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
                 Search
@@ -161,7 +197,8 @@ const ProductPage = () => {
                   <i class="zmdi zmdi-search"></i>
                 </button>
 
-                <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search" />
+                <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search Product Name"
+                onKeyDown={handleSearchKeyDown} />
               </div>
             </div>
 
@@ -339,7 +376,7 @@ const ProductPage = () => {
                     {/* <!-- Block2 --> */}
                     <div class="block2">
                       <div class="block2-pic hov-img0">
-                        <img src={imageURL + data.image} alt="IMG-PRODUCT" />
+                        <img src={imageURL + data.image} alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
                         <Link to={`/product/${data._id}`} target="_blank" class="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
                           {data.name}

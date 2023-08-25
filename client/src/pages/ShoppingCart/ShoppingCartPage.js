@@ -88,7 +88,7 @@ const ShoppingCartPage = () => {
                       <tr key={index} class="table_row">
                       <td class="column-1">
                         <div class="how-itemcart1">
-                          <img src={imageURL + data?.image} alt="IMG" class="img-thumbnail img-fluid" />
+                          <img src={imageURL + data?.image} alt="IMG" class="img-thumbnail img-fluid img-size-sm"/>
                         </div>
                       </td>
                       <td class="column-2">{data?.name}</td>

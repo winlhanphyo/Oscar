@@ -95,7 +95,7 @@ const ProductDetailPage = () => {
             <div class="col-md-6 col-lg-7 p-b-30">
               <div class="blog-item">
                 <div class="hov-img0">
-                  <img src={imageURL + product?.image} alt="IMG-BLOG" class="img-fluid rounded text-center" />
+                  <img src={imageURL + product?.image} alt="IMG-BLOG" class="img-fluid rounded img-size-xl" />
                 </div>
               </div>
             </div>
@@ -335,276 +335,272 @@ const ProductDetailPage = () => {
       </section>
 
       {/* <!-- Related Products --> */}
-      <section class="sec-relate-product bg0 p-t-20 p-b-105">
-        <div class="container">
-          <div class="p-b-45">
-            <h3 class="ltext-106 cl5 txt-center">
-              Related Products
-            </h3>
-          </div>
+	<section class="sec-relate-product bg0 p-t-20 p-b-105">
+		<div class="container">
+			<div class="p-b-45">
+				<h3 class="ltext-106 cl5 txt-center">
+					Related Products
+				</h3>
+			</div>
+			<div class="wrap-slick2">
+				<div class="slick2">
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
-          {/* <!-- Slide2 --> */}
-          <div class="wrap-slick2">
-            <div class="slick2">
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Art Details
+								</a>
+							</div>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item One
+									</a>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item One
-                      </a>
+									<span class="stext-105 cl3">
+										$16.64
+									</span>
+								</div>
 
-                      <span class="stext-105 cl3">
-                        $16.64
-                      </span>
-                    </div>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a2.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Art Details
+								</a>
+							</div>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item Two
+									</a>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item Two
-                      </a>
+									<span class="stext-105 cl3">
+										$35.31
+									</span>
+								</div>
 
-                      <span class="stext-105 cl3">
-                        $35.31
-                      </span>
-                    </div>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a6.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Quick View
+								</a>
+							</div>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item Three
+									</a>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item Three
-                      </a>
+									<span class="stext-105 cl3">
+										$25.50
+									</span>
+								</div>
 
-                      <span class="stext-105 cl3">
-                        $25.50
-                      </span>
-                    </div>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a4.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Art Details
+								</a>
+							</div>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item Four
+									</a>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item Four
-                      </a>
+									<span class="stext-105 cl3">
+										$75.00
+									</span>
+								</div>
 
-                      <span class="stext-105 cl3">
-                        $75.00
-                      </span>
-                    </div>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a4.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Art Details
+								</a>
+							</div>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item One
+									</a>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item One
-                      </a>
+									<span class="stext-105 cl3">
+										$34.75
+									</span>
+								</div>
 
-                      <span class="stext-105 cl3">
-                        $34.75
-                      </span>
-                    </div>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a3.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Art Details
+								</a>
+							</div>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item Two
+									</a>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item Two
-                      </a>
+									<span class="stext-105 cl3">
+										$93.20
+									</span>
+								</div>
 
-                      <span class="stext-105 cl3">
-                        $93.20
-                      </span>
-                    </div>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a2.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
 
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Art Details
+								</a>
+							</div>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item Three
+									</a>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item Three
-                      </a>
+									<span class="stext-105 cl3">
+										$52.66
+									</span>
+								</div>
 
-                      <span class="stext-105 cl3">
-                        $52.66
-                      </span>
-                    </div>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+						
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img src="poto/a1.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Art Details
+								</a>
+							</div>
 
-              <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                {/* <!-- Block2 --> */}
-                <div class="block2">
-                  <div class="block2-pic hov-img0">
-                    <img src="poto/j2.jpg" alt="IMG-PRODUCT" />
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										Item Four
+									</a>
 
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                      Quick View
-                    </a>
-                  </div>
+									<span class="stext-105 cl3">
+										$18.96
+									</span>
+								</div>
 
-                  <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                      <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                        Item Four
-                      </a>
-
-                      <span class="stext-105 cl3">
-                        $18.96
-                      </span>
-                    </div>
-
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                      <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
       <Footer />
 
@@ -626,7 +622,7 @@ const ProductDetailPage = () => {
             </button>
             <div class="row">
               <div class="col-md-6 col-lg-7 p-b-30 flex-c-m">
-                <img src="poto/j2.jpg" alt="IMG-BLOG" class="img-fluid rounded" style={{width: "300px"}} />
+                <img src="poto/a5.jpg" alt="IMG-BLOG" class="img-fluid rounded" style={{width: "300px"}} />
               </div>
 
               <div class="col-md-6 col-lg-5 p-b-30">

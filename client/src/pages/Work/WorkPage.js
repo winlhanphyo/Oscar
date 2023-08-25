@@ -28,7 +28,7 @@ const WorkPage = () => {
                                 autem vel eum iriure dolor in hen-
 							</span>
 						</div>
-						<div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
+						<div class="flex-r-m flex-w w-full p-t-100 respon2" data-appear="fadeInDown" data-delay="0">
 							<h2 class="ltext-109 cl2 p-b-43  text-end">
 								TITOLONE GRANDE<br/>SU DUE RIGHE
 							</h2>
@@ -56,7 +56,7 @@ const WorkPage = () => {
 					</div>
 				</div>
 				<div class="col-sm-12 col-md-8 col-lg-8">
-					<div class="blog-item p-t-100">
+					<div class="blog-item p-t-100 respon2">
 						<div class="hov-img0 bor2">
 							<a href="product-detail.html">
 								<img src="poto/a3.jpg" alt="IMG-BLOG"/>
@@ -70,7 +70,7 @@ const WorkPage = () => {
 	    </section>
 
       {/* <!--Section 2--> */}
-      <section class="p-t-100">
+      <section class="p-t-100 respon2">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 col-lg-4 p-t-70">
@@ -169,7 +169,7 @@ const WorkPage = () => {
 	    </section>
 
       {/* <!--- Section 4 --> */}
-      <section class="p-t-50">
+      <section class="p-t-50 respon2">
         <div class="container">
           <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4 text-center p-t-70">
@@ -219,7 +219,7 @@ const WorkPage = () => {
       </section>
 
       {/* <!-- Section 5 --> */}
-      <section class="p-t-100">
+      <section class="p-t-100 respon2">
         <div class="container">
           <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4">
@@ -315,7 +315,7 @@ const WorkPage = () => {
 	</section>
 
       {/* <!-- Section 7 --> */}
-      <section class="p-t-50 p-b-50">
+      <section class="p-t-50 p-b-50 respon2">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 col-lg-4">
