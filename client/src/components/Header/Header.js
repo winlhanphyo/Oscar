@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import $ from "jquery";
 import { imageURL } from '../../utils/constants/constant';
 import styles from './Header.module.scss';
 import axios from '../../axios/index';
@@ -16,10 +17,16 @@ const Header = () => {
     color: 'black'
   };
 
-  const searchModal = () => {
-    // console.log('show modal search');
-    // $('.modal-search-header').addClass('show-modal-search');
-    // $(".js-show-modal-search").css('opacity','0');
+  const searchModal = (e) => {
+    e.preventDefault();
+    $('.modal-search-header').addClass('show-modal-search');
+    $(this).css('opacity','0');
+  }
+
+  const hideModalSearch = (e) => {
+    e.preventDefault();
+    $('.modal-search-header').removeClass('show-modal-search');
+    $('.js-show-modal-search').css('opacity','1');
   }
 
   return (
@@ -69,7 +76,7 @@ const Header = () => {
               {/* <!-- Icon header --> */}
               <div class="wrap-icon-header flex-w flex-r-m h-full">
                 <div class="flex-c-m h-full p-r-24">
-                  <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={() => searchModal}>
+                  <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={searchModal}>
                     <i class="zmdi zmdi-search"></i>
                   </div>
                 </div>
@@ -103,7 +110,7 @@ const Header = () => {
           {/* <!-- Icon header --> */}
           <div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
             <div class="flex-c-m h-full p-r-10">
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={searchModal}>
               <i class="zmdi zmdi-search"></i>
             </div>
             </div>
@@ -168,7 +175,7 @@ const Header = () => {
         {/* <!-- Modal Search --> */}
         <div className={`modal-search-header flex-c-m trans-04 js-hide-modal-search ${styles.modalSearch}`}>
           <div class="container-search-header">
-            <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+            <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search" onClick={hideModalSearch}>
               <img src="images/icons/icon-close2.png" alt="CLOSE" />
             </button>
 
