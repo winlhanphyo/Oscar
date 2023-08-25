@@ -80,6 +80,7 @@
     $('.btn-show-menu-mobile').on('click', function(){
         $(this).toggleClass('is-active');
         $('.menu-mobile').slideToggle();
+        console.log('btn click');
     });
 
     var arrowMainMenu = $('.arrow-main-menu-m');

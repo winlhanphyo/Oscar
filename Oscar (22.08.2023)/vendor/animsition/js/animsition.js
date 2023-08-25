@@ -68,6 +68,7 @@
           // If do not have a console object to object window
           if (!('console' in window)) {
             window.console = {};
+            console.log('Animsition: working');
             window.console.log = function(str){ return str; };
           }
           if(!this.length) console.log('Animsition: Element does not exist on page.');

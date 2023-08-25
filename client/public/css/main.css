@@ -50,6 +50,19 @@ z-index: 1;
     text-align: start;
   }
 
+  .img-size{
+    height: 400px;
+  }
+
+  .img-size-sm{
+    height: 85px;
+  }
+
+  .img-size-xl{
+    width: 400px !important;
+    height: 600px;
+  }
+
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
@@ -3294,12 +3307,12 @@ input.num-product::-webkit-inner-spin-button {
 
   /*---------------------------------------------*/
   .respon1 {
-    font-size: 40px;
+    height: 600px;
   }
   
   /*---------------------------------------------*/
   .respon2 {
-    font-size: 20px;
+    padding-top: 0;
   }
 
   /*---------------------------------------------*/
