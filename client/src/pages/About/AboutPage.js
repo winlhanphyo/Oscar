@@ -9,12 +9,12 @@ const AboutPage = () => {
       <Header />
       <Cart />
 
-      {/* <!-- Title page --> 
+      {/* <!-- Title page --> */}
       <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{ backgroundImage: "url('poto/a3.jpg')" }}>
         <h2 class="ltext-105 cl0 txt-center">
           About
         </h2>
-      </section>*/}
+      </section>
 
       {/* <!-- Content page --> */}
       <section class="bg0 p-t-75 p-b-100">
