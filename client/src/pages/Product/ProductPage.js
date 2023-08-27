@@ -1,7 +1,7 @@
 import React from 'react';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
-import $ from 'jquery';
+/*import $ from 'jquery';*/
 import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
