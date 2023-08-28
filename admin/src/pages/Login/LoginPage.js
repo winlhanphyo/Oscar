@@ -55,6 +55,7 @@ const LoginPage = () => {
         }
       }
     });
+    console.log("preError", preErrorForm, validate);
     setErrorForm({ ...preErrorForm });
     return validate;
   }
@@ -78,7 +79,7 @@ const LoginPage = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleClick = (event) => {
     event.preventDefault();
     setLoading(true);
 
@@ -130,7 +131,7 @@ const LoginPage = () => {
 
       <div className={loading ? styles.container + ' shadow ' + styles.backdrop : styles.container }>
         <p className={styles.loginTtl}>Oscar Admin Login Form</p>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               required
@@ -166,7 +167,7 @@ const LoginPage = () => {
             <a href="/admin/forget-password" className={styles.forgotPwd}>Forgot Password?</a>
           </div>
           <div className="d-flex justify-content-around mt-5">
-            <Button  className={styles.loginBtn}>
+            <Button onClick={handleClick} className={styles.loginBtn}>
               Log In
             </Button>
           </div>
