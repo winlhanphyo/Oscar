@@ -3,9 +3,11 @@ import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import axios from '../../axios/index';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import styles from './Product.module.scss';
 
 const CreateProductPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [categoryList, setCategoryList] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
   const [errorForm, setErrorForm] = React.useState({
@@ -27,6 +29,7 @@ const CreateProductPage = () => {
   });
 
   React.useEffect(() => {
+    setLoading(true);
     axios.get("/category").then((dist) => {
       const result = [];
       dist?.data?.data?.map((cat, index) => {
@@ -38,8 +41,10 @@ const CreateProductPage = () => {
           setCategoryList(result);
         }
       });
+      setLoading(false);
     }).catch((err) => {
       swal("Oops!", err.toString(), "error");
+      setLoading(false);
     });
   }, []);
 
@@ -72,6 +77,7 @@ const CreateProductPage = () => {
     e.preventDefault();
     const validate = validation();
     if (validate) {
+      setLoading(true);
       const user = JSON.parse(localStorage.getItem("admin"));
       let formParam = new FormData();
       formParam.append('name', formData.name);
@@ -87,11 +93,13 @@ const CreateProductPage = () => {
         headers: {'Content-Type': 'multipart/form-data'}
       }).then((dist) => {
           console.log("Created Product")
+          setLoading(false);
           swal("Success", "Product is created successfully", "success").then(() => {
           window.location.href = "/admin/product";
         });
       }).catch((err) => {
         swal("Oops!", err.toString(), "error");
+        setLoading(false);
       })
     }
   }
@@ -135,6 +143,7 @@ const CreateProductPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       <div class="page-body-wrapper">
       <Sidebar />
         <div class="main-panel">

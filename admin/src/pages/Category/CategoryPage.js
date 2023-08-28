@@ -5,9 +5,11 @@ import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const CategoryPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [categoryList, setCategoryList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -27,9 +29,11 @@ const CategoryPage = () => {
     if (searchName.current?.value) {
       params.name = searchName.current.value
     }
+    setLoading(true);
     axios.get("/category", {
       params
     }).then((dist) => {
+      setLoading(false);
       setCategoryList(dist?.data?.data);
       setOffset(dist?.data?.offset);
       setTotalCount(dist?.data?.count);
@@ -40,6 +44,7 @@ const CategoryPage = () => {
       }
       setPaginateCount(count);
     }).catch((err) => {
+      setLoading(false);
       console.log('Get Category API error', err);
       swal("Oops!", "Get Category API error", "error");
     });
@@ -103,6 +108,7 @@ const CategoryPage = () => {
     <>
       <div class="container-scroller">
         <Header />
+        {loading && <LoadingSpinner />}
         {/* <!-- partial --> */}
         <div class="page-body-wrapper">
           {/* <!-- partial:partials/_sidebar.html --> */}

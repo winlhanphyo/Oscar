@@ -5,9 +5,11 @@ import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const OrderPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [orderList, setOrderList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -27,6 +29,7 @@ const OrderPage = () => {
     if (searchName.current?.value) {
       params.name = searchName.current.value
     }
+    setLoading(true);
     axios.get("/order", {
       params
     }).then((dist) => {
@@ -40,8 +43,10 @@ const OrderPage = () => {
         count.push(i + 1);
       }
       setPaginateCount(count);
+      setLoading(false);
     }).catch((err) => {
       swal("Oops!", err.toString(), "error");
+      setLoading(false);
     });
   }
 
@@ -56,6 +61,7 @@ const OrderPage = () => {
   };
 
   const searchOrder = () => {
+    setLoading(true);
     axios.get("/order", {
       params: {
         size: 5,
@@ -63,6 +69,7 @@ const OrderPage = () => {
         name: searchName.current.value
       }
     }).then((dist) => {
+      setLoading(false);
       setOrderList(dist?.data?.data);
       setOffset(dist?.data?.offset);
       setTotalCount(dist?.data?.count);
@@ -74,6 +81,7 @@ const OrderPage = () => {
       setPaginateCount(count);
     }).catch((err) => {
       swal("Oops!", err.toString(), "error");
+      setLoading(false);
     });
   }
 
@@ -103,6 +111,7 @@ const OrderPage = () => {
     <>
       <div class="container-scroller">
         <Header />
+        {loading && <LoadingSpinner />}
         {/* <!-- partial --> */}
         <div class="page-body-wrapper">
           {/* <!-- partial:partials/_sidebar.html --> */}

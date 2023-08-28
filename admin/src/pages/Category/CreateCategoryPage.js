@@ -2,9 +2,11 @@ import React from 'react';
 import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const CreateCategoryPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     name: '',
   });
@@ -23,6 +25,7 @@ const CreateCategoryPage = () => {
 
   const addCategory = (e) => {
     e.preventDefault();
+    setLoading(true);
     const error = validation(formData['name'], 'name');
     let preErrorForm = errorForm;
     if (error !== preErrorForm['name']) {
@@ -38,11 +41,13 @@ const CreateCategoryPage = () => {
         created_user_id: user._id
       };
       axios.post("/category", data).then((dist) => {
+        setLoading(false);
         swal("Success", "Category is created successfully", "success").then(() => {
           window.location.href = "/admin/category";
         });
       }).catch((err) => {
         swal("Oops!", "Create Category API Error", "error");
+        setLoading(false);
       })
     }
   }
@@ -71,6 +76,7 @@ const CreateCategoryPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       {/* <!-- partial --> */}
       <div class="page-body-wrapper">
         {/* <!-- partial:partials/_sidebar.html --> */}

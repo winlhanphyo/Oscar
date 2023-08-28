@@ -5,8 +5,8 @@ import swal from 'sweetalert';
 import { useDispatch } from "react-redux";
 import { LOGIN_SUCCESS } from "../../store/actions/types";
 import styles from './LoginPage.module.scss';
-import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import axios from '../../axios/index';
 
 const LoginPage = () => {
   const [loading, setLoading] = React.useState(false);
@@ -78,7 +78,7 @@ const LoginPage = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleClick = (event) => {
     event.preventDefault();
     setLoading(true);
 
@@ -126,11 +126,11 @@ const LoginPage = () => {
         <source src='../../../login/login.mp4' type='video/mp4'></source>
       </video>
 
-      {loading && <LoadingSpinner text="Logging in..." />}
+      {loading && <LoadingSpinner />}
 
       <div className={loading ? styles.container + ' shadow ' + styles.backdrop : styles.container }>
         <p className={styles.loginTtl}>Oscar Admin Login Form</p>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               required
@@ -166,7 +166,7 @@ const LoginPage = () => {
             <a href="/admin/forget-password" className={styles.forgotPwd}>Forgot Password?</a>
           </div>
           <div className="d-flex justify-content-around mt-5">
-            <Button  className={styles.loginBtn}>
+            <Button onClick={handleClick}  className={styles.loginBtn}>
               Log In
             </Button>
           </div>

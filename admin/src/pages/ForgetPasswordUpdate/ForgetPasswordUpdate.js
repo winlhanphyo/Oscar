@@ -4,8 +4,8 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import swal from 'sweetalert';
 import styles from './ForgetPasswordUpdate.module.scss';
-import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import axios from '../../axios/index';
 
 const ForgetPasswordUpdate = () => {
   const [loading, setLoading] = React.useState(false);
@@ -106,7 +106,7 @@ const ForgetPasswordUpdate = () => {
         <source src='../../../login/phone_using.mp4' type='video/mp4'></source>
       </video>
 
-      {loading && <LoadingSpinner text="Resetting password..." />}
+      {loading && <LoadingSpinner />}
 
       <div className={loading ? styles.container + ' shadow ' + styles.backdrop : styles.container}>
         <p className={styles.ForgetPasswordUpdateTtl}>Change Password</p>

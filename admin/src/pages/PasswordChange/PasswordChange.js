@@ -2,9 +2,11 @@ import React from 'react';
 import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const PasswordChange = () => {
+  const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     password: "",
     newPassword: "",
@@ -55,13 +57,16 @@ const PasswordChange = () => {
         password: formData.password,
         newPassword: formData.newPassword
       };
+      setLoading(true);
       axios.post(`user/password-change/${user._id}`, data).then((dist) => {
         console.log("New Password changed!")
+        setLoading(false);
         swal("Success", "New Password changed successfully", "success").then(() => {
           window.location.href = "/admin/user";
         });
       }).catch((err) => {
         swal("Oops!", err.toString(), "error");
+        setLoading(false);
       });
     }
   }
@@ -76,7 +81,6 @@ const PasswordChange = () => {
     const preErrorForm = errorForm;
     preFormData[name] = value;
     setFormData({ ...preFormData });
-
     if (value && preFormData["password"] === preFormData['confirmPassword']) {
       preErrorForm.password = null;
       preErrorForm.confirmPassword = null;
@@ -91,6 +95,7 @@ const PasswordChange = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       <div class="page-body-wrapper">
         <Sidebar />
         <div class="main-panel">

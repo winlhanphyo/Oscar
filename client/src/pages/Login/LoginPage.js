@@ -83,7 +83,6 @@ const LoginPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-
     const validate = validation();
     if (validate) {
       axios.post('/login', formData).then((response) => {
@@ -124,10 +123,9 @@ const LoginPage = () => {
 
   return (
     <>
+      {loading && <LoadingSpinner text="Logging in..." />}
       <Header />
       <Cart />
-
-      {loading && <LoadingSpinner text="Logging in..." />}
 
       {/* <div className={loading ? styles.container + ' shadow ' + styles.backdrop : styles.container}> */}
         <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{backgroundImage: "url('poto/a1.jpg')"}}>

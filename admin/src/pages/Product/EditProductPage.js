@@ -5,10 +5,12 @@ import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import axios from '../../axios/index';
 import styles from './Product.module.scss';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { imageURL } from '../../utils/constants/constant';
 
 const EditProductPage = () => {
   const param = useParams();
+  const [loading, setLoading] = React.useState(false);
   const [categoryList, setCategoryList] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
   const [errorForm, setErrorForm] = React.useState({
@@ -29,6 +31,7 @@ const EditProductPage = () => {
 
   React.useEffect(() => {
     let id = param['id'];
+    setLoading(true);
     axios.get(`/product/${id}`).then((dist) => {
       setFormData({
         name: dist?.data?.data?.name,
@@ -38,10 +41,12 @@ const EditProductPage = () => {
         count: dist?.data?.data?.count,
         status: dist?.data?.data?.status
       });
+      setLoading(false);
       const img = dist?.data?.data?.image ? imageURL + dist?.data?.data?.image : null;
       setPreview(img);
     }).catch((err) => {
       swal("Oops!", "Get Product API Error", "error");
+      setLoading(false);
     })
 
     axios.get("/category").then((dist) => {
@@ -90,6 +95,7 @@ const EditProductPage = () => {
     console.log('validate', validate);
     if (validate) {
       let id = param['id'];
+      setLoading(true);
       const user = JSON.parse(localStorage.getItem("admin"));
       let formParam = new FormData();
       formParam.append('name', formData.name);
@@ -107,11 +113,13 @@ const EditProductPage = () => {
           headers: { 'Content-Type': 'multipart/form-data' }
         }).then((dist) => {
           console.log("Updated Product")
+          setLoading(false);
           swal("Success", "Product is updated successfully", "success").then(() => {
             window.location.href = "/admin/product";
           });
         }).catch((err) => {
           swal("Oops!", "Update Product API Error", "error");
+          setLoading(false);
         })
     }
   }
@@ -149,6 +157,7 @@ const EditProductPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       <div class="page-body-wrapper">
         <Sidebar />
         <div class="main-panel">

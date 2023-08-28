@@ -2,9 +2,11 @@ import React from 'react';
 import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const CreateUserPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     firstName: "",
     lastName: "",
@@ -57,6 +59,7 @@ const CreateUserPage = () => {
 
   const addUser = (e) => {
     e.preventDefault();
+    setLoading(true);
     const validate = validation();
     if (validate) {
       const user = JSON.parse(localStorage.getItem("admin"));
@@ -73,11 +76,13 @@ const CreateUserPage = () => {
         headers: {'Content-Type': 'multipart/form-data'}
       }).then((dist) => {
         console.log("Created User")
+        setLoading(false);
         swal("Success", "User is created successfully", "success").then(() => {
           window.location.href = "/admin/user";
         });
       }).catch((err) => {
         swal("Oops!", "Create User API Error", "error");
+        setLoading(false);
       });
     }
   }
@@ -112,6 +117,7 @@ const CreateUserPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       <div class="page-body-wrapper">
       <Sidebar />
         <div class="main-panel">

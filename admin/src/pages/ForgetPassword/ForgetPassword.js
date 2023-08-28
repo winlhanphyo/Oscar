@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import swal from 'sweetalert';
 import styles from './ForgetPassword.module.scss';
-import axios from "../../axios/index";
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import axios from "../../axios/index";
 
 const ForgetPassword = () => {
   const [loading, setLoading] = React.useState(false);

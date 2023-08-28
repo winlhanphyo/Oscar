@@ -5,9 +5,11 @@ import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const UserPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [userList, setUserList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -27,6 +29,7 @@ const UserPage = () => {
     if (searchName.current?.value) {
       params.name = searchName.current.value
     }
+    setLoading(true);
     axios.get("/user", {
       params
     }).then((dist) => {
@@ -40,8 +43,10 @@ const UserPage = () => {
         count.push(i + 1);
       }
       setPaginateCount(count);
+      setLoading(false);
     }).catch((err) => {
       swal("Oops!", "Get User API Error", "error");
+      setLoading(false);
     });
   }
 
@@ -65,10 +70,12 @@ const UserPage = () => {
 
   const deleteUser = () => {
     console.log('delete user', deleteId);
+    setLoading(true);
     axios.delete(`/user/${deleteId}`).then((dist) => {
       getUserList();
     }).catch((err) => {
       swal("Oops!", "Delete User API Error", "error");
+      setLoading(false);
     });
   }
 
@@ -79,6 +86,7 @@ const UserPage = () => {
 
   const searchUser = () => {
     console.log('value', searchName.current.value)
+    setLoading(true);
     axios.get("/user", {
       params: {
         size: 5,
@@ -95,8 +103,10 @@ const UserPage = () => {
         count.push(i + 1);
       }
       setPaginateCount(count);
+      setLoading(false);
     }).catch((err) => {
       swal("Oops!", "Get User API Error", "error");
+      setLoading(false);
     });
   }
 
@@ -104,6 +114,7 @@ const UserPage = () => {
     <>
       <div class="container-scroller">
         <Header />
+        {loading && <LoadingSpinner />}
         {/* <!-- partial --> */}
         <div class="container-fluid page-body-wrapper">
           {/* <!-- partial:partials/_sidebar.html --> */}

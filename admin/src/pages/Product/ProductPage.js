@@ -7,9 +7,11 @@ import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import { imageURL } from '../../utils/constants/constant';
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const ProductPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [productList, setProductList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -29,6 +31,7 @@ const ProductPage = () => {
     if (searchName.current?.value) {
       params.name = searchName.current.value
     }
+    setLoading(true);
     axios.get("/product", {
       params
     }).then((dist) => {
@@ -42,8 +45,10 @@ const ProductPage = () => {
         count.push(i + 1);
       }
       setPaginateCount(count);
+      setLoading(false);
     }).catch((err) => {
       swal("Oops!", "Product List Page API Error", "error");
+      setLoading(false);
     });
   }
 
@@ -66,10 +71,12 @@ const ProductPage = () => {
   }
 
   const deleteCategory = () => {
+    setLoading(true);
     axios.delete(`/product/${deleteId}`).then((dist) => {
       getProductList();
     }).catch((err) => {
       swal("Oops!", err.toString(), "error");
+      setLoading(false);
     });
   }
 
@@ -78,6 +85,7 @@ const ProductPage = () => {
   }
 
   const searchProduct = () => {
+    setLoading(true);
     axios.get("/product", {
       params: {
         size: 5,
@@ -94,8 +102,10 @@ const ProductPage = () => {
         count.push(i + 1);
       }
       setPaginateCount(count);
+      setLoading(false);
     }).catch((err) => {
       swal("Oops!", err.toString(), "error");
+      setLoading(false);
     });
   }
 
@@ -103,6 +113,7 @@ const ProductPage = () => {
     <>
       <div class="container-scroller">
         <Header />
+        {loading && <LoadingSpinner />}
         {/* <!-- partial --> */}
         <div class="page-body-wrapper">
           {/* <!-- partial:partials/_sidebar.html --> */}

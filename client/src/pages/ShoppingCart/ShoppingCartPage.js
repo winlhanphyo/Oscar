@@ -82,51 +82,60 @@ const ShoppingCartPage = () => {
                     </tr>
 
                     {
-                    cartData?.length > 0 ?
-                    cartData?.map((data, index) => {
-                      return (<>
-                      <tr key={index} class="table_row">
-                      <td class="column-1">
-                        <div class="how-itemcart1">
-                          <img src={imageURL + data?.image} alt="IMG" class="img-thumbnail img-fluid img-size-sm"/>
-                        </div>
-                      </td>
-                      <td class="column-2">{data?.name}</td>
-                      <td class="column-3">$ {data?.price}</td>
-                      <td class="column-4">
-                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                          <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onClick={() => changeQuantity(Number(cartData[index].quantity) - 1, index)}>
-                            <i class="fs-16 zmdi zmdi-minus"></i>
-                          </div>
+                      cartData?.length > 0 ?
+                        cartData?.map((data, index) => {
+                          return (<>
+                            <tr key={index} class="table_row">
+                              <td class="column-1">
+                                <div class="how-itemcart1">
+                                  <img src={imageURL + data?.image} alt="IMG" class="img-thumbnail img-fluid img-size-sm" />
+                                </div>
+                              </td>
+                              <td class="column-2">{data?.name}</td>
+                              <td class="column-3">$ {data?.price}</td>
+                              <td class="column-4">
+                                <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                                  <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onClick={() => changeQuantity(Number(cartData[index].quantity) - 1, index)}>
+                                    <i class="fs-16 zmdi zmdi-minus"></i>
+                                  </div>
 
-                          <input class="mtext-104 cl3 txt-center num-product" type="number" onChange={(e) => changeQuantity(e, index)} name="num-product1" value={data?.quantity} />
+                                  <input class="mtext-104 cl3 txt-center num-product" type="number" onChange={(e) => changeQuantity(e, index)} name="num-product1" value={data?.quantity} />
 
-                          <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onClick={() => changeQuantity(Number(cartData[index].quantity) + 1, index)}>
-                            <i class="fs-16 zmdi zmdi-plus"></i>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="column-5">$ {data?.price}</td>
-                      <td class="column-3">
-                        <button class="flex-c-m stext-101 cl0 size-104 bor2 hov-btn2 p-lr-15 hov-btn3 trans-04 text-danger" onClick={() => removeProduct(index)}>
-                          <i class="fa fa-trash fa-2x "></i>
-                        </button>
-                      </td>
-                    </tr>
-                      </>)
-                      })
-                      :
-                      (
-                        <div>
-                          Cart Data is empty
-                        </div>
-                      )}
+                                  <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onClick={() => changeQuantity(Number(cartData[index].quantity) + 1, index)}>
+                                    <i class="fs-16 zmdi zmdi-plus"></i>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="column-5">$ {data?.price}</td>
+                              <td class="column-3">
+                                <button class="flex-c-m stext-101 cl0 size-104 bor2 hov-btn2 p-lr-15 hov-btn3 trans-04 text-danger" onClick={() => removeProduct(index)}>
+                                  <i class="fa fa-trash fa-2x "></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </>)
+                        })
+                        :
+                        (
+                          <>
+                          <tr class="table_row">
+                            <td class="column-1" colspan="6">
+                              <div class="flex-w flex-c-m">
+                                <div class="size-210 bor2 flex-c-m" style={{backgroundColor: "#D2E9E9"}}>
+                                  <i class="zmdi zmdi-folder-outline zmdi zmdi-flower-alt zmdi-hc-3x"></i>
+                                  <h4 class="p-l-15 mtext-103">Cart Data is Empty!</h4>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          </>
+                        )}
 
                   </table>
                 </div>
                 <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                  {cartData?.length > 0 && 
-                  <Link to="/checkout" class="flex-c-m stext-101 cl5 size-103 bg1 bor1 hov-btn1 p-lr-15 trans-04">CheckOut</Link>}
+                  {cartData?.length > 0 &&
+                    <Link to="/checkout" class="flex-c-m stext-101 cl5 size-103 bg1 bor1 hov-btn1 p-lr-15 trans-04">CheckOut</Link>}
                   <Link to="/shop" class="flex-c-m stext-101 cl5 size-104 p-lr-15 trans-04 bor121">Continue Shopping <i class="zmdi zmdi-long-arrow-right m-l-10"></i></Link>
                   {cartData?.length > 0 && <div class="flex-r-m mtext-101 cl2 size-119 p-lr-15 trans-04 m-tb-10">
                     Total Amount : $ {totalAmount}
@@ -140,13 +149,6 @@ const ShoppingCartPage = () => {
 
 
       <Footer />
-
-      {/* <!-- Back to top --> */}
-      <div class="btn-back-to-top" id="myBtn">
-        <span class="symbol-btn-back-to-top">
-          <i class="zmdi zmdi-chevron-up"></i>
-        </span>
-      </div>
     </>
   )
 }
