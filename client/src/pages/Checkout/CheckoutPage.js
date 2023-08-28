@@ -6,9 +6,11 @@ import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const CheckoutPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const cart = JSON.parse(localStorage.getItem("cart"));
   const [cartData, setCartData] = React.useState(null);
   const [totalAmount, setTotalAmount] = React.useState(0);
@@ -91,6 +93,7 @@ const CheckoutPage = () => {
 
   const createCheckout = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const validate = validation();
     if (validate) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -122,6 +125,7 @@ const CheckoutPage = () => {
 
       axios.post("/order", param).then(async (dist) => {
         console.log('response', dist);
+        setLoading(false);
         const stripe = await loadStripe("pk_test_51NfFraEGcRue3GUHmDGShja5f4ML32oLud8vLWGd2m6nEV8beUsUMb2UIGxwpgwun4BMWJEM41JzegaZHXTnEjzK00YRvykuo9");
         const result = stripe.redirectToCheckout({
           sessionId: dist.data.id,
@@ -130,11 +134,9 @@ const CheckoutPage = () => {
         if (result.error) {
           console.log(result.error);
         }
-        //   swal("Success", "Order is created successfully", "success").then(() => {
-        //   window.location.href = "/admin/product";
-        // });
       }).catch((err) => {
         swal("Oops!", err.toString(), "error");
+        setLoading(false);
       })
     }
   };
@@ -143,6 +145,8 @@ const CheckoutPage = () => {
     <>
       <Header />
       <Cart />
+
+      {loading && <LoadingSpinner />}
 
       {/* <!-- breadcrumb --> */}
       <div class="container">

@@ -118,6 +118,8 @@ const CreateAccountPage = () => {
       <Header />
       <Cart />
 
+      {loading && <LoadingSpinner text="Logging in..." />}
+
       {/* <!-- Title page --> */}
       <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{backgroundImage: "url('poto/a3.jpg')"}}>
         <h2 class="ltext-105 cl0 txt-center">
@@ -198,12 +200,7 @@ const CreateAccountPage = () => {
 
       <Footer />
 
-      {/* <!-- Back to top --> */}
-      <div class="btn-back-to-top" id="myBtn">
-        <span class="symbol-btn-back-to-top">
-          <i class="zmdi zmdi-chevron-up"></i>
-        </span>
-      </div>
+
     </>
   )
 }

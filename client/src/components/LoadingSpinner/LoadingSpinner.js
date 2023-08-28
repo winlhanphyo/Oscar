@@ -4,10 +4,14 @@ import styles from './LoadingSpinner.module.scss';
 
 const LoadingSpinner = ({text}) => {
     return(
+        // <div className={styles.loadingContainer}>
+        // <span>{text}</span>
+        //     <Spinner variant="dark" animation="grow" size="sm" />
+        //     <Spinner variant="dark" animation="grow" />
+        // </div>
+
         <div className={styles.loadingContainer}>
-        <span>{text}</span>
-            <Spinner variant="dark" animation="grow" size="sm" />
-            <Spinner variant="dark" animation="grow" />
+      	  <div className={styles.spinner}></div>
         </div>
     );
 }

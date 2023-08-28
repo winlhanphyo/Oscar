@@ -6,16 +6,17 @@ import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const ProductPage = () => {
-  const [activeProduct, setActiveProduct] = React.useState("all");
+  const [loading, setLoading] = React.useState(false);
+  const [activeCategory, setActiveCategory] = React.useState("all");
   const [categoryList, setCategoryList] = React.useState([]);
   const [productList, setProductList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [totalCount, setTotalCount] = React.useState(0);
   const [paginateCount, setPaginateCount] = React.useState([]);
-  const [deleteId, setDeleteId] = React.useState(null);
   const searchName = React.createRef();
 
   React.useEffect(() => {
@@ -51,19 +52,22 @@ const ProductPage = () => {
    * @param {*} offsetData 
    */
   const getProductWithCategoryList = (catId, offsetData = 0) => {
-    setActiveProduct(catId);
+    setActiveCategory(catId);
     let params = {
       size: 5,
       page: offsetData
     };
+    setLoading(true);
     if (searchName.current?.value) {
       params.name = searchName.current.value
     }
     axios.get(`/product/category/${catId}`, {
       params
     }).then((dist) => {
+      setLoading(false);
       setProductList(dist?.data?.data);
     }).catch((err) => {
+      setLoading(false);
       console.log('Get Category API error', err);
       swal("Oops!", "Get Category API error", "error");
     });
@@ -74,7 +78,8 @@ const ProductPage = () => {
    * @param {*} offsetData 
    */
   const getProductList = (offsetData = 0) => {
-    setActiveProduct("all");
+    setActiveCategory("all");
+    setLoading(true);
     let params = {
       size: 5,
       page: offsetData
@@ -85,6 +90,7 @@ const ProductPage = () => {
     axios.get("/product", {
       params
     }).then((dist) => {
+      setLoading(false);
       setProductList(dist?.data?.data);
       setOffset(dist?.data?.offset);
       setTotalCount(dist?.data?.count);
@@ -96,6 +102,7 @@ const ProductPage = () => {
       setPaginateCount(count);
     }).catch((err) => {
       swal("Oops!", "Product List Page API Error", "error");
+      setLoading(false);
     });
   }
 
@@ -116,14 +123,21 @@ const ProductPage = () => {
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
+      setLoading(true);
       const value = e.target.value;
-      axios.get("/product", {
-        params: {
-          size: 5,
-          page: 0,
-          name: value,
-        }
+      const params = {
+        size: 5,
+        page: 0,
+        name: value
+      };
+      let apiUrl = `/product`;
+      if (activeCategory !== "all") {
+        apiUrl = `/product/category/${activeCategory}`;
+      }
+      axios.get(apiUrl, {
+        params
       }).then((dist) => {
+        setLoading(false);
         setProductList(dist?.data?.data);
         setOffset(dist?.data?.offset);
         setTotalCount(dist?.data?.count);
@@ -135,6 +149,7 @@ const ProductPage = () => {
         setPaginateCount(count);
       }).catch((err) => {
         swal("Oops!", err.toString(), "error");
+        setLoading(false);
       });
     }
   }
@@ -154,12 +169,14 @@ const ProductPage = () => {
       <Header />
       <Cart />
 
+      {loading && <LoadingSpinner text="Logging in..." />}
+
       {/* <!-- Product --> */}
       <div class="bg0 m-t-23 p-b-100">
         <div class="container">
           <div class="flex-w flex-sb-m p-b-52">
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-              <button className={activeProduct === "all" ?
+              <button className={activeCategory === "all" ?
                 "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" : "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"}
                 data-filter="*" onClick={() => getProductList()}>
                 All Items
@@ -167,7 +184,7 @@ const ProductPage = () => {
 
               {categoryList.map((data) => {
                 return (
-                  <button className={activeProduct === data._id ?
+                  <button className={activeCategory === data._id ?
                   "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" : "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"} data-filter=".women" onClick={() => getProductWithCategoryList(data._id)}>
                     {data.name}
                   </button>
@@ -198,7 +215,7 @@ const ProductPage = () => {
                 </button>
 
                 <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search Product Name"
-                onKeyDown={handleSearchKeyDown} />
+                ref={searchName} onKeyDown={handleSearchKeyDown} />
               </div>
             </div>
 
@@ -437,13 +454,6 @@ const ProductPage = () => {
       </div>
 
       <Footer />
-
-      {/* <!-- Back to top --> */}
-      <div class="btn-back-to-top" id="myBtn">
-        <span class="symbol-btn-back-to-top">
-          <i class="zmdi zmdi-chevron-up"></i>
-        </span>
-      </div>
     </>
   )
 }

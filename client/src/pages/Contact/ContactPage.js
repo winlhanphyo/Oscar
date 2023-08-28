@@ -4,9 +4,11 @@ import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const ContactPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     email: "",
     msg: ""
@@ -41,15 +43,18 @@ const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     const validate = validation();
     if (validate) {
       axios.post("/contact", formData).then((dist) => {
         console.log("Created Product")
+        setLoading(false);
         swal("Success", "Thank you for contact mail", "success").then(() => {
           history.push("/home");
         });
       }).catch((err) => {
         swal("Oops!", err.toString(), "error");
+        setLoading(false);
       })
     }
   }
@@ -78,6 +83,8 @@ const ContactPage = () => {
     <>
       <Header />
       <Cart />
+
+      {loading && <LoadingSpinner />}
 
       {/* <!-- Title page --> */}
       <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{ backgroundImage: "url('poto/a1.jpg')" }}>
@@ -180,12 +187,7 @@ const ContactPage = () => {
 
       <Footer />
 
-      {/* <!-- Back to top --> */}
-      <div class="btn-back-to-top" id="myBtn">
-        <span class="symbol-btn-back-to-top">
-          <i class="zmdi zmdi-chevron-up"></i>
-        </span>
-      </div>
+
     </>
   )
 }

@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const EditUserPage = () => {
   const param = useParams();
+  const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     firstName: "",
     lastName: "",
@@ -21,14 +23,18 @@ const EditUserPage = () => {
 
   React.useEffect(() => {
     let id = param['id'];
+    setLoading(true);
     axios.get(`/user/${id}`).then((dist) => {
       setFormData({
         firstName: dist?.data?.data?.firstName,
         lastName: dist?.data?.data?.lastName,
         email: dist?.data?.data?.email
       });
+      setLoading(false);
     }).catch((err) => {
-      alert('Get User API Error' + err.toString());
+      console.log('Get User API Error' + err.toString());
+      swal("Oops!", "GET User API Error", "error");
+      setLoading(false);
     })
   }, []);
 
@@ -103,6 +109,7 @@ const EditUserPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       <div class="page-body-wrapper">
         <Sidebar />
         <div class="main-panel">

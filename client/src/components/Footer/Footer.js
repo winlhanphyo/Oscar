@@ -1,8 +1,13 @@
 import { Container, Navbar } from 'react-bootstrap';
+import $ from "jquery";
 import { useHistory, useLocation } from 'react-router-dom';
 import styles from './Footer.module.scss';
 
 const Footer = () => {
+
+  const backToTop = () => {
+    $('html, body').animate({scrollTop: 0}, 300);
+  }
 
   return (
     <>
@@ -146,6 +151,13 @@ const Footer = () => {
           </div>
         </div>
       </footer>
+
+      {/* <!-- Back to top --> */}
+            <div class="btn-back-to-top" id="myBtn" onClick={backToTop}>
+        <span class="symbol-btn-back-to-top">
+          <i class="zmdi zmdi-chevron-up"></i>
+        </span>
+      </div>
     </>
   )
 }

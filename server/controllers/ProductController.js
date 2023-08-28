@@ -162,9 +162,8 @@ const getProductWithCategoryId = async (req, res) => {
     const productPerPage = req.query.size || 5;
     const name = req.query.name || null;
     let condition = { deleted_at: null, category: new mongoose.Types.ObjectId(catId) };
-    if (name) {
-      condition.category = new mongoose.Types.ObjectId(catId);
-    };
+    name ? condition.name = {$regex: name, $options: 'i'} : null;
+    catId ? condition.category = new mongoose.Types.ObjectId(catId) : null;
 
     const product = await Product.find(condition).skip(page * productPerPage).limit(productPerPage)
     .populate('category').populate('created_user_id').populate('updated_user_id');

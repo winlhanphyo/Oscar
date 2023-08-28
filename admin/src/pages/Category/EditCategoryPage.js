@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const EditCategoryPage = () => {
   const param = useParams();
+  const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     name: '',
   });
@@ -16,13 +18,16 @@ const EditCategoryPage = () => {
 
   React.useEffect(() => {
     let id = param['id'];
+    setLoading(true);
     axios.get(`/category/${id}`).then((dist) => {
       console.log('dist', dist);
       setFormData({
         name: dist?.data?.data?.name
       })
+      setLoading(false);
     }).catch((err) => {
       alert('Get Category API Error' + err.toString());
+      setLoading(false);
     })
   }, []);
 
@@ -86,6 +91,7 @@ const EditCategoryPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       {/* <!-- partial --> */}
       <div class="page-body-wrapper">
         {/* <!-- partial:partials/_sidebar.html --> */}

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import {Button, Form} from 'react-bootstrap';
 import { useDispatch } from "react-redux";
-import { FORGET_PASSWORD_SUCCESS } from "../../store/actions/types";
+import swal from 'sweetalert';
 import styles from './PasswordChangeForm.module.scss';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
@@ -87,77 +87,15 @@ const PasswordChangeForm = () => {
       setLoading(false);
       setDisabledLoginBtn(false);
       if(response.status === 200) {
-        history.push('/login');
+        swal("Success", "Password is changed successfully", "success").then(() => {
+          history.push('/login');
+        });
       }
     }).catch(error => {
       setLoading(false);
       setDisabledLoginBtn(false);
-      alert(error.response.data);
+      swal("Oops!", "Password Change API is error occurred!", "error");
     });
-    // if (formData.new_password === 'password' && formData.comfirm_new_password === formData.new_password) {
-    //   const token = 12345;
-
-      /** store logged in user's info to local storage */
-      // localStorage.setItem(
-      //   "user",
-      //   JSON.stringify({
-      //     accessToken: token,
-      //     ...formData
-      //   })
-      // );
-
-    //   /** store logged in user's info to App State */
-    //   dispatch({
-    //     type: FORGET_PASSWORD_SUCCESS,
-    //     payload: {
-    //       user: {
-    //         accessToken: '12345',
-    //         ...formData
-    //       },
-    //     }
-    //   });
-    //   history.push('/admin/events');
-    // } else {
-    //   alert('Password Change is not successfully !');
-    // }
-
-    // axios.post("auth/login", formData)
-    // .then((res) => {
-    //   const { data } = res;
-    //   const { token } = data.success;
-    //   const { user } = data;
-
-    //   /** store logged in user's info to local storage */
-    //   localStorage.setItem(
-    //     "user",
-    //     JSON.stringify({
-    //       accessToken: token,
-    //       ...user
-    //     })
-    //   );
-
-    //   /** store logged in user's info to App State */
-    //   dispatch({
-    //     type: LOGIN_SUCCESS,
-    //     payload: {
-    //       user: {
-    //         accessToken: token,
-    //         ...user
-    //       },
-    //     }
-    //   });
-    // })
-    // .then(() => navigate('/home'))
-    // .catch((error) => {
-    //   if (error.response) {
-    //     console.error(error.response.data);
-    //     // if (error.response.data.errors) {
-    //     //   this.setState({
-    //     //     errors: error.response.data.errors
-    //     //   });
-    //     // }
-    //   }
-    // });
   }
 
   return (
@@ -166,7 +104,7 @@ const PasswordChangeForm = () => {
         <source src='../../../login/phone_using.mp4' type='video/mp4'></source>
       </video>
 
-      {loading && <LoadingSpinner text="Resetting password..." />}
+      {loading && <LoadingSpinner />}
 
       <div className={loading ? styles.container + ' shadow ' + styles.backdrop : styles.container }>
         <p className={styles.passwordChangeFormTtl}>Change Password</p>

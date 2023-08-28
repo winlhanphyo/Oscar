@@ -3,10 +3,12 @@ import swal from 'sweetalert';
 import { useParams } from 'react-router-dom';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
 const EditOrderPage = () => {
   const param = useParams();
+  const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     country: "",
     address: "",
@@ -30,6 +32,7 @@ const EditOrderPage = () => {
 
   React.useEffect(() => {
     let id = param['id'];
+    setLoading(true);
     axios.get(`/order/${id}`).then((dist) => {
       setFormData({
         customerName: dist?.data?.data?.customer?.firstName + dist?.data?.data?.customer?.lastName,
@@ -43,8 +46,10 @@ const EditOrderPage = () => {
         phone: dist?.data?.data?.phone,
         status: dist?.data?.data?.status
       });
+      setLoading(false);
     }).catch((err) => {
       swal("Oops!", "Get Order API Error", "error");
+      setLoading(false);
     })
   }, []);
 
@@ -125,6 +130,7 @@ const EditOrderPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       <div class="page-body-wrapper">
       <Sidebar />
         <div class="main-panel">

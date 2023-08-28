@@ -5,18 +5,23 @@ import { imageURL } from '../../utils/constants/constant';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import axios from '../../axios/index';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import styles from "./Order.module.scss";
 
 const OrderDetailPage = () => {
   const param = useParams();
+  const [loading, setLoading] = React.useState(false);
   const [orderDetail, setOrderDetail] = React.useState(null);
 
   React.useEffect(() => {
     let id = param['id'];
+    setLoading(true);
     axios.get(`/order/${id}`).then((dist) => {
       console.log('dist', dist);
+      setLoading(false);
       setOrderDetail(dist?.data?.data);
     }).catch((err) => {
+      setLoading(false);
       swal("Oops!", "Get Order API Error", "error");
     })
   }, []);
@@ -24,6 +29,7 @@ const OrderDetailPage = () => {
   return (
     <div class="container-scroller">
       <Header />
+      {loading && <LoadingSpinner />}
       <div class="page-body-wrapper">
         <Sidebar />
         <div class="main-panel">

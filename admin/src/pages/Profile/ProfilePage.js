@@ -5,9 +5,6 @@ import styles from "./ProfilePage.module.scss";
 const ProfilePage = () => {
   const user = JSON.parse(localStorage.getItem("admin"));
 
-  const handleUpdate = () => {
-    window.location.href = '/admin/user/' + user._id + '/edit';
-  }
   return (
     <div class="container-scroller">
     <Header />

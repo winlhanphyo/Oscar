@@ -58,7 +58,6 @@ const ForgetPasswordPage = () => {
   const handleClick = (event) => {
     event.preventDefault();
     setLoading(true);
-
     const validate = validation();
     if (validate) {
       axios.post('/forget-password', formData).then((response) => {
