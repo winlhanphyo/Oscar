@@ -73,10 +73,13 @@ const EditUserPage = () => {
         type: formData.type,
         created_user_id: user._id
       };
+      setLoading(true);
       axios.post(`/user/${id}`, data).then((dist) => {
         console.log("Updated User")
+        setLoading(false);
         window.location.href = "/admin/user";
       }).catch((err) => {
+        setLoading(false);
         swal("Oops!", "Update User API Error", "error");
       })
     }

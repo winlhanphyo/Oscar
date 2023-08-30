@@ -2,7 +2,7 @@ import React from 'react';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
 import { loadStripe } from "@stripe/stripe-js";
-import { imageURL } from '../../utils/constants/constant';
+import { imageURL, countryList } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
@@ -28,7 +28,7 @@ const CheckoutPage = () => {
     country: "Singapore",
     company: "",
     address: "",
-    additonalInfo: "",
+    additionalInfo: "",
     city: "",
     postalCode: "",
     phone: ""
@@ -93,9 +93,9 @@ const CheckoutPage = () => {
 
   const createCheckout = async (e) => {
     e.preventDefault();
-    setLoading(true);
     const validate = validation();
     if (validate) {
+      setLoading(true);
       const user = JSON.parse(localStorage.getItem("user"));
 
       const orderDetail = [];
@@ -107,12 +107,16 @@ const CheckoutPage = () => {
         };
         orderDetail.push(param);
       });
+      let currentUrl = window.location.href;
+      let domain = currentUrl.split("/checkout")[0];
 
       const param = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         country: formData.country,
         address: formData.address,
+        additionalInfo: formData.additionalInfo,
+        company: formData.company,
         city: formData.city,
         postalCode: formData.postalCode,
         phone: formData.phone,
@@ -120,11 +124,11 @@ const CheckoutPage = () => {
         status: "new",
         totalAmount,
         orderDetail,
-        created_user_id: user._id
+        created_user_id: user._id,
+        domainUrl: domain
       };
 
       axios.post("/order", param).then(async (dist) => {
-        console.log('response', dist);
         setLoading(false);
         const stripe = await loadStripe("pk_test_51NfFraEGcRue3GUHmDGShja5f4ML32oLud8vLWGd2m6nEV8beUsUMb2UIGxwpgwun4BMWJEM41JzegaZHXTnEjzK00YRvykuo9");
         const result = stripe.redirectToCheckout({
@@ -196,13 +200,19 @@ const CheckoutPage = () => {
                       Shipping Address
                     </h4>
 
-                    <div class="rs1-select2 rs2-select2 bor13 bg0 m-b-12 m-t-9">
+                    {/* <div class="rs1-select2 rs2-select2 bor13 bg0 m-b-12 m-t-9">
                       <select class="js-select2" name="time">
                         <option selected>Singapore</option>
                         <option>Myanmar</option>
                       </select>
                       <div class="dropDownSelect2"></div>
-                    </div>
+                    </div> */}
+
+                    <select class="form-control m-b-5" style={{borderRadius: "22px"}}>
+                    {countryList.map((data) => {
+                        return (<option value={data}>{data}</option>)
+                      })}
+                    </select>
 
                     <div class="row">
                       <div class="col-lg-6 col-xl-6">
@@ -247,6 +257,19 @@ const CheckoutPage = () => {
                         <div className="invalid-form">{errorForm.address}</div>) : ''}
                     </div>
                   </div>
+
+                  <div class="w-full p-t-5">
+                    <div class=" bg0 m-b-12">
+                      <input
+                        className={errorForm?.additionalInfo ? "stext-111 cl8 plh3 size-111 p-lr-15 bor13 is-invalid" : "stext-111 cl8 plh3 size-111 p-lr-15 bor13"}
+                        type="text" name="additionalInfo" placeholder="Apartment, suite (optional).etc"
+                        value={formData.additionalInfo}
+                        onChange={handleChange} />
+                      {errorForm.additionalInfo ? (
+                        <div className="invalid-form">{errorForm.additionalInfo}</div>) : ''}
+                    </div>
+                  </div>
+
                   <div class="w-full p-t-5">
                     <div class=" bg0 m-b-12">
                       <input
@@ -289,7 +312,7 @@ const CheckoutPage = () => {
             <div class="col-sm-12 col-lg-5 col-xl-5 m-lr-auto m-b-50">
               <div class="bor10 p-lr-40 p-t-30 p-b-40 m-lr-0-xl p-lr-15-sm bg10">
                 {
-                  cartData.map((data) => {
+                  cartData?.map((data) => {
                     return (
                       <>
                         <div class="flex-w flex-t p-b-30">

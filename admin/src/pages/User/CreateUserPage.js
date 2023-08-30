@@ -59,9 +59,9 @@ const CreateUserPage = () => {
 
   const addUser = (e) => {
     e.preventDefault();
-    setLoading(true);
     const validate = validation();
     if (validate) {
+      setLoading(true);
       const user = JSON.parse(localStorage.getItem("admin"));
       const data = {
         firstName: formData.firstName,

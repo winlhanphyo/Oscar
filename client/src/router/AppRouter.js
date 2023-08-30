@@ -4,7 +4,6 @@ import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import LoginPage from "../pages/Login/LoginPage";
 import ForgetPasswordPage from "../pages/ForgetPassword/ForgetPasswordPage";
-import PasswordChangeForm from "../pages/PasswordChangeForm/PasswordChangeForm";
 import HomePage from "../pages/Home/HomePage";
 import AboutPage from "../pages/About/AboutPage";
 import ContactPage from "../pages/Contact/ContactPage";
@@ -14,9 +13,11 @@ import WorkPage from "../pages/Work/WorkPage";
 import PaymentCancelPage from "../pages/PaymentCancel/PaymentCancelPage";
 import PaymentSuccessPage from "../pages/PaymentSuccess/PaymentSuccessPage";
 import ProductPage from "../pages/Product/ProductPage";
+import ProductSearchPage from "../pages/ProductSearch/ProductSearchPage";
 import ProductDetailPage from "../pages/ProductDetail/ProductDetailPage";
 import ShoppingCartPage from "../pages/ShoppingCart/ShoppingCartPage";
 import ArtistPage from "../pages/Artist/ArtistPage";
+import ForgetPasswordUpdatePage from "../pages/ForgetPasswordUpdate/ForgetPasswordUpdatePage";
 
 const AppRouter = withRouter(({ location }) => {
 
@@ -35,11 +36,13 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/payment/success" component={PaymentSuccessPage} />
         <PublicRoute path="/work" component={WorkPage} />
         <PublicRoute path="/product/:id" component={ProductDetailPage} />
+        <PublicRoute path="/shop/search" component={ProductSearchPage} />
         <PublicRoute path="/shop" component={ProductPage} />
         <PublicRoute path="/artist" component={ArtistPage} />
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/home" component={HomePage} />
-        <PublicRoute path="/forgetpassword" component={ForgetPasswordPage} />
+        <PublicRoute path="/forget-password" component={ForgetPasswordPage} />
+        <PublicRoute path="/forget-password-update/:userId/:token" component={ForgetPasswordUpdatePage} />
         {/* <PublicRoute path="/admin/user/create" component={CreatePage} />
         <PrivateRoute path="/admin/user/:id/update" component={CreatePage} />
         <PrivateRoute path="/admin/:id/profile" component={ProfilePage} /> */}

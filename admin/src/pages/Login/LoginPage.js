@@ -81,10 +81,10 @@ const LoginPage = () => {
 
   const handleClick = (event) => {
     event.preventDefault();
-    setLoading(true);
 
     const validate = validation();
     if (validate) {
+      setLoading(true);
       axios.post('/login', formData).then((response) => {
         console.log(response);
         setLoading(false);

@@ -31,7 +31,8 @@ router
   .route('/forget-password')
   .post(
     [
-      check("email").notEmpty().withMessage("Email must not be empty")
+      check("email").notEmpty().withMessage("Email must not be empty"),
+      check("domainUrl").notEmpty().withMessage("Domain URL must not be empty")
     ], authController.forgetPassword);
 
 router

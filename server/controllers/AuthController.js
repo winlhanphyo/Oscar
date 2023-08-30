@@ -123,7 +123,7 @@ const forgetPassword = async (req, res) => {
         token: crypto.randomBytes(16).toString("hex"),
       }).save();
     }
-    const link = `${process.env.BASE_URL}/admin/forget-password-update/${user._id}/${token.token}`;
+    const link = `${req.body.domainUrl}/forget-password-update/${user._id}/${token.token}`;
     const msg = `Here is the password reset link \n ${link}`;
     const mail = await utils.sendEmail(user.email, "Oscar Password Reset", msg);
 

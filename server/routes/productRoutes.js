@@ -23,8 +23,8 @@ router
   .get(productController.findProduct)
   .post(
     [
-      check("name").notEmpty().withMessage("Name must not be empty"),
-      check("description").notEmpty().withMessage("Description must not be empty"),
+      // check("name").notEmpty().withMessage("Name must not be empty"),
+      // check("description").notEmpty().withMessage("Description must not be empty"),
     ],
     productController.updateProduct)
   .delete(productController.deleteProduct)

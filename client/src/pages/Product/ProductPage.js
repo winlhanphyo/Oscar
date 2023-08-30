@@ -436,9 +436,8 @@ const ProductPage = () => {
             {paginateCount?.map((dist) => {
               return (
                 <>
-                  <li className={Number(dist - 1) === Number(offset) ? "flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1" : "flex-c-m how-pagination1 trans-04 m-all-7"}
-                  onClick={() => paginateClick(null, dist)}>
-                    <a class="page-link">{dist}</a></li>
+                  <a className={Number(dist - 1) === Number(offset) ? "flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1" : "flex-c-m how-pagination1 trans-04 m-all-7"}
+                  onClick={() => paginateClick(null, dist)}>{dist}</a>
                 </>
               )
             })}

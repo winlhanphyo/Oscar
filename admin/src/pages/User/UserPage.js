@@ -2,16 +2,29 @@ import React from 'react';
 import moment from 'moment';
 import $ from 'jquery';
 import swal from 'sweetalert';
+import { useLocation } from 'react-router-dom';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import OscarPagination from '../../components/OscarPagination/OscarPagination';
 import axios from '../../axios/index';
 
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 const UserPage = () => {
+  let query = useQuery();
   const [loading, setLoading] = React.useState(false);
   const [userList, setUserList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
+  const [paginationData, setPaginationData] = React.useState({
+    from: 1,
+    last_page: 1,
+    per_page: 1
+  })
   const [totalCount, setTotalCount] = React.useState(0);
   const [paginateCount, setPaginateCount] = React.useState([]);
   const [deleteId, setDeleteId] = React.useState(null);
@@ -22,27 +35,39 @@ const UserPage = () => {
   }, []);
 
   const getUserList = (offsetData = 0) => {
+    offsetData = Number(query.get("page")) || 0;
+    offsetData = offsetData > 0 ? offsetData - 1 : offsetData;
+    let searchNameData = query.get("searchName") || searchName.current.value;
+    searchName.current.value = searchNameData;
     let params = {
       size: 5,
-      page: offsetData
+      page: Number(offsetData)
     };
-    if (searchName.current?.value) {
-      params.name = searchName.current.value
+    if (searchNameData) {
+      params.name = searchNameData;
     }
     setLoading(true);
     axios.get("/user", {
       params
     }).then((dist) => {
-      $(".odd").empty();
+      // $(".odd").empty();
       setUserList(dist?.data?.data);
       setOffset(dist?.data?.offset);
       setTotalCount(dist?.data?.count);
       const page = dist?.data?.count / 5;
       const count = [];
+      let lastPage = 0;
       for (let i = 0; i < page; i++) {
         count.push(i + 1);
+        lastPage = i + 1;
       }
       setPaginateCount(count);
+      let prePaginationData = {
+        from: dist?.data?.offset,
+        last_page: lastPage,
+        per_page: 5
+      }
+      setPaginationData({...prePaginationData});
       setLoading(false);
     }).catch((err) => {
       swal("Oops!", "Get User API Error", "error");
@@ -85,29 +110,41 @@ const UserPage = () => {
   }
 
   const searchUser = () => {
-    console.log('value', searchName.current.value)
-    setLoading(true);
-    axios.get("/user", {
-      params: {
-        size: 5,
-        page: 0,
-        name: searchName.current.value,
-      }
-    }).then((dist) => {
-      setUserList(dist?.data?.data);
-      setOffset(dist?.data?.offset);
-      setTotalCount(dist?.data?.count);
-      const page = dist?.data?.count / 5;
-      const count = [];
-      for (let i = 0; i < page; i++) {
-        count.push(i + 1);
-      }
-      setPaginateCount(count);
-      setLoading(false);
-    }).catch((err) => {
-      swal("Oops!", "Get User API Error", "error");
-      setLoading(false);
-    });
+    let offsetData = Number(query.get("page")) || 0;
+    offsetData = offsetData > 0 ? offsetData - 1 : offsetData;
+    let searchNameData = searchName.current.value;
+    window.location.href = "/admin/user?page=" + offsetData + "&searchName=" + searchNameData;
+    // console.log('value', searchName.current.value)
+    // setLoading(true);
+    // axios.get("/user", {
+    //   params: {
+    //     size: 5,
+    //     page: 0,
+    //     name: searchName.current.value,
+    //   }
+    // }).then((dist) => {
+    //   setUserList(dist?.data?.data);
+    //   setOffset(dist?.data?.offset);
+    //   setTotalCount(dist?.data?.count);
+    //   const page = dist?.data?.count / 5;
+    //   const count = [];
+    //   let lastPage = 0;
+    //   for (let i = 0; i < page; i++) {
+    //     count.push(i + 1);
+    //     lastPage = i + 1;
+    //   }
+    //   let prePaginationData = {
+    //     from: dist?.data?.offset,
+    //     last_page: lastPage,
+    //     per_page: 5
+    //   }
+    //   setPaginationData({...prePaginationData});
+    //   setPaginateCount(count);
+    //   setLoading(false);
+    // }).catch((err) => {
+    //   swal("Oops!", "Get User API Error", "error");
+    //   setLoading(false);
+    // });
   }
 
   return (
@@ -181,7 +218,7 @@ const UserPage = () => {
                           </tbody>
                         </table>
 
-                        <nav aria-label="Category Page navigation">
+                        {/* <nav aria-label="Category Page navigation">
                           <ul class="pagination justify-content-center">
                             <li className={Number(offset) === 0 ? "page-item disabled" : "page-item"}>
                               <a class="page-link" href="#" tabindex={offset - 1} onClick={() => paginateClick("prev")}>Previous</a>
@@ -198,7 +235,13 @@ const UserPage = () => {
                               <a className={totalCount <= ((Number(offset) + 1) * 5) ? "page-link disabled" : "page-link"} onClick={() => paginateClick("next")}>Next</a>
                             </li>
                           </ul>
-                        </nav>
+                        </nav> */}
+
+
+                        <OscarPagination
+                          paginateUrl="/admin/user?page="
+                          metadata={paginationData}
+                          fetchData={getUserList} />
                       </div>
                     </div>
                   </div>

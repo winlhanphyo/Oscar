@@ -1,27 +1,24 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../store/actions/types";
 import axios from '../../axios/index';
 
 
 const Header = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const storageData = JSON.parse(localStorage.getItem("admin"));
+  const storageData = JSON.parse(localStorage.getItem("admin") || null);
 
   const currentUser = {
-    id : storageData._id,
-    firstName : storageData.firstName,
-    lastName : storageData.lastName,
-    email : storageData.email
+    id : storageData?._id,
+    firstName : storageData?.firstName,
+    lastName : storageData?.lastName,
+    email : storageData?.email
   };
 
   const handleLogout = () => {
     axios.get("/logout").then(response => {
       console.log(response);
       localStorage.removeItem("admin");
-
       dispatch({
         type: LOGOUT
       });
@@ -35,8 +32,13 @@ const Header = () => {
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="navbar-brand-wrapper d-flex justify-content-center">
           <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="/images/logo.svg" alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/images/logo-mini.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo" href="/admin/home">
+              {/* <img src="/images/logo.svg" alt="logo" /> */}
+              Oscar
+              </a>
+            <a class="navbar-brand brand-logo-mini" href="/admin/home">
+              <img src="/images/logo-mini.svg" alt="logo" />
+              </a>
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
               <span class="mdi mdi-sort-variant"></span>
             </button>

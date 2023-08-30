@@ -10,6 +10,8 @@ const EditOrderPage = () => {
   const param = useParams();
   const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
+    customerFirstName: "",
+    customerLastName: "",
     country: "",
     address: "",
     city: "",
@@ -18,7 +20,9 @@ const EditOrderPage = () => {
     status: ""
   });
   const [formData, setFormData] = React.useState({
-    customerName: "",
+    customerFirstName: "",
+    customerLastName: "",
+    accountName: "",
     email: "",
     country: "",
     company: "",
@@ -35,7 +39,9 @@ const EditOrderPage = () => {
     setLoading(true);
     axios.get(`/order/${id}`).then((dist) => {
       setFormData({
-        customerName: dist?.data?.data?.customer?.firstName + dist?.data?.data?.customer?.lastName,
+        customerFirstName: dist?.data?.data?.firstName,
+        customerLastName: dist?.data?.data?.lastName,
+        accountName: dist?.data?.data?.customer?.firstName + " " + dist?.data?.data?.customer?.lastName,
         email: dist?.data?.data?.customer?.email,
         country: dist?.data?.data?.country,
         company: dist?.data?.data?.company,
@@ -55,6 +61,8 @@ const EditOrderPage = () => {
 
   const validation = () => {
     const errorMsg = {
+      customerFirstName: "Delivery First Name is required",
+      customerLastName: "Delivery Last Name is required",
       country: "Country is required",
       address: "Address is required",
       city: "City is required",
@@ -66,7 +74,6 @@ const EditOrderPage = () => {
     let validate = true;
     Object.keys(errorMsg).map((dist) => {
       if ((dist === "count" && Number(formData[dist]) < 0) || !formData[dist]) {
-        console.log('formData', formData[dist]);
         preErrorForm[dist] = errorMsg[dist];
         validate = false;
       } else {
@@ -82,9 +89,12 @@ const EditOrderPage = () => {
     const validate = validation();
     console.log('validate', validate);
     if (validate) {
+      setLoading(true);
       let id = param['id'];
       const user = JSON.parse(localStorage.getItem("admin"));
       const data = {
+        firstName: formData.customerFirstName,
+        lastName: formData.customerLastName,
         country: formData.country,
         company: formData.company,
         address: formData.address,
@@ -97,10 +107,12 @@ const EditOrderPage = () => {
       };
       axios.post(`/order/${id}`, data).then((dist) => {
         console.log("Updated Order")
+        setLoading(false);
         swal("Success", "Order is updated successfully", "success").then(() => {
           window.location.href = "/admin/order";
         });
       }).catch((err) => {
+        setLoading(false);
         swal("Oops!", err.toString(), "error");
       })
     }
@@ -142,8 +154,22 @@ const EditOrderPage = () => {
                     <h4 class="card-title">Update Order</h4>
                     <form class="forms-sample">
                       <div class="form-group">
-                        <label for="customerName">Customer Name</label>
-                        <input type="text" disabled name="customerName" className={errorForm?.customerName ? `form-control is-invalid` : `form-control`} value={formData.customerName} onChange={handleChange} id="customerName" placeholder="customer name" />
+                        <label for="customerFirstName">Customer First Name</label>
+                        <input type="text" name="customerFirstName" className={errorForm?.customerFirstName ? `form-control is-invalid` : `form-control`} value={formData.customerFirstName} onChange={handleChange} id="customerFirstName" placeholder="Customer First name" />
+                        {errorForm.customerFirstName ? (
+                          <div class="invalid-feedback">{errorForm.customerFirstName}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="customerLastName">Customer Last Name</label>
+                        <input type="text" name="customerLastName" className={errorForm?.customerLastName ? `form-control is-invalid` : `form-control`} value={formData.customerLastName} onChange={handleChange} id="customerLastName" placeholder="Customer Last name" />
+                        {errorForm.customerLastName ? (
+                          <div class="invalid-feedback">{errorForm.customerLastName}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="accountName">Account Name</label>
+                        <input type="text" disabled name="accountName" className={errorForm?.accountName ? `form-control is-invalid` : `form-control`} value={formData.accountName} onChange={handleChange} id="accountName" placeholder="account name" />
                       </div>
 
                       <div class="form-group">

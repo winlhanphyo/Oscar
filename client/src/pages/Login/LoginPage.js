@@ -82,9 +82,9 @@ const LoginPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLoading(true);
     const validate = validation();
     if (validate) {
+      setLoading(true);
       axios.post('/login', formData).then((response) => {
         console.log(response);
         setLoading(false);
@@ -173,7 +173,7 @@ const LoginPage = () => {
                   <button class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                     Submit
                   </button>
-                  <Link to="/forgetpassword" class="flex-l-m stext-103 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Forget Your Password?</Link><hr />
+                  <Link to="/forget-password" class="flex-l-m stext-103 size-121 p-lr-15 trans-04 pointer text-dark p-t-30">Forget Your Password?</Link><hr />
                   <Link to="/create/account" class ="flex-c-m stext-101 size-121 p-lr-15 trans-04 pointer text-dark">Create Account</Link>
                 </form>
               </div>

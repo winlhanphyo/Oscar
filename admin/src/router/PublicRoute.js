@@ -6,9 +6,7 @@ const PublicRoute = ({ isLoggedIn, component: Component, ...rest }) => (
   <Route
     {...rest}
     component={props => (
-      <div className="container">
         <Component {...props} />
-      </div>
     )}
   />
 );

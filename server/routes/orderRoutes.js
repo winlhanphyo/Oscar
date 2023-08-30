@@ -17,7 +17,8 @@ router
       check("city").notEmpty().withMessage("City must not be empty"),
       check("postalCode").notEmpty().withMessage("Postal Code must not be empty"),
       check("phone").notEmpty().withMessage("Phone must not be empty"),
-      check("orderDetail").notEmpty().withMessage("Order Detail must not be empty")
+      check("orderDetail").notEmpty().withMessage("Order Detail must not be empty"),
+      check("domainUrl").notEmpty().withMessage("Domain URL must not be empty")
     ],
     orderController.createOrder);
 

@@ -17,32 +17,46 @@ const ForgetPasswordUpdate = () => {
     newPassword: '',
     comfirmNewPassword: '',
   });
-  const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(true);
   const { token, userId } = useParams();
-  const dispatch = useDispatch();
-  let validation = (value, name) => {
-    if (name === 'newPassword') {
-      if (!value) {
-        return 'New Password is required';
-      } else if (value.length > 10) {
-        return 'New Password is greater than 10';
+  const [showPassword, setShowPassword] = React.useState(false);
+
+
+  const validation = (error = true) => {
+    const keys = ["newPassword", "comfirmNewPassword"];
+
+    let preErrorForm = errorForm;
+    let validate = true;
+    keys.map((dist) => {
+      let value = formData[dist];
+      if (dist === 'newPassword') {
+        if (!value) {
+          preErrorForm[dist] = 'New Password is required';
+          validate = false;
+        } else if (value.length > 10) {
+          preErrorForm[dist] = 'New Password is greater than 10';
+          validate = false;
+        }
       }
-      return '';
-    }
-    if (name === 'comfirmNewPassword') {
-      if (!value) {
-        return 'Comfirm Password is required';
-      } else if (value.length > 10) {
-        return 'Comfirm Password is greater than 10';
-      } else if (value !== formData.newPassword) {
-        return 'Comfirm Password not equal with New Password';
+      if (dist === 'comfirmNewPassword') {
+        if (!value) {
+          preErrorForm[dist] = 'Comfirm Password is required';
+          validate = false;
+        } else if (value.length > 10) {
+          preErrorForm[dist] = 'Comfirm Password is greater than 10';
+          validate = false;
+        } else if (value !== formData.newPassword) {
+          preErrorForm["comfirmNewPassword"] = 'Comfirm Password not equal with New Password';
+          preErrorForm["newPassword"] = 'New Password not equal with Confirm Password';
+          validate = false;
+        }
       }
-      return '';
-    }
+    });
+    setErrorForm({ ...preErrorForm });
+    return validate;
   }
 
   /**
-   * handle textbox change register button disabled enabled.
+   * handle textbox change register button.
    */
   const handleChange = (event) => {
     const name = event.target.name;
@@ -50,7 +64,7 @@ const ForgetPasswordUpdate = () => {
     let preFormData = formData;
     preFormData[name] = value;
     setFormData({ ...preFormData });
-    const error = validation(value, name);
+    const error = validation(false);
     let preErrorForm = errorForm;
     if (!error) {
       preErrorForm[name] = error;
@@ -58,68 +72,56 @@ const ForgetPasswordUpdate = () => {
         ...preErrorForm
       });
     }
-    if (!error && formData.newPassword && formData.comfirmNewPassword) {
-      setDisabledLoginBtn(false);
-    } else {
-      setDisabledLoginBtn(true);
-    }
   };
 
-  const handleBlur = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    const error = validation(value, name);
-    let preErrorForm = errorForm;
-    if (error) {
-      preErrorForm[name] = error;
-      setErrorForm({
-        ...preErrorForm
+  const handleClick = (event) => {
+    event.preventDefault();
+    const validate = validation();
+    if (validate) {
+      setLoading(true);
+      const param = {
+        password: formData.newPassword
+      };
+      axios.post(`/password-reset-update/${userId}/${token}`, param).then(response => {
+        setLoading(false);
+        if (response.status === 200) {
+          swal("Success", "Password is reset successfully", "success").then(() => {
+            window.location.href = "/admin/login";
+          });
+        }
+      }).catch(err => {
+        setLoading(false);
+        swal("Oops!", "Password Reset API Error", "error");
       });
+    } else {
+      setLoading(false);
     }
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setLoading(true);
-    setDisabledLoginBtn(true);
-    const param = {
-      password: formData.newPassword
-    };
-    axios.post(`/password-reset-update/${userId}/${token}`, param).then(response => {
-      setLoading(false);
-      setDisabledLoginBtn(false);
-      if (response.status === 200) {
-        swal("Success", "Password is reset successfully", "success").then(() => {
-          window.location.href = "/admin/login";
-        });
-      }
-    }).catch(err => {
-      setLoading(false);
-      setDisabledLoginBtn(false);
-      swal("Oops!", "Password Reset API Error", "error");
-    });
+  const handleChangeShowPassword = (event) => {
+    const checked = event.target.checked;
+    setShowPassword(checked);
   }
 
   return (
     <Fragment>
       <video autoPlay loop muted className={loading ? styles.backdrop + ' shadow ' + styles.videoBg : styles.videoBg}>
-        <source src='../../../login/phone_using.mp4' type='video/mp4'></source>
+        <source src='../../../login/login.mp4' type='video/mp4'></source>
       </video>
 
       {loading && <LoadingSpinner />}
 
       <div className={loading ? styles.container + ' shadow ' + styles.backdrop : styles.container}>
         <p className={styles.ForgetPasswordUpdateTtl}>Change Password</p>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Control
               required
               name="newPassword"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="New Password"
               value={formData.newPassword}
               onChange={handleChange}
-              onBlur={handleBlur}
               className={styles.formControl}
               isValid={!errorForm.newPassword}
               isInvalid={errorForm.newPassword}
@@ -131,11 +133,10 @@ const ForgetPasswordUpdate = () => {
             <Form.Control
               required
               name="comfirmNewPassword"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Confirm New Password"
               value={formData.comfirmNewPassword}
               onChange={handleChange}
-              onBlur={handleBlur}
               className={styles.formControl}
               isValid={!errorForm.comfirmNewPassword}
               isInvalid={errorForm.comfirmNewPassword}
@@ -143,8 +144,20 @@ const ForgetPasswordUpdate = () => {
             {errorForm.comfirmNewPassword ? (
               <span className='text-danger mt-4'>{errorForm.comfirmNewPassword}</span>) : ''}
           </Form.Group>
+          <Form.Group>
+          <div key={`default-checkbox}`} className="mb-3">
+            <Form.Check
+              type="checkbox"
+              id={`default-checkbox}`}
+              label={`Show Password`}
+              onChange={handleChangeShowPassword}
+              value={showPassword}
+            />
+          </div>
+          </Form.Group>
+          
           <div className="d-flex justify-content-around mt-5">
-            <Button disabled={disabledLoginBtn} type="submit" className={styles.forgetBtn}>
+            <Button onClick={handleClick} className={styles.forgetBtn}>
               Change
             </Button>
           </div>

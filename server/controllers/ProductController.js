@@ -117,11 +117,11 @@ const updateProduct = async (req, res) => {
         }
       }
     }
-    product.name = req.body.name;
-    product.description = req.body.description;
-    product.category = req.body.category;
-    product.price = req.body.price;
-    product.count = req.body.count;
+    req.body?.name ? product.name = req.body.name : null;
+    req.body.description ? product.description = req.body.description : null;
+    req.body?.category ? product.category = req.body.category : null;
+    req.body?.price ? product.price = req.body.price : null;
+    req.body?.count ? product.count = req.body.count : null;
     product.updated_user_id = req.body.updated_user_id;
     req.body?.status ? product.status = req.body.status : null;
     const result = await product.save();

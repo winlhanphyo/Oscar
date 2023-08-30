@@ -1,21 +1,13 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import $ from "jquery";
-import { imageURL } from '../../utils/constants/constant';
 import styles from './Header.module.scss';
-import axios from '../../axios/index';
-
 
 
 const Header = () => {
-  const [value, setValue] = React.useState(0);
+  const searchName = React.useRef();
   const history = useHistory();
   const storageData = JSON.parse(localStorage.getItem("user"));
-
-  const indicatorStyle = {
-    lineHeight: '5rem', // Adjust the line height as needed
-    color: 'black'
-  };
 
   const searchModal = (e) => {
     e.preventDefault();
@@ -27,6 +19,21 @@ const Header = () => {
     e.preventDefault();
     $('.modal-search-header').removeClass('show-modal-search');
     $('.js-show-modal-search').css('opacity','1');
+  }
+
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      const value = e.target.value;
+      history.push({
+        pathname: '/shop/search',
+        search: `?searchName=${value}`
+      });
+    }
+  }
+
+  const showMenu = () => {
+    $(this).toggleClass('is-active');
+    $('.menu-mobile').slideToggle();
   }
 
   return (
@@ -48,7 +55,7 @@ const Header = () => {
               <div class="menu-desktop">
                 <ul class="main-menu">
                   <li className={window.location.href.indexOf("home") !== -1 ? "active-menu" : ""}>
-                    <Link to="/home">Home <i class="fa fa-angle-down p-l-7" aria-hidden="true"></i></Link>
+                    <Link to="/home">Home</Link>
                     {/* <ul class="sub-menu">
 									<li><a href="index1.html">Artista One</a></li>
 									<li><a href="index2.html">Artista Two</a></li>
@@ -56,7 +63,7 @@ const Header = () => {
 								</ul> */}
                   </li>
                   <li className={window.location.href.indexOf("shop") !== -1 ? "active-menu" : ""}>
-                    <Link to="/shop">Shop <i class="fa fa-angle-down p-l-7" aria-hidden="true"></i></Link>
+                    <Link to="/shop">Shop </Link>
                     {/* <ul class="sub-menu">
 									<li><a href="product.html">Item One</a></li>
 									<li><a href="product.html">Item Two</a></li>
@@ -65,6 +72,10 @@ const Header = () => {
                   </li>
                   <li className={window.location.href.indexOf("about") !== -1 ? "active-menu" : ""}>
                     <Link to="/about">About</Link>
+                  </li>
+
+                  <li>
+                    <Link to="/artist">Artist</Link>
                   </li>
 
                   <li className={window.location.href.indexOf("contact") !== -1 ? "active-menu" : ""}>
@@ -117,19 +128,19 @@ const Header = () => {
 
             <div class="flex-c-m h-full p-lr-10 bor5">
               <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="3">
-                <i class="zmdi zmdi-shopping-cart"></i>
+              <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
               </div>
             </div>
 
-            <div class="flex-c-m h-full p-lr-10 bor5">
+            {/* <div class="flex-c-m h-full p-lr-10 bor5">
               <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
-                <a href="login.html" alt="Login"><i class="zmdi zmdi-account-o text-dark"></i></a>
+                <Link to="/login" alt="Login"><i class="zmdi zmdi-account-o text-dark"></i></Link>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* <!-- Button show menu --> */}
-          <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+          <div class="btn-show-menu-mobile hamburger hamburger--squeeze" onClick={showMenu}>
             <span class="hamburger-box">
               <span class="hamburger-inner"></span>
             </span>
@@ -147,27 +158,35 @@ const Header = () => {
                 <li><a href="index2.html">Artista Two</a></li>
                 <li><a href="index3.html">Artista Three</a></li>
               </ul> */}
-              <span class="arrow-main-menu-m">
+              {/* <span class="arrow-main-menu-m">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </span>
+              </span> */}
             </li>
             <li>
               <Link to="/shop">Shop</Link>
-              <ul class="sub-menu-m">
+              {/* <ul class="sub-menu-m">
                 <li><a href="product.html">Item One</a></li>
                 <li><a href="product.html">Item Two</a></li>
                 <li><a href="product.html">Item Three</a></li>
               </ul>
               <span class="arrow-main-menu-m">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </span>
+              </span> */}
             </li>
             <li>
               <Link to="/about">About</Link>
             </li>
 
             <li>
+              <Link to="/artist">Artist</Link>
+            </li>
+
+            <li>
               <Link to="/contact">Contact</Link>
+            </li>
+
+            <li>
+              <Link to="/login">Login</Link>
             </li>
           </ul>
         </div>
@@ -183,7 +202,7 @@ const Header = () => {
               <button class="flex-c-m trans-04">
                 <i class="zmdi zmdi-search"></i>
               </button>
-              <input class="plh3" type="text" name="search" placeholder="Search..." />
+              <input class="plh3" type="text" name="search" placeholder="Search..." ref={searchName} onKeyDown={handleSearchKeyDown} />
             </form>
           </div>
         </div>

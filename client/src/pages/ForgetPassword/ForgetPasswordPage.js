@@ -57,10 +57,14 @@ const ForgetPasswordPage = () => {
 
   const handleClick = (event) => {
     event.preventDefault();
-    setLoading(true);
     const validate = validation();
     if (validate) {
-      axios.post('/forget-password', formData).then((response) => {
+      setLoading(true);
+      let currentUrl = window.location.href;
+      let domain = currentUrl.split("/forget-password")[0];
+      let param = formData;
+      param.domainUrl = domain;
+      axios.post('/forget-password', param).then((response) => {
         console.log(response);
         setLoading(false);
         swal("Success", "Password Reset link is sent to your email successfully", "success").then(() => {

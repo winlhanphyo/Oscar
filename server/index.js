@@ -18,6 +18,7 @@ const productRoute = require("./routes/productRoutes");
 const contactRoute = require("./routes/contactRoutes");
 const userRoute = require("./routes/userRoutes");
 const orderRoute = require("./routes/orderRoutes");
+const dashboardRoute = require("./routes/dashboardRoutes");
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -128,45 +129,74 @@ mongoose.connect("mongodb://localhost:27017/Oscar", {
   //   res.status(200).end();
   // });
 
-  app.post("/api/create-checkout-session", async (req, res) => { 
+  app.post('/webhook', async (req, res) => {
+    const payload = req.body;
+    const sig = req.headers['stripe-signature'];
+  
+    let event;
+  
     try {
-      const product = req.body;
-      console.log('product', product);
-      const session = await stripe.checkout.sessions.create({ 
-        payment_method_types: ["card"], 
-        line_items: [ 
-          { 
-            price_data: { 
-              currency: "usd", 
-              product_data: { 
-                name: product.name, 
-              }, 
-              unit_amount: product.price * 100, 
-            }, 
-            quantity: product.quantity,
-          }, 
-        ],
-        mode: "payment",
-        // shipping_address_collection: {
-        //   allowed_countries: ['US', 'SG', "IT"],
-        // },
-        // custom_text: {
-        //   shipping_address: {
-        //     message: 'Please note that we can\'t guarantee 2-day delivery for PO boxes at this time.',
-        //   },
-        //   submit: {
-        //     message: 'We\'ll email you instructions on how to get started.',
-        //   },
-        // },
-        success_url: "http://localhost:3000/success", 
-        cancel_url: "http://localhost:3000/cancel", 
-      }); 
-      res.json({ id: session.id }); 
+      event = stripe.webhooks.constructEvent(payload, sig, process.env.STRIPE_SECRET_KEY);
     } catch (err) {
-      console.log('Stripe API Error', err);
-      res.status(400).json({msg: err.toString()});
+      return res.status(400).send(`Webhook Error: ${err.message}`);
     }
+  
+    // Handle the event based on its type
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
+      console.log('checkout complete------');
+      // Check the payment status and take appropriate actions
+      if (session.payment_status === 'paid') {
+        // Payment was successful
+        console.log('Paid----------');
+      } else if (session.payment_status === 'unpaid') {
+        // Payment failed
+        console.log('Unpaid--------------');
+      }
+    }
+  
+    res.status(200).end();
   });
+
+  // app.post("/api/create-checkout-session", async (req, res) => { 
+  //   try {
+  //     const product = req.body;
+  //     console.log('product', product);
+  //     const session = await stripe.checkout.sessions.create({ 
+  //       payment_method_types: ["card"], 
+  //       line_items: [ 
+  //         { 
+  //           price_data: { 
+  //             currency: "usd", 
+  //             product_data: { 
+  //               name: product.name, 
+  //             }, 
+  //             unit_amount: product.price * 100, 
+  //           }, 
+  //           quantity: product.quantity,
+  //         }, 
+  //       ],
+  //       mode: "payment",
+  //       // shipping_address_collection: {
+  //       //   allowed_countries: ['US', 'SG', "IT"],
+  //       // },
+  //       // custom_text: {
+  //       //   shipping_address: {
+  //       //     message: 'Please note that we can\'t guarantee 2-day delivery for PO boxes at this time.',
+  //       //   },
+  //       //   submit: {
+  //       //     message: 'We\'ll email you instructions on how to get started.',
+  //       //   },
+  //       // },
+  //       success_url: "http://localhost:3000/success", 
+  //       cancel_url: "http://localhost:3000/cancel", 
+  //     }); 
+  //     res.json({ id: session.id }); 
+  //   } catch (err) {
+  //     console.log('Stripe API Error', err);
+  //     res.status(400).json({msg: err.toString()});
+  //   }
+  // });
 
   const stripeChargeCallback = res => (stripeErr, stripeRes) => {
     if (stripeErr) {
@@ -194,7 +224,8 @@ mongoose.connect("mongodb://localhost:27017/Oscar", {
   app.use('/api/product', productRoute);
   app.use('/api/contact', contactRoute);
   app.use('/api/user', authenticate, userRoute);
-  app.use('/api/order', authenticate, orderRoute);
+  app.use('/api/order', orderRoute);
+  app.use('/api/dashboard', dashboardRoute);
   app.use("/api", authRoute);
   
   app.listen(process.env.PORT || 4000, () => {

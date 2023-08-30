@@ -14,11 +14,12 @@ const getOrder = async (
     let condition = { deleted_at: null };
     let aggregatePipeline = [];
     if (name) {
+      console.log('name', name);
       aggregatePipeline.push({
         $match: {
           $or: [
-            { "customer.firstName": name },
-            { "customer.lastName": name }
+            { firstName: { $regex: name, $options: 'i' } },
+            { lastName: { $regex: name, $options: 'i' } }
           ]
         }
       });
@@ -219,9 +220,10 @@ const checkOut = async (productList, orderData, orderDetailData, res) => {
       //     message: 'We\'ll email you instructions on how to get started.',
       //   },
       // },
-      success_url: "http://localhost:3100/payment/success",
-      cancel_url: "http://localhost:3100/payment/cancel",
+      success_url: orderData.domainUrl + "/payment/success",
+      cancel_url: orderData.domainUrl + "/payment/cancel",
     });
+    delete orderData?.domainUrl
     orderCreateData(orderData, orderDetailData, session, res);
   } catch (err) {
     console.log('Stripe API Error', err);

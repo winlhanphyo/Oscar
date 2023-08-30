@@ -23,13 +23,13 @@ const sendEmail = async (email, subject, text) => {
       secure: false,
       requireTLS: true,
       auth: {
-        user: "winlhanphyo2@gmail.com",
-        pass: "hzankrhkuwdupeao",
+        user: "spprt.oscar@gmail.com",
+        pass: "cdbxlblhmnpobpyl",
       },
     });
 
     await transporter.sendMail({
-      from: "winlhanphyo2@gmail.com",
+      from: "spprt.oscar@gmail.com",
       to: email,
       subject: subject,
       text: text,

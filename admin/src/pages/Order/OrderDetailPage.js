@@ -43,7 +43,16 @@ const OrderDetailPage = () => {
                     <div class="container">
                       <div className={`row ${styles.orderInfoRow}`}>
                         <div class="col-sm-4">
-                          Customer:
+                          Customer Name:
+                        </div>
+                        <div class="col-sm-8">
+                          {`${orderDetail?.firstName} ${orderDetail?.lastName}`}
+                        </div>
+                      </div>
+
+                      <div className={`row ${styles.orderInfoRow}`}>
+                        <div class="col-sm-4">
+                          Account Name:
                         </div>
                         <div class="col-sm-8">
                           {`${orderDetail?.customer?.firstName} ${orderDetail?.customer?.lastName}`}

@@ -94,10 +94,10 @@ const CreateAccountPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLoading(true);
 
     const validate = validation();
     if (validate) {
+      setLoading(true);
       axios.post('/signup', formData).then((response) => {
         setLoading(false);
         if (response.status === 200) {

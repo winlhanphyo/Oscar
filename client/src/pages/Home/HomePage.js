@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './HomePage.module.scss';
+// import styles from './HomePage.module.scss';
 import axios from '../../axios/index';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';

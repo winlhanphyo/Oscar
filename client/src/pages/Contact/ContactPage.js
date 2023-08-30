@@ -43,9 +43,9 @@ const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
     const validate = validation();
     if (validate) {
+      setLoading(true);
       axios.post("/contact", formData).then((dist) => {
         console.log("Created Product")
         setLoading(false);
