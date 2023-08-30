@@ -16,7 +16,6 @@
     "halfmoon": "^1.1.1",
     "jquery": "^3.7.0",
     "moment": "^2.29.4",
-    "node-sass": "^8.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
@@ -55,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "node-sass": "^7.0.3",
     "redux-devtools-extension": "^2.13.9"
   }
 }
