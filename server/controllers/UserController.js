@@ -70,7 +70,7 @@ const createUser = async (req, res) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password,
+      password: await bcrypt.hash(req.body.password, 12),
       type: req.body.type,
       created_user_id: req.body.created_user_id,
     }
@@ -108,7 +108,7 @@ const updateUser = async (req, res) => {
     req.body?.firstName ? user.firstName = req.body.firstName : null;
     req.body?.lastName ? user.lastName = req.body.lastName : null;
     req.body?.email ? user.email = req.body.email : null;
-    req?.body?.password ? user.password = req.body.password : null;
+    req?.body?.password ? user.password = await bcrypt.hash(req.body.password, 12) : null;
     req?.body?.type ? user.type = req.body.type : null;
     user.updated_user_id = req.body.updated_user_id;
     const result = await user.save();
