@@ -27,6 +27,7 @@ const getDashboardData = async (
       status: 1
     });
   } catch (err) {
+    console.log(err);
     return res.status(400).json({
       message: err.toString(),
       success: false
@@ -237,9 +238,15 @@ const orders = await Order.find({
 });
 
 // Extract order IDs and convert them to ObjectIds
-const orderDetailIdList = orders.map((order) => new mongoose.Types.ObjectId(order.orderDetail.toString()));
-
-console.log('orderDetailIdList: ', orderDetailIdList);
+const orderDetailIdList = orders
+  .map((order) => {
+    if (order?.orderDetail && mongoose.Types.ObjectId.isValid(order.orderDetail.toString())) {
+      return new mongoose.Types.ObjectId(order.orderDetail.toString());
+    }
+    // Handle cases where order.orderDetail is not valid or missing
+    return null; // or any other appropriate value or handling
+  })
+  .filter((objectId) => objectId !== null);
 
 const condition = {
   $match: {
