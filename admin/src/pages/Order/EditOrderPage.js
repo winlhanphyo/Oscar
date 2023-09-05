@@ -31,7 +31,8 @@ const EditOrderPage = () => {
     city: "",
     postalCode: "",
     phone: "",
-    status: ""
+    status: "",
+    payment: "false"
   });
 
   React.useEffect(() => {
@@ -50,7 +51,8 @@ const EditOrderPage = () => {
         city: dist?.data?.data?.city,
         postalCode: dist?.data?.data?.postalCode,
         phone: dist?.data?.data?.phone,
-        status: dist?.data?.data?.status
+        status: dist?.data?.data?.status,
+        payment: dist?.data?.data?.payment
       });
       setLoading(false);
     }).catch((err) => {
@@ -103,6 +105,7 @@ const EditOrderPage = () => {
         postalCode: formData.postalCode,
         phone: formData.phone,
         status: formData.status,
+        payment: formData.payment,
         updated_user_id: user._id
       };
       axios.post(`/order/${id}`, data).then((dist) => {
@@ -228,6 +231,16 @@ const EditOrderPage = () => {
                           <option value="new">new</option>
                           <option value="shipping">shipping</option>
                           <option value="delivered">delivered</option>
+                        </select>
+                        {errorForm.status ? (
+                          <div class="invalid-feedback">{errorForm.status}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="payment">Payment</label>
+                        <select className={`custom-select`} id="payment" name="payment" value={formData.payment} onChange={handleChange}>
+                          <option value="true">Done</option>
+                          <option value="false">Not Paid</option>
                         </select>
                         {errorForm.status ? (
                           <div class="invalid-feedback">{errorForm.status}</div>) : ''}

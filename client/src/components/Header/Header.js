@@ -8,6 +8,20 @@ const Header = () => {
   const searchName = React.useRef();
   const history = useHistory();
   const storageData = JSON.parse(localStorage.getItem("user"));
+  const [cartCount, setCartCount] = React.useState(0);
+
+
+  React.useEffect(() => {
+    try {
+      let cart = localStorage.getItem("cart") || null;
+      if (cart) {
+        cart = JSON.parse(cart);
+        setCartCount(cart?.length || 0);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   const searchModal = (e) => {
     e.preventDefault();
@@ -93,7 +107,7 @@ const Header = () => {
                 </div>
 
                 <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-                  <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="3">
+                  <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={cartCount}>
                     <Link to="/cart"><i class="zmdi zmdi-shopping-cart text-dark"></i></Link>
                   </div>
                 </div>

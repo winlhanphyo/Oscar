@@ -2,12 +2,13 @@ import React from 'react';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
 import { loadStripe } from "@stripe/stripe-js";
-import { imageURL, countryList } from '../../utils/constants/constant';
+import { countryList } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
+import { imageURL } from '../../utils/constants/constant';
 
 const CheckoutPage = () => {
   const [loading, setLoading] = React.useState(false);
@@ -137,6 +138,8 @@ const CheckoutPage = () => {
 
         if (result.error) {
           console.log(result.error);
+        } else {
+          localStorage.removeItem("cart");
         }
       }).catch((err) => {
         swal("Oops!", err.toString(), "error");

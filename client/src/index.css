@@ -23,3 +23,7 @@ code {
 .is-invalid {
   margin-bottom: 0px !important;
 }
+
+.visually-hidden {
+  display: none !important;
+}

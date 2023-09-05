@@ -56,7 +56,7 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/admin/forget-password-update/:userId/:token" component={ForgetPasswordUpdate} />
         <PrivateRoute path="/admin/users" component={UserPage} />
         <PrivateRoute path="/admin/profile" component={ProfilePage} />
-        <PublicRoute path="/admin/home" component={HomePage} />
+        <PrivateRoute path="/admin/home" component={HomePage} />
 
         {/* <PrivateRoute path="/success" component={Success} />
         <PrivateRoute path="/cancel" component={Cancel} />

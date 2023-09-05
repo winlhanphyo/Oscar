@@ -5,13 +5,13 @@ import 'bootstrap';
 import { useLocation } from 'react-router-dom';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
-import { imageURL } from '../../utils/constants/constant';
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
 import StockDialog from "../../components/StockDialog/StockDialog";
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 import { ImageModal } from '../../components/ImageModal/ImageModal';
 import OscarPagination from '../../components/OscarPagination/OscarPagination';
+import { imageURL } from '../../utils/constants/constant';
 
 
 function useQuery() {
@@ -211,6 +211,7 @@ const ProductPage = () => {
                               <th>Count</th>
                               <th>Status</th>
                               <th>Image</th>
+                              <th>Artist Name</th>
                               <th>Created At</th>
                               <th>Updated At</th>
                               <th>Action</th>
@@ -221,18 +222,29 @@ const ProductPage = () => {
                               return (
                                 <tr key={index}>
                                   <td>{((index + 1) + (5 * Number(offset)))}</td>
-                                  <td>{data?.name}</td>
+                                  <td style={{width: "20%"}}>{data?.name}</td>
                                   <td>{data?.category?.name}</td>
                                   <td>{data?.price}</td>
                                   <td>{data?.count}</td>
                                   <td>{data?.status}</td>
                                   <td><img onClick={() => showImageModal(imageURL + data.image)} src={imageURL + data.image} /></td>
+                                  <td style={{width: "10%"}}>{data?.artistName}</td>
                                   <td>{moment(data.createdAt).format('YYYY-MM-DD')}</td>
                                   <td>{moment(data.updatedAt).format('YYYY-MM-DD')}</td>
                                   <td>
                                     <button type="button" class="btn btn-social-icon btn-outline-facebook" onClick={() => editProduct(data._id)}><i class="mdi mdi-pencil"></i></button>
-                                    <button type="button" class="btn btn-social-icon btn-outline-facebook" data-toggle="modal" data-target="#confirmModal" onClick={() => showDeleteDialog(data._id)}><i class="mdi mdi-delete"></i></button>
-                                    <button type="button" class="btn btn-social-icon btn-outline-facebook" data-toggle="modal" data-target="#stockModal" onClick={() => showStockDialog(data)}><i class="mdi mdi-plus"></i></button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-social-icon btn-outline-facebook"
+                                      data-toggle="modal" data-target="#confirmModal"
+                                      disabled={data.category.name === "Home"}
+                                      onClick={() => showDeleteDialog(data._id)}><i class="mdi mdi-delete"></i></button>
+                                    <button type="button" class="btn btn-social-icon btn-outline-facebook"
+                                      data-toggle="modal"
+                                      data-target="#stockModal"
+                                      onClick={() => showStockDialog(data)}>
+                                        <i class="mdi mdi-plus"></i>
+                                    </button>
                                   </td>
                                 </tr>
                               )

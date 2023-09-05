@@ -54,6 +54,10 @@ const orderSchema = new mongoose.Schema({
     require: true,
     ref: "orderDetail"
   }],
+  payment: {
+    type: Boolean,
+    default: false
+  },
   created_user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user"

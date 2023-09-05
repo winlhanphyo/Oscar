@@ -1,17 +1,18 @@
 import React from 'react';
 import swal from 'sweetalert';
 import { useParams } from 'react-router-dom';
+import { imageURL } from '../../utils/constants/constant';
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Header/Sidebar";
 import axios from '../../axios/index';
 import styles from './Product.module.scss';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import { imageURL } from '../../utils/constants/constant';
 
 const EditProductPage = () => {
   const param = useParams();
   const [loading, setLoading] = React.useState(false);
   const [categoryList, setCategoryList] = React.useState([]);
+  const [initCategoryName, setInitCategoryName] = React.useState(null);
   const [preview, setPreview] = React.useState(null);
   const [errorForm, setErrorForm] = React.useState({
     name: "",
@@ -24,6 +25,7 @@ const EditProductPage = () => {
     name: "",
     description: "",
     category: "",
+    artistName: "",
     price: "",
     count: "",
     status: "available"
@@ -37,10 +39,12 @@ const EditProductPage = () => {
         name: dist?.data?.data?.name,
         description: dist?.data?.data?.description,
         category: dist?.data?.data?.category?._id,
+        artistName: dist?.data?.data?.artistName,
         price: dist?.data?.data?.price,
         count: dist?.data?.data?.count,
         status: dist?.data?.data?.status
       });
+      setInitCategoryName(dist?.data?.data?.category?.name);
       setLoading(false);
       const img = dist?.data?.data?.image ? imageURL + dist?.data?.data?.image : null;
       setPreview(img);
@@ -49,7 +53,11 @@ const EditProductPage = () => {
       setLoading(false);
     })
 
-    axios.get("/category").then((dist) => {
+    let categoryParam = {
+      size: "all"
+    };
+
+    axios.get("/category", {params: categoryParam}).then((dist) => {
       const result = [];
       dist?.data?.data?.map((cat, index) => {
         result.push({
@@ -104,6 +112,9 @@ const EditProductPage = () => {
       formParam.append('count', formData.count);
       if (formData?.image) {
         formParam.append('image', formData.image);
+      }
+      if (formData?.artistName) {
+        formParam.append('artistName', formData.artistName);
       }
       formParam.append('category', formData.category);
       formParam.append('created_user_id', user._id);
@@ -184,15 +195,33 @@ const EditProductPage = () => {
 
                       <div class="form-group">
                         <label for="category">Category</label>
-                        <select className={errorForm?.category ? `custom-select is-invalid` : `custom-select`} id="category" name="category" value={formData.category} onChange={handleChange}>
+                        <select
+                          disabled={initCategoryName === "Home"}
+                          className={errorForm?.category ? `custom-select is-invalid` : `custom-select`}
+                          id="category"
+                          name="category"
+                          value={formData.category}
+                          onChange={handleChange}>
                           <option value="" selected>Choose...</option>
                           {categoryList.map((data) => {
-                            return (<option value={data.id}>{data.name}</option>)
+                            return (
+                              <>
+                              {
+                                ((initCategoryName === "Home" && data.name === "Home") || (initCategoryName !== "Home" && data.name !== "Home")) &&
+                              <option value={data.id}>{data.name}</option>
+                              }
+                              </>
+                            )
                           })
                           }
                         </select>
                         {errorForm.category ? (
                           <div class="invalid-feedback">{errorForm.category}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="artistName">Artist Name</label>
+                        <input type="text" name="artistName" className={`form-control`} value={formData.artistName} onChange={handleChange} id="name" placeholder="artist name"/>
                       </div>
 
                       <div class="form-group">
@@ -220,7 +249,14 @@ const EditProductPage = () => {
                       <div class="form-group">
                         <label for="image">Image</label>
                         <div class="custom-file">
-                          <input type="file" name="image" className="custom-file-input" id="image" onChange={handleFileSelected} required />
+                          <input
+                            type="file"
+                            name="image"
+                            className="custom-file-input"
+                            id="image"
+                            disabled={initCategoryName === "Home"}
+                            onChange={handleFileSelected}
+                            required />
                           <label class="custom-file-label" for="validatedCustomFile">{formData?.image?.name ? formData.image.name : "Choose file..."}</label>
                         </div>
                         {preview &&

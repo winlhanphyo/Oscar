@@ -8,6 +8,7 @@ import axios from '../../axios/index';
 
 const EditUserPage = () => {
   const param = useParams();
+  const user = JSON.parse(localStorage.getItem("admin"));
   const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     firstName: "",
@@ -146,7 +147,7 @@ const EditUserPage = () => {
 
                       <div class="form-group">
                         <label for="type">Type</label>
-                        <select className="custom-select" id="type" name="type" value={formData.type} onChange={handleChange}>
+                        <select className="custom-select" id="type" name="type" value={formData.type} onChange={handleChange} disabled={param['id'] === user._id.toString()}>
                           <option value="Admin">Admin</option>
                           <option value="User" selected>User</option>
                         </select>

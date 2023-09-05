@@ -9,21 +9,23 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const OscarPagination = ({ metadata, paginateUrl }) => {
+const OscarPagination = ({ metadata, paginateUrl, size }) => {
   let query = useQuery();
   const [paginate, setPagination] = React.useState(null);
   const [items, setItems] = React.useState([]);
   const [pageNo, setPageNo] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(Number(size) || 5);
 
   React.useEffect(() => {
-    setPagination({...metadata});
+    setPagination({ ...metadata });
 
     let loopCount = metadata?.last_page;
-    if (metadata?.last_page > 5) {
-      loopCount = 4
+    if (metadata?.last_page > pageSize) {
+      loopCount = pageSize - 1;
     };
 
     let pageNumber = Number(query.get("page")) || 1;
+    console.log('page number: ' + pageNumber, loopCount);
     setPageNo(pageNumber);
     let data = [];
 
@@ -50,7 +52,7 @@ const OscarPagination = ({ metadata, paginateUrl }) => {
         <Pagination.First onClick={(event) => changePagination(1)} />
         <Pagination.Prev onClick={(event) => changePagination(pageNo - 1)} />
         <Pagination onClick={(event) => changePagination(Number(event.target.text))}>{items}</Pagination>
-        {paginate?.last_page > 5 &&
+        {paginate?.last_page > pageSize &&
           (<>
             <Pagination.Ellipsis />
             <Pagination.Item active={paginate?.last_page === pageNo} onClick={() => changePagination(paginate?.last_page)}>{paginate?.last_page}</Pagination.Item>

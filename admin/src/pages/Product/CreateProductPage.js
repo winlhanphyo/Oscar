@@ -22,6 +22,7 @@ const CreateProductPage = () => {
     name: "",
     description: "",
     category: "",
+    artistName: "",
     price: "",
     count: "",
     image: null,
@@ -86,7 +87,9 @@ const CreateProductPage = () => {
       formParam.append('count', formData.count);
       formParam.append('image', formData.image);
       formParam.append('category', formData.category);
-      formParam.append('created_user_id', user._id);
+      if (formData?.artistName) {
+        formParam.append('artistName', formData.artistName);
+      }
       formParam.append('status', formData.status);
       axios.post("/product", formParam,
       {
@@ -173,12 +176,21 @@ const CreateProductPage = () => {
                         <select className={errorForm?.category ? `custom-select is-invalid` : `custom-select`} id="category" name="category" value={formData.category} onChange={handleChange}>
                           <option value="" selected>Choose...</option>
                           {categoryList.map((data) => {
-                            return (<option value={data.id}>{data.name}</option>)
-                          })
-                          }
+                            return (
+                              <>
+                              {
+                                (data.name !== "Home") && <option value={data.id}>{data.name}</option>
+                              }
+                              </>
+                            )})}
                         </select>
                         {errorForm.category ? (
                           <div class="invalid-feedback">{errorForm.category}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="artistName">Artist Name</label>
+                        <input type="text" name="artistName" className={`form-control`} value={formData.artistName} onChange={handleChange} id="name" placeholder="artist name"/>
                       </div>
 
                       <div class="form-group">

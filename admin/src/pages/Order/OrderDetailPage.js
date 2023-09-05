@@ -131,23 +131,27 @@ const OrderDetailPage = () => {
                         </div>
                       </div>
 
+                      <div className={`row ${styles.orderInfoRow}`}>
+                        <div class="col-sm-4">
+                          Status:
+                        </div>
+                        <div class="col-sm-8">
+                          {orderDetail?.status && `${orderDetail?.status}`}
+                        </div>
+                      </div>
+
+                      <div className={`row ${styles.orderInfoRow}`}>
+                        <div class="col-sm-4">
+                          Payment:
+                        </div>
+                        <div class="col-sm-8">
+                          {orderDetail?.payment ? "done" : "not paid" }
+                        </div>
+                      </div>
+
                     </div>
 
                     <div className={`container ${styles.orderDetailContainer}`}>
-                      {/* <div className={`row ${styles.orderDetailLabel}`}>
-                        <div class="col-md-3">
-                          Product Name
-                        </div>
-                        <div class="col-md-3">
-                          Image
-                        </div>
-                        <div class="col-md-3">
-                          Qty
-                        </div>
-                        <div class="col-md-3">
-                          Amount
-                        </div>
-                      </div> */}
 
                       {orderDetail?.orderDetail?.map((dist, index) => {
                         return (<>

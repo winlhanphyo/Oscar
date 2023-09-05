@@ -39,6 +39,8 @@ const getOrder = async (
       ...aggregatePipeline,
       { $count: 'count' } // Add this stage to count the matching documents
     ]);
+
+    console.log('orderCount', orderCount);
     order.map((data) => {
       if (data?.customer) {
         data.customer = data.customer[0];
@@ -47,7 +49,7 @@ const getOrder = async (
 
     return res.json({
       data: order,
-      count: orderCount?.count,
+      count: orderCount[0]?.count,
       offset: page || 0,
       status: 1
     });
@@ -59,6 +61,22 @@ const getOrder = async (
     // logger.postErrorLogger.log('error', 'Error Order Lists')
   }
 };
+
+const successPayment = async (orderId) => {
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) {
+      const error = new Error("Not Found!");
+      error.statusCode = 404;
+      throw error;
+    }
+    order.payment = true;
+    const result = await order.save();
+    return { res: "order payment successful!" };
+  } catch (err) {
+    console.log('success Payment function failed', err);
+  }
+}
 
 const findOrder = async (req, res) => {
   try {
@@ -123,7 +141,7 @@ const createOrder = async (req, res) => {
   }
 }
 
-const orderCreateData = async (orderData, orderDetailData, session, res) => {
+const orderCreateData = async (orderData, orderDetailData) => {
   for (let i = 0; i < orderDetailData.length; i++) {
     const param = orderDetailData[i];
     const product = await Product.findById(param.product);
@@ -136,7 +154,7 @@ const orderCreateData = async (orderData, orderDetailData, session, res) => {
   const orderDetailIds = orderDetailData.map((data) => data.id);
   orderData.orderDetail = orderDetailIds;
   const result = await Order.insertMany(orderData);
-  res.json({ id: session.id });
+  return result;
 }
 
 const updateOrder = async (req, res) => {
@@ -168,6 +186,7 @@ const updateOrder = async (req, res) => {
     req.body?.postalCode ? order.postalCode = req.body.postalCode : null;
     req.body?.phone ? order.phone = req.body.phone : null;
     req.body?.status ? order.status = req.body.status : null;
+    req.body?.payment ? order.payment = req.body.payment : null;
     order.updated_user_id = req.body.updated_user_id;
     const result = await order.save();
     res.json({ message: "Updated Successfully!", data: result, status: 1 });
@@ -205,10 +224,20 @@ const checkOut = async (productList, orderData, orderDetailData, res) => {
   try {
     console.log('product', productList);
     const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+    const domainUrl = orderData.domainUrl;
+    delete orderData?.domainUrl;
+    const result = await orderCreateData(orderData, orderDetailData);
+    console.log('order result', result[0]._id.toString());
+    
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: productList,
       mode: "payment",
+      payment_intent_data:  {
+        metadata: {
+          orderId: result[0]._id.toString(),
+        },
+      },
       // shipping_address_collection: {
       //   allowed_countries: ['US', 'SG', "IT"],
       // },
@@ -220,15 +249,15 @@ const checkOut = async (productList, orderData, orderDetailData, res) => {
       //     message: 'We\'ll email you instructions on how to get started.',
       //   },
       // },
-      success_url: orderData.domainUrl + "/payment/success",
-      cancel_url: orderData.domainUrl + "/payment/cancel",
+      success_url: domainUrl + "/payment/success",
+      cancel_url: domainUrl + "/payment/cancel",
     });
-    delete orderData?.domainUrl
-    orderCreateData(orderData, orderDetailData, session, res);
+    return res.json({ id: session.id });
+
   } catch (err) {
     console.log('Stripe API Error', err);
-    res.status(400).json({ msg: err.toString() });
+    throw err.toString();
   }
 }
 
-module.exports = { getOrder, findOrder, createOrder, deleteOrder, updateOrder };
+module.exports = { getOrder, findOrder, createOrder, deleteOrder, updateOrder, successPayment };

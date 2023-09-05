@@ -11,8 +11,12 @@ const getCategory = async (
     const name = req.query.name || null;
     let condition = { deleted_at: null };
     name ? condition.name = {$regex: name, $options: 'i'} : null;
-    const category = await Category.find(condition).skip(page * categoryPerPage).limit(categoryPerPage)
-    .populate('created_user_id').populate('updated_user_id');
+    let category = null;
+    if (categoryPerPage !== "all") {
+      category = await Category.find(condition).skip(page * categoryPerPage).limit(categoryPerPage).populate('created_user_id').populate('updated_user_id');
+    } else {
+      category = await Category.find(condition).populate('created_user_id').populate('updated_user_id');
+    }
     const categoryCount = await Category.find(condition).count();
     return res.json({
       data: category,

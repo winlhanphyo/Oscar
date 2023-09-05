@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import { imageURL } from '../../utils/constants/constant';
 
 const ShoppingCartPage = () => {
   const [cartData, setCartData] = React.useState(null);
   const [totalAmount, setTotalAmount] = React.useState(0);
 
   React.useEffect(() => {
-    let cart = localStorage.getItem("cart");
+    let cart = localStorage.getItem("cart") || null;
     if (cart) {
       cart = JSON.parse(cart);
       setCartData(cart);

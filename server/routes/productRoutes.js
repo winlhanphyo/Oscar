@@ -5,6 +5,10 @@ const productController = require('../controllers/ProductController');
 const router = express.Router();
 
 router
+  .route("/top")
+  .get([], productController.getTopProduct);
+
+router
   .route("/")
   .get([], productController.getProduct)
   .post(

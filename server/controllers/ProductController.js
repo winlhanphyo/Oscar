@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const utils = require('../utils');
 const Product = require("../models/Product");
 const mongoose = require('mongoose');
+const Category = require('../models/Category');
 
 const getProduct = async (
   req,
@@ -14,7 +15,7 @@ const getProduct = async (
     let condition = { deleted_at: null };
     name ? condition.name = {$regex: name, $options: 'i'} : null;
     const product = await Product.find(condition).skip(page * productPerPage).limit(productPerPage)
-    .populate('category').populate('created_user_id').populate('updated_user_id');
+      .populate('category').populate('created_user_id').populate('updated_user_id');
     const productCount = await Product.find(condition).count();
     return res.json({
       data: product,
@@ -30,6 +31,24 @@ const getProduct = async (
     // logger.postErrorLogger.log('error', 'Error Product Lists')
   }
 };
+
+const getTopProduct = async(req, res) => {
+  try {
+    const category = await Category.findOne({ name: "Home" });
+    const products = await Product.find({ category: category?._id });
+
+    return res.json({
+      data: products,
+      status: 1
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: err.toString(),
+      success: false
+    })
+    // logger.postErrorLogger.log('error', 'Error Product Lists')
+  }
+}
 
 const findProduct = async (req, res) => {
   try {
@@ -68,6 +87,7 @@ const createProduct = async (req, res) => {
       name: req.body.name,
       description: req.body.description,
       category: req.body.category,
+      artistName: req.body.artistName,
       price: req.body.price,
       count: req.body.count,
       image,
@@ -120,6 +140,7 @@ const updateProduct = async (req, res) => {
     req.body?.name ? product.name = req.body.name : null;
     req.body.description ? product.description = req.body.description : null;
     req.body?.category ? product.category = req.body.category : null;
+    req.body?.artistName ? product.artistName = req.body.artistName : null;
     req.body?.price ? product.price = req.body.price : null;
     req.body?.count ? product.count = req.body.count : null;
     product.updated_user_id = req.body.updated_user_id;
@@ -184,4 +205,4 @@ const getProductWithCategoryId = async (req, res) => {
   }
 }
 
-module.exports = { getProduct, getProductWithCategoryId, findProduct, createProduct, deleteProduct, updateProduct };
+module.exports = { getProduct, getProductWithCategoryId, findProduct, createProduct, deleteProduct, updateProduct, getTopProduct };

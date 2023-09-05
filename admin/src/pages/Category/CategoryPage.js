@@ -199,8 +199,22 @@ const CategoryPage = () => {
                                   <td>{moment(data.createdAt).format('YYYY-MM-DD')}</td>
                                   <td>{moment(data.updatedAt).format('YYYY-MM-DD')}</td>
                                   <td>
-                                    <button type="button" class="btn btn-social-icon btn-outline-facebook" onClick={() => editCategory(data._id)}><i class="mdi mdi-pencil"></i></button>
-                                    <button type="button" class="btn btn-social-icon btn-outline-facebook" data-toggle="modal" data-target="#confirmModal" onClick={() => showDeleteDialog(data._id)}><i class="mdi mdi-delete"></i></button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-social-icon btn-outline-facebook"
+                                      disabled={data.name === "Home"}
+                                      onClick={() => editCategory(data._id)}>
+                                        <i class="mdi mdi-pencil"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-social-icon btn-outline-facebook"
+                                      data-toggle="modal"
+                                      data-target="#confirmModal"
+                                      disabled={data.name === "Home"}
+                                      onClick={() => showDeleteDialog(data._id)}>
+                                        <i class="mdi mdi-delete"></i>
+                                      </button>
                                   </td>
                                 </tr>
                               )

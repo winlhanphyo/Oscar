@@ -1,4 +1,5 @@
 import axios from "axios";
+import { apiURL } from "../utils/constants/constant";
 
 const getToken = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -11,7 +12,7 @@ const getToken = () => {
 }
 
 const instance = axios.create({
-  baseURL: "http://localhost:4000/api/"
+  baseURL: apiURL + "api/"
 });
 
 instance.defaults.headers.common['Authorization'] = getToken();

@@ -1,13 +1,13 @@
 import React from 'react';
 import swal from 'sweetalert';
 import { Link, useLocation } from 'react-router-dom';
-import { imageURL } from '../../utils/constants/constant';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 import styles from "./ProductSearchPage.module.scss";
+import { imageURL } from '../../utils/constants/constant';
 
 function useQuery() {
   const { search } = useLocation();

@@ -17,6 +17,7 @@ function useQuery() {
 
 const UserPage = () => {
   let query = useQuery();
+  const user = JSON.parse(localStorage.getItem("admin"));
   const [loading, setLoading] = React.useState(false);
   const [userList, setUserList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
@@ -75,15 +76,15 @@ const UserPage = () => {
     });
   }
 
-  const paginateClick = (status = null, index = 0) => {
-    if (status === "next") {
-      getUserList(offset + 1);
-    } else if (status === "prev") {
-      getUserList(offset - 1);
-    } else {
-      getUserList(index - 1);
-    }
-  };
+  // const paginateClick = (status = null, index = 0) => {
+  //   if (status === "next") {
+  //     getUserList(offset + 1);
+  //   } else if (status === "prev") {
+  //     getUserList(offset - 1);
+  //   } else {
+  //     getUserList(index - 1);
+  //   }
+  // };
 
   const goToCreateUser = () => {
     window.location.href="/admin/user/create";
@@ -209,7 +210,15 @@ const UserPage = () => {
                                   <td>{moment(data.updatedAt).format('YYYY-MM-DD')}</td>
                                   <td>
                                     <button type="button" class="btn btn-social-icon btn-outline-facebook" onClick={() => editUser(data._id)}><i class="mdi mdi-pencil"></i></button>
-                                    <button type="button" class="btn btn-social-icon btn-outline-facebook" data-toggle="modal" data-target="#confirmModal" onClick={() => showDeleteDialog(data._id)}><i class="mdi mdi-delete"></i></button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-social-icon btn-outline-facebook"
+                                      data-toggle="modal"
+                                      data-target="#confirmModal"
+                                      disabled={data._id.toString() === user._id.toString()}
+                                      onClick={() => showDeleteDialog(data._id)}>
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
                                   </td>
                                 </tr>
                               )

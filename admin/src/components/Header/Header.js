@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from "react-redux";
+import $ from "jquery";
 import { LOGOUT } from "../../store/actions/types";
 import axios from '../../axios/index';
 
@@ -26,6 +27,10 @@ const Header = () => {
       window.location.href="/admin/login";
     })
   };
+
+  const handleClickOffCanvas = () => {
+    $('.sidebar-offcanvas').toggleClass('active')
+  }
 
   return (
     <>
@@ -168,7 +173,7 @@ const Header = () => {
               </div>
             </li>
           </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" onClick={handleClickOffCanvas}>
             <span class="mdi mdi-menu"></span>
           </button>
         </div>

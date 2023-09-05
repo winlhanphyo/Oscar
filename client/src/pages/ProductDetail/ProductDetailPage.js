@@ -1,24 +1,52 @@
 import React from 'react';
 import swal from 'sweetalert';
-import { useHistory, useParams } from 'react-router-dom';
-import { imageURL } from '../../utils/constants/constant';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
+import { imageURL } from '../../utils/constants/constant';
 
 const ProductDetailPage = () => {
   const param = useParams();
   const history = useHistory();
+  const [loading, setLoading] = React.useState(false);
   const [product, setProduct] = React.useState();
+  const [relatedProduct, setRelatedProduct] = React.useState([]);
 
   React.useEffect(() => {
     let id = param['id'];
     axios.get(`/product/${id}`).then((dist) => {
       console.log("dist", dist?.data?.data);
       setProduct(dist?.data?.data);
+      getRelatedProduct(dist?.data?.data?.category?._id);
     });
   }, []);
+
+  const getRelatedProduct = async (catId) => {
+    let params = {
+      size: 5,
+      page: 0
+    };
+    axios.get(`/product/category/${catId}`, {
+      params
+    }).then((dist) => {
+      setLoading(false);
+      const productData = [];
+      for (let i = 0; i < dist.data?.data?.length; i++) {
+        if (dist.data?.data[i]?.id !== param['id']) {
+          productData.push(dist.data?.data[i]);
+        }
+      }
+
+      setRelatedProduct(productData);
+    }).catch((err) => {
+      setLoading(false);
+      console.log('Get Category API error', err);
+      swal("Oops!", "Get Category API error", "error");
+    });
+  }
 
   const addNewProduct = (dist, cart) => {
     const param = {
@@ -31,7 +59,6 @@ const ProductDetailPage = () => {
       quantity: 1
     };
     cart.push(param);
-    console.log('cart', cart);
     localStorage.setItem("cart", JSON.stringify(cart));
     history.push("/cart");
   }
@@ -68,6 +95,8 @@ const ProductDetailPage = () => {
     <>
       <Header />
       <Cart />
+
+      {loading && <LoadingSpinner />}
 
       {/* <!-- breadcrumb --> */}
       <div class="container">
@@ -115,18 +144,20 @@ const ProductDetailPage = () => {
                 </p>
 
                 <div class="p-t-33">
-                  <div class="flex-w flex-r-m p-b-10">
-                    <div class="size-205 flex-l-m respon6 stext-301">
-                      Artista Name
-                    </div>
+                  {product?.artistName &&
+                    <div class="flex-w flex-r-m p-b-10">
+                      <div class="size-205 flex-l-m respon6 stext-301">
+                        Artista Name
+                      </div>
 
-                    <div class="size-206 respon6-next stext-110">
-                      Item One
+                      <div class="size-206 respon6-next stext-110">
+                        {product.artistName}
+                      </div>
                     </div>
-                  </div>
+                  }
 
                   <div class="flex-w flex-l-m p-b-10">
-                    <div class="size-205 flex-c-m respon6 stext-301">
+                    <div class="size-205 flex-l-m respon6 stext-301">
                       Category
                     </div>
 
@@ -136,7 +167,7 @@ const ProductDetailPage = () => {
                   </div>
 
                   <div class="flex-w flex-l-m p-b-10">
-                    <div class="size-205 flex-c-m respon6 stext-301">
+                    <div class="size-205 flex-l-m respon6 stext-301">
                       Status
                     </div>
 
@@ -145,21 +176,21 @@ const ProductDetailPage = () => {
                     </div>
                   </div>
                   <hr />
-                  <div class="flex-w flex-r-m p-b-10">
-                    <div class="size-204 flex-w flex-m respon6-next">
+                  <div class="flex-w flex-c-m p-b-10">
+								    <div class="size-204 flex-w flex-c-m respon6-next">
                       {product?.status === "available" &&
-                      <button
-                        onClick={addToCart}
-                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                        Add to cart
-                      </button>
+                        <button
+                          onClick={addToCart}
+                          class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                          Add to cart
+                        </button>
                       }
                     </div>
                   </div>
                 </div>
 
-                <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                  <div class="flex-m bor9 p-r-10 m-r-11">
+                <div class="flex-w flex-c-m p-t-40">
+							    <div class="flex-m bor9 p-r-10 m-r-11">
                     <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
                       <i class="zmdi zmdi-favorite"></i>
                     </a>
@@ -181,10 +212,8 @@ const ProductDetailPage = () => {
             </div>
           </div>
 
-          <div class="bor10 m-t-50 p-t-43 p-b-40">
-            {/* <!-- Tab01 --> */}
+          {/* <div class="bor10 m-t-50 p-t-43 p-b-40">
             <div class="tab01">
-              {/* <!-- Nav tabs --> */}
               <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item p-b-10">
                   <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
@@ -199,7 +228,6 @@ const ProductDetailPage = () => {
                 </li>
               </ul>
 
-              {/* <!-- Tab panes --> */}
               <div class="tab-content p-t-43">
                 <div class="tab-pane fade show active" id="description" role="tabpanel">
                   <div class="how-pos2 p-lr-15-md">
@@ -251,7 +279,6 @@ const ProductDetailPage = () => {
                   <div class="row">
                     <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                       <div class="p-b-30 m-lr-15-sm">
-                        {/* <!-- Review --> */}
                         <div class="flex-w flex-t p-b-68">
                           <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
                             <img src={imageURL + product?.image} alt="AVATAR" />
@@ -278,7 +305,6 @@ const ProductDetailPage = () => {
                           </div>
                         </div>
 
-                        {/* <!-- Add review --> */}
                         <form class="w-full">
                           <h5 class="mtext-108 cl2 p-b-7">
                             Add a review
@@ -330,277 +356,66 @@ const ProductDetailPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
       {/* <!-- Related Products --> */}
-	<section class="sec-relate-product bg0 p-t-20 p-b-105">
-		<div class="container">
-			<div class="p-b-45">
-				<h3 class="ltext-106 cl5 txt-center">
-					Related Products
-				</h3>
-			</div>
-			<div class="wrap-slick2">
-				<div class="slick2">
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
+      <section class="sec-relate-product bg0 p-t-20 p-b-105">
+        <div class="container">
+          <div class="p-b-45">
+            <h3 class="ltext-106 cl5 txt-center">
+              Related Products
+            </h3>
+          </div>
+          <div class="wrap-slick2">
+            <div class="slick2">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Art Details
-								</a>
-							</div>
+              {relatedProduct.map((dist) => {
+                return (
+                  <>
+                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
 
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item One
-									</a>
+                      <div class="block2">
+                        <div class="block2-pic hov-img0">
+                          <img src={imageURL + dist?.image} alt="IMG-PRODUCT" class="img-fluid img-size respon1" />
 
-									<span class="stext-105 cl3">
-										$16.64
-									</span>
-								</div>
+                          <Link to={`/product/${dist?._id}`}
+                            class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                            Detail
+                          </Link>
+                        </div>
 
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                          <div class="block2-txt-child1 flex-col-l ">
+                            <Link to={`/product/${dist?._id}`} class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                              {dist?.name}
+                            </Link>
 
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a2.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
+                            <span class="stext-105 cl3">
+                              ${dist?.price}
+                            </span>
+                          </div>
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Art Details
-								</a>
-							</div>
+                          <div class="block2-txt-child2 flex-r p-t-3">
+                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                              <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
+                              <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )
+              })
 
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item Two
-									</a>
+              }
 
-									<span class="stext-105 cl3">
-										$35.31
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a6.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
-
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item Three
-									</a>
-
-									<span class="stext-105 cl3">
-										$25.50
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a4.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
-
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Art Details
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item Four
-									</a>
-
-									<span class="stext-105 cl3">
-										$75.00
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a4.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
-
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Art Details
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item One
-									</a>
-
-									<span class="stext-105 cl3">
-										$34.75
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a3.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
-
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Art Details
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item Two
-									</a>
-
-									<span class="stext-105 cl3">
-										$93.20
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a2.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
-
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Art Details
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item Three
-									</a>
-
-									<span class="stext-105 cl3">
-										$52.66
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="poto/a1.jpg" alt="IMG-PRODUCT" class="img-fluid img-size respon1"/>
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Art Details
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Item Four
-									</a>
-
-									<span class="stext-105 cl3">
-										$18.96
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"/>
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON"/>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
 
@@ -617,7 +432,7 @@ const ProductDetailPage = () => {
             </button>
             <div class="row">
               <div class="col-md-6 col-lg-7 p-b-30 flex-c-m">
-                <img src="poto/a5.jpg" alt="IMG-BLOG" class="img-fluid rounded" style={{width: "300px"}} />
+                <img src="poto/a5.jpg" alt="IMG-BLOG" class="img-fluid rounded" style={{ width: "300px" }} />
               </div>
 
               <div class="col-md-6 col-lg-5 p-b-30">
