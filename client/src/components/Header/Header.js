@@ -1,10 +1,15 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import $ from "jquery";
 import styles from './Header.module.scss';
 
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const Header = () => {
+  let query = useQuery();
   const searchName = React.useRef();
   const history = useHistory();
   const storageData = JSON.parse(localStorage.getItem("user"));
@@ -13,6 +18,11 @@ const Header = () => {
 
   React.useEffect(() => {
     try {
+      const currentUrl = window.location.href;
+      if (currentUrl.indexOf("/shop/search") !== -1) {
+        let searchNameData = query.get("searchName") || searchName.current.value;
+        searchName.current.value = searchNameData;
+      }
       let cart = localStorage.getItem("cart") || null;
       if (cart) {
         cart = JSON.parse(cart);
@@ -88,7 +98,7 @@ const Header = () => {
                     <Link to="/about">About</Link>
                   </li>
 
-                  <li>
+                  <li className={window.location.href.indexOf("artist") !== -1 ? "active-menu" : ""}>
                     <Link to="/artist">Artist</Link>
                   </li>
 
@@ -141,7 +151,7 @@ const Header = () => {
             </div>
 
             <div class="flex-c-m h-full p-lr-10 bor5">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="3">
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={cartCount}>
               <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
               </div>
             </div>

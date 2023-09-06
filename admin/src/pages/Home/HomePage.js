@@ -168,7 +168,7 @@ const HomePage = () => {
                         <p class="text-primary mb-0 hover-cursor">Analytics</p>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-end flex-wrap">
+                    {/* <div class="d-flex justify-content-between align-items-end flex-wrap">
                       <button type="button" class="btn btn-light bg-white btn-icon mr-3 d-none d-md-block ">
                         <i class="mdi mdi-download text-muted"></i>
                       </button>
@@ -179,7 +179,7 @@ const HomePage = () => {
                         <i class="mdi mdi-plus text-muted"></i>
                       </button>
                       <button class="btn btn-primary mt-2 mt-xl-0">Download report</button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

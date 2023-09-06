@@ -54,7 +54,7 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/admin/login" component={LoginPage} />
         <PublicRoute path="/admin/forget-password" component={ForgetPassword} />
         <PublicRoute path="/admin/forget-password-update/:userId/:token" component={ForgetPasswordUpdate} />
-        <PrivateRoute path="/admin/users" component={UserPage} />
+        <PublicRoute path="/admin/users" component={UserPage} />
         <PrivateRoute path="/admin/profile" component={ProfilePage} />
         <PrivateRoute path="/admin/home" component={HomePage} />
 

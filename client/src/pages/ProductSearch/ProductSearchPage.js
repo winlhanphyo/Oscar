@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import OscarPagination from '../../components/OscarPagination/OscarPagination';
 import axios from '../../axios/index';
 import styles from "./ProductSearchPage.module.scss";
 import { imageURL } from '../../utils/constants/constant';
@@ -17,10 +18,16 @@ function useQuery() {
 
 const ProductSearchPage = () => {
   let query = useQuery();
+  const paginateSize = 5;
   const [itemName, setItemName] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [productList, setProductList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
+  const [paginationData, setPaginationData] = React.useState({
+    from: 1,
+    last_page: 1,
+    per_page: 1
+  })
   const [totalCount, setTotalCount] = React.useState(0);
   const [paginateCount, setPaginateCount] = React.useState([]);
 
@@ -37,9 +44,13 @@ const ProductSearchPage = () => {
    */
   const getProductList = (offsetData = 0, searchName=null) => {
     setLoading(true);
+    offsetData = Number(query.get("page")) || 0;
+    offsetData = offsetData > 0 ? offsetData - 1 : offsetData;
+    // let searchNameData = query.get("searchName") || searchName.current.value;
+    // searchName.current.value = searchNameData;
     let params = {
-      size: 5,
-      page: offsetData
+      size: paginateSize,
+      page: Number(offsetData)
     };
     if (searchName) {
       params.name = searchName
@@ -51,12 +62,21 @@ const ProductSearchPage = () => {
       setProductList(dist?.data?.data);
       setOffset(dist?.data?.offset);
       setTotalCount(dist?.data?.count);
-      const page = dist?.data?.count / 5;
+      const page = dist?.data?.count / paginateSize;
       const count = [];
+      let lastPage = 0;
       for (let i = 0; i < page; i++) {
         count.push(i + 1);
+        lastPage = i + 1;
       }
       setPaginateCount(count);
+      setLoading(false);
+      let prePaginationData = {
+        from: dist?.data?.offset,
+        last_page: lastPage,
+        per_page: paginateSize
+      }
+      setPaginationData({ ...prePaginationData });
     }).catch((err) => {
       swal("Oops!", "Product List Page API Error", "error");
       setLoading(false);
@@ -102,7 +122,7 @@ const ProductSearchPage = () => {
                         <img src={imageURL + data.image} alt="IMG-PRODUCT" class="img-fluid img-size respon1" />
 
                         <Link to={`/product/${data._id}`} target="_blank" class="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
-                          {data.name}
+                          Detail
                         </Link>
                       </div>
 
@@ -133,7 +153,7 @@ const ProductSearchPage = () => {
 
           {/* <!-- Pagination --> */}
 
-          <div class="flex-w w-full p-t-10 m-lr--7 flex-c-m">
+          {/* <div class="flex-w w-full p-t-10 m-lr--7 flex-c-m">
             <a className={Number(offset) === 0 ? "flex-c-m how-pagination1 trans-04 m-all-7 disabled" : "flex-c-m how-pagination1 trans-04 m-all-7"}
               onClick={() => paginateClick("prev")}>
               <i class="fa fa-long-arrow-left"></i>
@@ -154,7 +174,14 @@ const ProductSearchPage = () => {
               onClick={() => paginateClick("next")}>
               <i class="fa fa-long-arrow-right"></i>
             </a>
-          </div>
+          </div> */}
+
+          <OscarPagination
+            paginateUrl="/shop/search?page="
+            metadata={paginationData}
+            fetchData={getProductList}
+            size="8"
+          />
 
         </div>
       </div>

@@ -51,7 +51,8 @@ z-index: 1;
   }
 
   .img-size{
-    height: 400px;
+    height: 350px !important;
+    object-fit: cover;
   }
 
   .img-size-sm{

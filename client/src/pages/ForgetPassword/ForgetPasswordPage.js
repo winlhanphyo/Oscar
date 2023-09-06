@@ -123,7 +123,7 @@ const ForgetPasswordPage = () => {
                 <button onClick={handleClick} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                   Submit
                 </button>
-                <Link href="login.html" class="flex-l-m stext-101 size-102 p-lr-15 trans-04 pointer text-dark p-t-30">cancel</Link>
+                <Link to="/login" class="flex-l-m stext-101 size-102 p-lr-15 trans-04 pointer text-dark p-t-30">cancel</Link>
               </form>
             </div>
           </div>

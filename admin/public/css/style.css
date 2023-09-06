@@ -19181,9 +19181,14 @@ code {
 }
 
 .btn.btn-social-icon {
-  width: 50px;
-  height: 50px;
-  padding: 0;
+  /* width: 40px;
+  height: 40px;
+  padding: 0; */
+
+  width: 35px;
+    height: 35px;
+    margin: 2px;
+    padding: 0;
 }
 
 .btn-group .btn + .btn {
