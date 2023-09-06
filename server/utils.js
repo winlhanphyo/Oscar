@@ -16,13 +16,13 @@ const sendEmail = async (email, subject, text) => {
       // host: 'smtp.gmail.com',
       // port: 465,
       // secure: true, // use SSL
-
-      host: 'smtp.gmail.com',
+      service: "gmail",
+      host: "smtp.gmail.com",
       port: 465,
       secure: true,
       auth: {
         user: "spprt.oscar@gmail.com",
-        pass: "cdbxlblhmnpobpyl",
+        pass: "cdbxlblhmnpobpyl"
       },
     });
 

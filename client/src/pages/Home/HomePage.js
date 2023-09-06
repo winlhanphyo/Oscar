@@ -22,7 +22,6 @@ const HomePage = () => {
 
   React.useEffect(() => {
     setLoading(true);
-    console.log('window size', windowSize);
     axios.get("/product/top").then((dist) => {
       // $(".odd").empty();
       setProductList(dist?.data?.data);
@@ -77,7 +76,7 @@ const HomePage = () => {
                     nonummy nibh ...
                   </span>
                 </div>
-                <div class="flex-c-m flex-w w-full p-t-45">
+                <div class="flex-c-m flex-w w-full p-t-15">
                   <a href="#" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                     READ MORE
                   </a>
@@ -89,11 +88,11 @@ const HomePage = () => {
                   </h2>
                 </div>
                 <div class="flex-r-m flex-w w-full p-t-50" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-appear="fadeInDown" data-delay="0">
-                  <h5 style={windowSize?.width < 400 ? {textAlight: "center"} : {}} class="mtext-103 cl2  text-end">
+                  <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end"}>
                     Muputo<br />2023
                   </h5>
                 </div>
-                <div class="flex-r-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                <div class="flex-r-m flex-w w-full p-t-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
                   <Link to={`/product/${productList[0]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -154,7 +153,7 @@ const HomePage = () => {
                 </h2>
               </div>
               <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}}>
-                <h5 style={windowSize?.width < 400 ? {textAlight: "center"} : {}} class="mtext-103 cl2  text-end">
+                <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end"}>
                   Muputo<br />2023
                 </h5>
               </div>
@@ -235,7 +234,7 @@ const HomePage = () => {
                 </h2>
               </div>
               <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-delay="0">
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlight: "center"} : {}}>
+                <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end"}>
                   Muputo<br />2023
                 </h5>
               </div>
@@ -297,17 +296,17 @@ const HomePage = () => {
 							SU DUE RIGHE
 						</h2>
 					</div> */}
-              <div class="flex-l-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlight: "center"} : {}}>
+              <div class="flex-l-m flex-w w-full p-t-50" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-appear="fadeInDown" data-delay="0">
+                <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end"}>
                   Muputo
                 </h5>
               </div>
               <div class="flex-l-m flex-w w-full" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}} data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlight: "center"} : {}}>
+                <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end"}>
                   2023
                 </h5>
               </div>
-              <div class="flex-l-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+              <div class="flex-l-m flex-w w-full p-t-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
                 <Link to={`/product/${productList[2]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
@@ -316,7 +315,7 @@ const HomePage = () => {
           </div>
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-              <div class="flex-c-m flex-w w-full p-t-100">
+              <div class="flex-c-m flex-w w-full p-t-50">
                 <Link to="/shop" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Visit To Gallery
                 </Link>
