@@ -133,11 +133,11 @@ const ShoppingCartPage = () => {
 
                   </table>
                 </div>
-                <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                <div class="flex-w flex-c-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                   {cartData?.length > 0 &&
-                    <Link to="/checkout" class="flex-c-m stext-101 cl5 size-103 bg1 bor1 hov-btn1 p-lr-15 trans-04">CheckOut</Link>}
+                    <Link to="/checkout" class="flex-c-m stext-101 cl5 size-103 bg1 bor1 hov-btn1  m-lr-50 trans-04">CheckOut</Link>}
                   <Link to="/shop" class="flex-c-m stext-101 cl5 size-104 p-lr-15 trans-04 bor121">Continue Shopping <i class="zmdi zmdi-long-arrow-right m-l-10"></i></Link>
-                  {cartData?.length > 0 && <div class="flex-r-m mtext-101 cl2 size-119 p-lr-15 trans-04 m-tb-10">
+                  {cartData?.length > 0 && <div class="flex-c-m mtext-101 cl2 size-119  m-lr-50 trans-04 m-tb-10">
                     Total Amount : $ {totalAmount}
                   </div>}
                 </div>

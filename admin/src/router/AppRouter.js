@@ -49,18 +49,18 @@ const AppRouter = withRouter(({ location }) => {
         <PrivateRoute path="/admin/user" component={UserPage} />
         <PrivateRoute path="/admin/password-change" component={PasswordChange} />
         <PrivateRoute path="/admin/order/:id/edit" component={EditOrderPage} />
-        <PrivateRoute path="/admin/order/:id" component={OrderDetailPage} />
+        <PublicRoute path="/admin/order/:id" component={OrderDetailPage} />
         <PrivateRoute path="/admin/order" component={OrderPage} />
         <PublicRoute path="/admin/login" component={LoginPage} />
         <PublicRoute path="/admin/forget-password" component={ForgetPassword} />
         <PublicRoute path="/admin/forget-password-update/:userId/:token" component={ForgetPasswordUpdate} />
-        <PublicRoute path="/admin/users" component={UserPage} />
+        <PrivateRoute path="/admin/users" component={UserPage} />
         <PrivateRoute path="/admin/profile" component={ProfilePage} />
-        <PrivateRoute path="/admin/home" component={HomePage} />
+        <PublicRoute path="/admin/home" component={HomePage} />
 
-        {/* <PrivateRoute path="/success" component={Success} />
+        <PrivateRoute path="/success" component={Success} />
         <PrivateRoute path="/cancel" component={Cancel} />
-        <PrivateRoute path="/payment" component={StripePayment} /> */}
+        <PrivateRoute path="/payment" component={StripePayment} />
 
         {/* Redirect all 404's to home */}
         <Redirect to='/admin/home' />
