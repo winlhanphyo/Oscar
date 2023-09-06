@@ -36,13 +36,13 @@ const Header = () => {
   const searchModal = (e) => {
     e.preventDefault();
     $('.modal-search-header').addClass('show-modal-search');
-    $(this).css('opacity','0');
+    $(this).css('opacity', '0');
   }
 
   const hideModalSearch = (e) => {
     e.preventDefault();
     $('.modal-search-header').removeClass('show-modal-search');
-    $('.js-show-modal-search').css('opacity','1');
+    $('.js-show-modal-search').css('opacity', '1');
   }
 
   const handleSearchKeyDown = (e) => {
@@ -143,16 +143,16 @@ const Header = () => {
           </div>
 
           {/* <!-- Icon header --> */}
-          <div>
-            <div style={{display: "flex"}}>
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-15 js-show-modal-search" onClick={searchModal}>
-              <i class="zmdi zmdi-search"></i>
-            </div>
+          <div style={{ display: "flex" }}>
+            <div class="flex-c-m h-full p-r-10">
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-5 js-show-modal-search" onClick={searchModal}>
+                <i class="zmdi zmdi-search"></i>
+              </div>
             </div>
 
             <div class="flex-c-m h-full p-lr-10 bor5">
               <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-5 icon-header-noti js-show-cart" data-notify={cartCount}>
-              <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
+                <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
               </div>
             </div>
 
