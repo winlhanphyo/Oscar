@@ -135,23 +135,23 @@ const Header = () => {
         <div class="wrap-header-mobile">
           {/* <!-- Logo moblie -->		 */}
           <div class="logo-mobile">
-            <a href="index.html">
+            <Link to="/home">
               <p class="mtext-103 cl2">
                 OSCAR D.CHAVARRIA
               </p>
-            </a>
+            </Link>
           </div>
 
           {/* <!-- Icon header --> */}
-          <div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
-            <div class="flex-c-m h-full p-r-10">
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search" onClick={searchModal}>
+          <div>
+            <div style={{display: "flex"}}>
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-15 js-show-modal-search" onClick={searchModal}>
               <i class="zmdi zmdi-search"></i>
             </div>
             </div>
 
             <div class="flex-c-m h-full p-lr-10 bor5">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={cartCount}>
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-5 icon-header-noti js-show-cart" data-notify={cartCount}>
               <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
               </div>
             </div>

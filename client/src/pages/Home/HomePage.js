@@ -1,6 +1,6 @@
 import React from 'react';
 import swal from 'sweetalert';
-// import styles from './HomePage.module.scss';
+import styles from './HomePage.module.scss';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
@@ -11,11 +11,18 @@ import { imageURL } from '../../utils/constants/constant';
 
 
 const HomePage = () => {
+  const [windowSize, setWindowSize] = React.useState([
+    {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+  ]);
   const [loading, setLoading] = React.useState(false);
   const [productList, setProductList] = React.useState([]);
 
   React.useEffect(() => {
     setLoading(true);
+    console.log('window size', windowSize);
     axios.get("/product/top").then((dist) => {
       // $(".odd").empty();
       setProductList(dist?.data?.data);
@@ -24,6 +31,22 @@ const HomePage = () => {
       swal("Oops!", "Product List Page API Error", "error");
       setLoading(false);
     });
+  }, []);
+
+  React.useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -59,18 +82,18 @@ const HomePage = () => {
                     READ MORE
                   </a>
                 </div>
-                <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                  <h2 class="ltext-109 cl2  text-end">
+                <div class="flex-r-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {paddingTop: "100px"}: {}} data-appear="fadeInDown" data-delay="0">
+                  <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                     {/* TITOLONE GRANDE<br/>SU DUE RIGHE */}
                     {productList[0]?.name}
                   </h2>
                 </div>
-                <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                  <h5 class="mtext-103 cl2  text-end">
+                <div class="flex-r-m flex-w w-full p-t-50" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-appear="fadeInDown" data-delay="0">
+                  <h5 style={windowSize?.width < 400 ? {textAlight: "center"} : {}} class="mtext-103 cl2  text-end">
                     Muputo<br />2023
                   </h5>
                 </div>
-                <div class="flex-r-m flex-w w-full p-t-100">
+                <div class="flex-r-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
                   <Link to={`/product/${productList[0]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -80,9 +103,9 @@ const HomePage = () => {
             <div class="col-sm-12 col-md-8 col-lg-8">
               <div class="blog-item">
                 <div class="hov-img0 bor2">
-                  <a href="product-detail.html">
-                    <img src={imageURL + productList[0]?.image} alt="IMG-BLOG" />
-                  </a>
+                  <Link to={`/product/${productList[0]?._id}`}>
+                    <img className={styles.img} src={imageURL + productList[0]?.image} alt="IMG-BLOG" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -118,20 +141,20 @@ const HomePage = () => {
             <div class="col-sm-6 col-md-6 col-lg-4 p-t-20">
               <div class="block2">
                 <div class="block2-pic hov-img0 bor2">
-                  <img src={imageURL + productList[1]?.image} alt="IMG-PRODUCT" class="img-fluid" />
+                  <img className={styles.img} src={imageURL + productList[1]?.image} alt="IMG-PRODUCT" class="img-fluid" />
                   <Link to={`/product/${productList[1]?._id}`} class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
                 </div>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end">
+              <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {paddingTop: "100px"}: {}}>
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* TITOLONE GRANDE<br/>SU DUE RIGHE */}
                   {productList[1]?.name}
                 </h2>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}}>
+                <h5 style={windowSize?.width < 400 ? {textAlight: "center"} : {}} class="mtext-103 cl2  text-end">
                   Muputo<br />2023
                 </h5>
               </div>
@@ -139,7 +162,7 @@ const HomePage = () => {
             <div class="col-sm-6 col-md-6 col-lg-4">
               <div class="block2 p-t-100">
                 <div class="block2-pic hov-img0 bor2">
-                  <img src={imageURL + productList[2]?.image} alt="IMG-PRODUCT" />
+                  <img className={styles.img} src={imageURL + productList[2]?.image} alt="IMG-PRODUCT" />
                   <Link to={`/product/${productList[2]?._id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -149,7 +172,7 @@ const HomePage = () => {
             <div class="col-sm-6 col-md-6 col-lg-4">
               <div class="block2 p-t-50">
                 <div class="block2-pic hov-img0 bor2">
-                  <img src={imageURL + productList[3]?.image} alt="IMG-PRODUCT" />
+                  <img className={styles.img} src={imageURL + productList[3]?.image} alt="IMG-PRODUCT" />
                   <Link to={`/product/${productList[3]?._id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -168,7 +191,7 @@ const HomePage = () => {
               <div class="blog-item">
                 <div class="hov-img0 bor2">
                   <Link to={`/product/${productList[4]?._id}`}>
-                    <img src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
+                    <img className={styles.img} src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
                   </Link>
                 </div>
               </div>
@@ -197,13 +220,13 @@ const HomePage = () => {
           <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4">
               <div class="flex-r-m flex-w w-full p-t-100 respon2" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end">
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* TITOLONE GRANDE<br/>SU DUE RIGHE */}
                   {productList[5]?.name}
                 </h2>
               </div>
               <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h2 class="mtext-110 cl2  text-end">
+                <h2 class="mtext-110 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* quis nostrud exerci<br/>
 							tation ullamcorper<br/>
 							suscipit lobortis nisl<br/>
@@ -211,12 +234,12 @@ const HomePage = () => {
                   {productList[5]?.description}
                 </h2>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-delay="0">
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlight: "center"} : {}}>
                   Muputo<br />2023
                 </h5>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-100 p-b-50">
+              <div class="flex-r-m flex-w w-full p-t-100 p-b-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
                 <Link to={`/product/${productList[5]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
@@ -227,14 +250,17 @@ const HomePage = () => {
               <div class="blog-item">
                 <div class="hov-img0 bor2">
                   <a to={`/product/${productList[4]?._id}`}>
-                    <img src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
+                    <img className={styles.img} src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
                   </a>
                 </div>
               </div>
 
               <div class="block2">
                 <div class="block2-pic hov-img0 bor2">
-                  <img src={imageURL + productList[3]?.image} class="img-fluid p-t-50 rounded" style={{ width: "300px" }} />
+                  <img className={styles.img}
+                    src={imageURL + productList[3]?.image}
+                    class="img-fluid p-t-50 rounded"
+                    style={windowSize?.width < 400 ? { margin: "30px 0", width: "300px" } : {width: "300px"}} />
                   <Link to={`/product/${productList[3]?._id}`} target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -254,14 +280,14 @@ const HomePage = () => {
               <div class="block2">
                 <div class="hov-img0 bor2">
                   <Link to={`/product/${productList[2]?._id}`}>
-                    <img src={imageURL + productList[2]?.image} alt="IMG-BLOG" class="img-fluid " />
+                    <img className={styles.img} src={imageURL + productList[2]?.image} alt="IMG-BLOG" class="img-fluid " />
                   </Link>
                 </div>
               </div>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4">
-              <div class="flex-l-m flex-w w-full p-t-200" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end">
+              <div class="flex-l-m flex-w w-full p-t-200" style={windowSize?.width < 400 ? {paddingTop: "100px"}: {}} data-appear="fadeInDown" data-delay="0">
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* TITOLONE GRANDE */}
                   {productList[2]?.name}
                 </h2>
@@ -271,20 +297,20 @@ const HomePage = () => {
 							SU DUE RIGHE
 						</h2>
 					</div> */}
-              <div class="flex-l-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-l-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-appear="fadeInDown" data-delay="0">
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlight: "center"} : {}}>
                   Muputo
                 </h5>
               </div>
-              <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-l-m flex-w w-full" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}} data-appear="fadeInDown" data-delay="0">
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlight: "center"} : {}}>
                   2023
                 </h5>
               </div>
-              <div class="flex-l-m flex-w w-full p-t-100">
-                <a href="product-detail.html" target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+              <div class="flex-l-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                <Link to={`/product/${productList[2]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
-                </a>
+                </Link>
               </div>
             </div>
           </div>

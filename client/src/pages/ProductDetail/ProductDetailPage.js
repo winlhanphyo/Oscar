@@ -7,6 +7,7 @@ import Footer from '../../components/Footer/Footer';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 import { imageURL } from '../../utils/constants/constant';
+import styles from "./ProductDetail.module.scss";
 
 const ProductDetailPage = () => {
   const param = useParams();
@@ -146,32 +147,32 @@ const ProductDetailPage = () => {
                 <div class="p-t-33">
                   {product?.artistName &&
                     <div class="flex-w flex-r-m p-b-10">
-                      <div class="size-205 flex-l-m respon6 stext-301">
+                      <div className={`size-205 flex-l-m respon6 stext-301 ${styles.artInfoRespon}`}>
                         Artista Name
                       </div>
 
-                      <div class="size-206 respon6-next stext-110">
+                      <div class="size-206 stext-110">
                         {product.artistName}
                       </div>
                     </div>
                   }
 
                   <div class="flex-w flex-l-m p-b-10">
-                    <div class="size-205 flex-l-m respon6 stext-301">
+                    <div className={`size-205 flex-l-m respon6 stext-301 ${styles.artInfoRespon}`}>
                       Category
                     </div>
 
-                    <div class="size-206 respon6-next stext-110">
+                    <div class="size-206 stext-110">
                       {product?.category?.name}
                     </div>
                   </div>
 
                   <div class="flex-w flex-l-m p-b-10">
-                    <div class="size-205 flex-l-m respon6 stext-301">
+                    <div className={`size-205 flex-l-m respon6 stext-301 ${styles.artInfoRespon}`}>
                       Status
                     </div>
 
-                    <div class="size-206 respon6-next stext-110">
+                    <div class="size-206 stext-110">
                       {product?.status === "available" ? "Available" : "Not Available"}
                     </div>
                   </div>
@@ -422,7 +423,7 @@ const ProductDetailPage = () => {
 
 
       {/* <!-- Modal1 --> */}
-      <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+      {/* <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
         <div class="overlay-modal1 js-hide-modal1"></div>
 
         <div class="container">
@@ -514,7 +515,7 @@ const ProductDetailPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
