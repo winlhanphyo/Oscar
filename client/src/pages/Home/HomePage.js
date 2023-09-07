@@ -52,6 +52,7 @@ const HomePage = () => {
     <>
       <Header />
       <Cart />
+      {loading && <LoadingSpinner />}
       {/* <!--Section 1--> */}
       <section>
         <div class="container">
@@ -248,8 +249,8 @@ const HomePage = () => {
             <div class="col-sm-12 col-md-8 col-lg-8 text-center">
               <div class="blog-item">
                 <div class="hov-img0 bor2">
-                  <a to={`/product/${productList[4]?._id}`}>
-                    <img className={styles.img} src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
+                  <a to={`/product/${productList[5]?._id}`}>
+                    <img className={styles.img} src={imageURL + productList[5]?.image} alt="IMG-BLOG" />
                   </a>
                 </div>
               </div>
