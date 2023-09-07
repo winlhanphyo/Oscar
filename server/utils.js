@@ -16,18 +16,18 @@ const sendEmail = async (email, subject, text) => {
       // host: 'smtp.gmail.com',
       // port: 465,
       // secure: true, // use SSL
-      service: "gmail",
-      host: "smtp.gmail.com",
-      port: 25,
-      secure: false,
+      // service: "gmail",
+      host: "oscar-admin.orionmmtecheng.com",
+      port: 465,
+      secure: true,
       auth: {
-        user: "spprt.oscar@gmail.com",
-        pass: "cdbxlblhmnpobpyl"
+        user: "support@oscar-admin.orionmmtecheng.com",
+        pass: "M4tZjdsKYeTNKaWV"
       },
     });
 
     await transporter.sendMail({
-      from: "spprt.oscar@gmail.com",
+      from: "support@oscar-admin.orionmmtecheng.com",
       to: email,
       subject: subject,
       text: text,

@@ -84,7 +84,7 @@ const ArtistPage = () => {
                     elit, sed diam nonummy nibh ...
                     magna aliquam erat
                   </span>
-                  <div class="flex-r-m flex-w w-full p-t-45" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                  <div class="flex-r-m flex-w w-full p-t-45" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
                     <Link to={`/product/${productList[2]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                       Art Details
                     </Link>
@@ -96,7 +96,7 @@ const ArtistPage = () => {
               <div class="blog-item">
                 <div class="hov-img0 bor2">
                   <a href="product-detail.html">
-                    <img src={imageURL + productList[2]?.image} alt="IMG-BLOG" />
+                    <img src={imageURL + productList[2]?.image} alt="IMG-BLOG" style={windowSize?.width <= 575 ? { width: "390px", objectFit: "cover" } : {}} />
                   </a>
                 </div>
               </div>
@@ -134,20 +134,20 @@ const ArtistPage = () => {
           </div>
           <div class="row p-t-50">
             <div class="p-b-50 col-sm-12 col-md-12 col-lg-12">
-              <h3 class="ltext-105 cl5" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+              <h3 class="ltext-105 cl5" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                 Selected<br /> Work
               </h3>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="flex-r-m flex-w w-full p-t-100 respon2" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   {/* TITOLONE GRANDE<br />SU DUE RIGHE */}
                   {productList[1]?.name}
                 </h2>
               </div>
 
               <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-110 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <h5 class="mtext-110 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   {/* quis nostrud exerci<br />
                   tation ullamcorper<br />
                   suscipit lobortis nisl<br />
@@ -155,13 +155,13 @@ const ArtistPage = () => {
                   {productList[1]?.description}
                 </h5>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   Muputo<br />2023
                 </h5>
               </div>
 
-              <div class="flex-r-m flex-w w-full p-t-50 p-b-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+              <div class="flex-r-m flex-w w-full p-t-50 p-b-50" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
                 <Link to={`/product/${productList[1]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
@@ -171,7 +171,7 @@ const ArtistPage = () => {
               <div class="blog-item">
                 <div class="hov-img0 bor2">
                   <Link to={`/product/${productList[1]?._id}`}>
-                    <img src={imageURL + productList[1]?.image} alt="IMG-BLOG" />
+                    <img src={imageURL + productList[1]?.image} alt="IMG-BLOG" style={windowSize?.width <= 575 ? { width: "390px", objectFit: "cover" } : {}} />
                   </Link>
                 </div>
               </div>
@@ -187,7 +187,7 @@ const ArtistPage = () => {
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="block2">
                 <div class="block2-pic hov-img0">
-                  <img src={imageURL + productList[3]?.image} class="img-fluid rounded p-t-100 img-size" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}} />
+                  <img src={imageURL + productList[3]?.image} class="img-fluid rounded p-t-100 img-size" style={windowSize?.width <= 575 ? { justifyContent: "center", width: "390px", objectFit: "cover" } : {}} />
                   <Link to={`/product/${productList[3]?._id}`} target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -196,14 +196,14 @@ const ArtistPage = () => {
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   {/* TITOLONE GRANDE<br />SU DUE RIGHE */}
                   {productList[0]?.name}
                 </h2>
               </div>
 
               <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-110 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <h5 class="mtext-110 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   {/* quis nostrud exerci<br />
                   tation ullamcorper<br />
                   suscipit lobortis nisl<br />
@@ -211,13 +211,13 @@ const ArtistPage = () => {
                   {productList[0]?.description}
                 </h5>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   Muputo<br />2023
                 </h5>
               </div>
 
-              <div class="flex-r-m flex-w w-full p-t-50 p-b-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+              <div class="flex-r-m flex-w w-full p-t-50 p-b-50" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
                 <Link to={`/product/${productList[0]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
@@ -226,9 +226,9 @@ const ArtistPage = () => {
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="blog-item">
                 <div class="hov-img0 bor2">
-                  <a href="product-detail.html">
-                  <img src={imageURL + productList[0]?.image} style={{width: "350px"}} alt="IMG-BLOG" />
-                  </a>
+                  <Link to={`/product/${productList[0]?._id}`}>
+                    <img src={imageURL + productList[0]?.image} style={windowSize?.width <= 575 ? { width: "390px", objectFit: "cover" } : {}} alt="IMG-BLOG" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -243,15 +243,15 @@ const ArtistPage = () => {
             <div class="col-sm-12 col-md-7 col-lg-7">
               <div class="blog-item">
                 <div class="hov-img0 bor2">
-                  <a href="product-detail.html">
-                    <img src={imageURL + productList[5]?.image} alt="IMG-BLOG" />
-                  </a>
+                  <Link to={`/product/${productList[5]?._id}`}>
+                    <img src={imageURL + productList[5]?.image} alt="IMG-BLOG" style={{ width: "350px" }} />
+                  </Link>
                 </div>
               </div>
             </div>
             <div class="col-sm-12 col-md-5 col-lg-5">
               <div class="flex-l-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   {productList[5]?.name}
                 </h2>
               </div>
@@ -260,18 +260,18 @@ const ArtistPage = () => {
                   SU DUE RIGHE
                 </h2>
               </div> */}
-              <div class="flex-l-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+              <div class="flex-l-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   Muputo
                 </h5>
               </div>
-              <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+              <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                   2023
                 </h5>
               </div>
 
-              <div class="flex-l-m flex-w w-full p-t-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+              <div class="flex-l-m flex-w w-full p-t-50" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
                 <Link to={`/product/${productList[5]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
