@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
+import styles from "./AboutPage.module.scss";
 
 const AboutPage = () => {
   return (
@@ -43,7 +44,7 @@ const AboutPage = () => {
             <div class="col-11 col-md-5 col-lg-4 col-md-4 col-sm-12 m-lr-auto">
               <div class="how-bor1 ">
                 <div class="hov-img0">
-                  <img src="poto/a5.jpg" alt="IMG" />
+                  <img src="poto/a5.jpg" alt="IMG" className={styles.img} />
                 </div>
               </div>
             </div>
@@ -75,7 +76,7 @@ const AboutPage = () => {
             <div class="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
               <div class="how-bor2">
                 <div class="hov-img0">
-                  <img src="poto/a6.jpg" alt="IMG" />
+                  <img src="poto/a6.jpg" alt="IMG" className={styles.img} />
                 </div>
               </div>
             </div>

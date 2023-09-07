@@ -134,20 +134,20 @@ const ArtistPage = () => {
           </div>
           <div class="row p-t-50">
             <div class="p-b-50 col-sm-12 col-md-12 col-lg-12">
-              <h3 class="ltext-105 cl5">
+              <h3 class="ltext-105 cl5" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                 Selected<br /> Work
               </h3>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="flex-r-m flex-w w-full p-t-100 respon2" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end">
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* TITOLONE GRANDE<br />SU DUE RIGHE */}
                   {productList[1]?.name}
                 </h2>
               </div>
 
               <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-110 cl2  text-end">
+                <h5 class="mtext-110 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* quis nostrud exerci<br />
                   tation ullamcorper<br />
                   suscipit lobortis nisl<br />
@@ -155,13 +155,13 @@ const ArtistPage = () => {
                   {productList[1]?.description}
                 </h5>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   Muputo<br />2023
                 </h5>
               </div>
 
-              <div class="flex-r-m flex-w w-full p-t-50 p-b-50">
+              <div class="flex-r-m flex-w w-full p-t-50 p-b-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
                 <Link to={`/product/${productList[1]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
@@ -187,7 +187,7 @@ const ArtistPage = () => {
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="block2">
                 <div class="block2-pic hov-img0">
-                  <img src={imageURL + productList[3]?.image} class="img-fluid rounded p-t-100 img-size" />
+                  <img src={imageURL + productList[3]?.image} class="img-fluid rounded p-t-100 img-size" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}} />
                   <Link to={`/product/${productList[3]?._id}`} target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -196,14 +196,14 @@ const ArtistPage = () => {
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end">
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* TITOLONE GRANDE<br />SU DUE RIGHE */}
                   {productList[0]?.name}
                 </h2>
               </div>
 
               <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-110 cl2  text-end">
+                <h5 class="mtext-110 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {/* quis nostrud exerci<br />
                   tation ullamcorper<br />
                   suscipit lobortis nisl<br />
@@ -211,13 +211,13 @@ const ArtistPage = () => {
                   {productList[0]?.description}
                 </h5>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   Muputo<br />2023
                 </h5>
               </div>
 
-              <div class="flex-r-m flex-w w-full p-t-50 p-b-50">
+              <div class="flex-r-m flex-w w-full p-t-50 p-b-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
                 <Link to={`/product/${productList[0]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
@@ -251,7 +251,7 @@ const ArtistPage = () => {
             </div>
             <div class="col-sm-12 col-md-5 col-lg-5">
               <div class="flex-l-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end">
+                <h2 class="ltext-109 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   {productList[5]?.name}
                 </h2>
               </div>
@@ -260,18 +260,18 @@ const ArtistPage = () => {
                   SU DUE RIGHE
                 </h2>
               </div> */}
-              <div class="flex-l-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-l-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   Muputo
                 </h5>
               </div>
-              <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0">
-                <h5 class="mtext-103 cl2  text-end">
+              <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
                   2023
                 </h5>
               </div>
 
-              <div class="flex-l-m flex-w w-full p-t-50">
+              <div class="flex-l-m flex-w w-full p-t-50" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
                 <Link to={`/product/${productList[5]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
