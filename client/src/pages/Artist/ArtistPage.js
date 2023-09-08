@@ -134,7 +134,7 @@ const ArtistPage = () => {
           </div>
           <div class="row p-t-50">
             <div class="p-b-50 col-sm-12 col-md-12 col-lg-12">
-              <h3 class="ltext-105 cl5" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
+              <h3 class="ltext-105 cl5">
                 Selected<br /> Work
               </h3>
             </div>

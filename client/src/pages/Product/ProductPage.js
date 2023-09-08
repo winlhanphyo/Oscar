@@ -313,97 +313,6 @@ const ProductPage = () => {
                     )
                   })}
 
-                  {/* <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Four
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Five
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Four
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Five
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Four
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Five
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Four
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Five
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Four
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Five
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Four
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Five
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Four
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Five
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Two
-                  </a>
-                  <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10">
-                    Item Three
-                  </a> */}
-
                 </div>
               </div>
             </div>
@@ -417,7 +326,7 @@ const ProductPage = () => {
                     {/* <!-- Block2 --> */}
                     <div class="block2">
                       <div class="block2-pic hov-img0">
-                        <img src={imageURL + data.image} alt="IMG-PRODUCT" class="img-fluid img-size respon1" />
+                        <img src={imageURL + data.image} alt="IMG-PRODUCT" class="img-fluid img-size respon1 oscar-item-size" />
 
                         <Link to={`/product/${data._id}`} target="_blank" class="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
                           Detail

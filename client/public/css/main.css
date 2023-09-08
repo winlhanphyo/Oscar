@@ -3379,4 +3379,9 @@ input.num-product::-webkit-inner-spin-button {
     padding-top: 80px;
   }
 
+  .oscar-item-size{
+    height: 350px !important;
+    width: 260px !important;
+  }
+
 }
