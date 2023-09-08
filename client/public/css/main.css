@@ -3364,4 +3364,19 @@ input.num-product::-webkit-inner-spin-button {
     padding: 20px;
   }
 
+  .respon8{
+    display: none;
+  }
+
+  .oscar-center{
+    justify-content: center !important;
+    -ms-align-items: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .oscar-padding-top{
+    padding-top: 80px;
+  }
+
 }

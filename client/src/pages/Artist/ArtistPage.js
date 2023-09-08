@@ -55,7 +55,7 @@ const ArtistPage = () => {
       <section class="p-t-50 respon2">
         <div class="container">
           <div class="row">
-            <img class="over-image" src="poto/j5.png" />
+            <img class="over-image respon8" src="poto/j5.png" />
             <div class="col-sm-12 col-md-4 col-lg-4">
               <div class="flex-col-l-m p-t-100 p-b-30 respon5">
                 <div class="layer-slick1 animated" data-appear="fadeInDown" data-delay="0">
