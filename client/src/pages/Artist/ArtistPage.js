@@ -95,9 +95,9 @@ const ArtistPage = () => {
             <div class="col-sm-12 col-md-8 col-lg8">
               <div class="blog-item">
                 <div class="hov-img0 bor2">
-                  <a href="product-detail.html">
+                  <Link to={`/product/${productList[2]?._id}`}>
                     <img src={imageURL + productList[2]?.image} alt="IMG-BLOG" style={windowSize?.width <= 575 ? { width: "390px", objectFit: "cover" } : {}} />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
