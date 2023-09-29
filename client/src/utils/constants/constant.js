@@ -21,6 +21,6 @@ export const countryList = ["Afghanistan", "Albania", "Algeria", "Andorra", "Ang
 "Turkey", "Turkmenistan", "Turks & Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay",
 "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
-export const imageURL = "https://oscar-api.orionmmtecheng.com/";
-export const apiURL = "https://oscar-api.orionmmtecheng.com/";
+export const imageURL = "http://localhost:4000/";
+export const apiURL = "http://localhost:4000/";
 export const paginationLimit = 5;

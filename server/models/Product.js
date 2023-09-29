@@ -9,6 +9,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  fullDescription: {
+    type: String,
+    required: true
+  },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "category"
@@ -27,6 +31,26 @@ const productSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
+  },
+  quote: {
+    type: String,
+    required: true
+  },
+  dimension: {
+    type: String,
+    required: true
+  },
+  material: {
+    type: String,
+    required: true
+  },
+  technique: {
+    type: String,
+    required: true
+  },
+  note: {
+    type: String,
+    required: false
   },
   status: {
     type: String,

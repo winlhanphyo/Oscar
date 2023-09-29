@@ -13,7 +13,7 @@ const getProduct = async (
     const productPerPage = req.query.size || 5;
     const name = req.query.name || null;
     let condition = { deleted_at: null };
-    name ? condition.name = {$regex: name, $options: 'i'} : null;
+    name ? condition.name = { $regex: name, $options: 'i' } : null;
     const product = await Product.find(condition).skip(page * productPerPage).limit(productPerPage)
       .populate('category').populate('created_user_id').populate('updated_user_id');
     const productCount = await Product.find(condition).count();
@@ -32,13 +32,19 @@ const getProduct = async (
   }
 };
 
-const getTopProduct = async(req, res) => {
+const getTopProduct = async (req, res) => {
   try {
-    const category = await Category.findOne({ name: "Home" });
-    const products = await Product.find({ category: category?._id });
+    // const category = await Category.findOne({ name: "Home" });
+    // const products = await Product.find({ category: category?._id });
+
+    const randomDocuments = await Product.aggregate([
+      { $sample: { size: 10 } }, // Specify the number of random documents you want to retrieve
+    ]);
+    
+    console.log('Random documents:', randomDocuments);
 
     return res.json({
-      data: products,
+      data: randomDocuments,
       status: 1
     });
   } catch (err) {
@@ -91,9 +97,15 @@ const createProduct = async (req, res) => {
       price: req.body.price,
       count: req.body.count,
       image,
+      quote: req.body.quote,
+      fullDescription: req.body.fullDescription,
+      dimension: req.body.dimension,
+      material: req.body.material,
+      technique: req.body.technique,
       created_user_id: req.body.created_user_id,
     };
     req.body?.status ? productData.status = req.body.status : null;
+    req.body.note ? productData.note = req.body.note : null;
     const result = await Product.insertMany(productData);
     res
       .status(201)
@@ -145,6 +157,13 @@ const updateProduct = async (req, res) => {
     req.body?.count ? product.count = req.body.count : null;
     product.updated_user_id = req.body.updated_user_id;
     req.body?.status ? product.status = req.body.status : null;
+
+    req.body.quote ? product.quote = req.body.quote : null;
+    req.body.fullDescription ? product.fullDescription = req.body.fullDescription : null;
+    req.body.dimension ? product.dimension = req.body.dimension : null;
+    req.body.material ? product.material = req.body.material : null;
+    req.body.technique ? product.technique = req.body.technique : null;
+    req.body.note ? product.note = req.body.note : null;
     const result = await product.save();
     res.json({ message: "Updated Product Successfully!", data: result, status: 1 });
   } catch (err) {
@@ -183,11 +202,11 @@ const getProductWithCategoryId = async (req, res) => {
     const productPerPage = req.query.size || 5;
     const name = req.query.name || null;
     let condition = { deleted_at: null, category: new mongoose.Types.ObjectId(catId) };
-    name ? condition.name = {$regex: name, $options: 'i'} : null;
+    name ? condition.name = { $regex: name, $options: 'i' } : null;
     catId ? condition.category = new mongoose.Types.ObjectId(catId) : null;
 
     const product = await Product.find(condition).skip(page * productPerPage).limit(productPerPage)
-    .populate('category').populate('created_user_id').populate('updated_user_id');
+      .populate('category').populate('created_user_id').populate('updated_user_id');
     const productCount = await Product.find(condition).count();
 
     return res.json({
@@ -205,4 +224,18 @@ const getProductWithCategoryId = async (req, res) => {
   }
 }
 
-module.exports = { getProduct, getProductWithCategoryId, findProduct, createProduct, deleteProduct, updateProduct, getTopProduct };
+/**
+ * download product image.
+ * @param req 
+ * @param res 
+ */
+const downloadProductImage = async (req, res) => {
+  try {
+    const path = "upload/product/" + req.params.filename;
+    res.download(path);
+  } catch (err) {
+    console.log('download product image file error', err);
+  }
+}
+
+module.exports = { getProduct, getProductWithCategoryId, findProduct, createProduct, deleteProduct, updateProduct, getTopProduct, downloadProductImage };

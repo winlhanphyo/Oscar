@@ -35,6 +35,10 @@ router
 
 router
   .route("/category/:id")
-  .get(productController.getProductWithCategoryId)
+  .get(productController.getProductWithCategoryId);
+
+router
+  .route('/:filename/download')
+  .get(productController.downloadProductImage);
 
 module.exports = router;

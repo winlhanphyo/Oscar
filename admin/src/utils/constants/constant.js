@@ -1,2 +1,2 @@
-export const imageURL = "https://oscar-api.orionmmtecheng.com/";
+export const imageURL = "http://localhost:4000/";
 export const paginationLimit = 5;

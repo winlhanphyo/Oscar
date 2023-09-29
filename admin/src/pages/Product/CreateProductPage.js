@@ -16,6 +16,11 @@ const CreateProductPage = () => {
     category: "",
     price: "",
     count: "",
+    quote: "",
+    fullDescription: "",
+    dimension: "",
+    material: "",
+    technique: "",
     image: null
   });
   const [formData, setFormData] = React.useState({
@@ -25,6 +30,12 @@ const CreateProductPage = () => {
     artistName: "",
     price: "",
     count: "",
+    quote: "",
+    fullDescription: "",
+    dimension: "",
+    material: "",
+    technique: "",
+    note: "",
     image: null,
     status: "available"
   });
@@ -55,6 +66,11 @@ const CreateProductPage = () => {
       category: "Category is required",
       price: "Price is required",
       count: "Count is required",
+      quote: "Quote is required",
+      fullDescription: "Full Description is required",
+      dimension: "Dimension is required",
+      material: "Material is required",
+      technique: "Technique is required",
       image: "Image is required"
     };
 
@@ -87,6 +103,17 @@ const CreateProductPage = () => {
       formParam.append('count', formData.count);
       formParam.append('image', formData.image);
       formParam.append('category', formData.category);
+      
+      formParam.append('quote', formData.quote);
+      formParam.append('fullDescription', formData.fullDescription);
+      formParam.append('dimension', formData.dimension);
+      formParam.append('material', formData.material);
+      formParam.append('technique', formData.technique);
+
+      if (formData?.note) {
+        formParam.append('note', formData.note);
+      }
+
       if (formData?.artistName) {
         formParam.append('artistName', formData.artistName);
       }
@@ -128,6 +155,10 @@ const CreateProductPage = () => {
     }
   };
 
+  /**
+   * handle file change.
+   * @param {*} e 
+   */
   const handleFileSelected = (e) => {
     const name = e.target.name;
     let preFormData = formData;
@@ -172,6 +203,13 @@ const CreateProductPage = () => {
                       </div>
 
                       <div class="form-group">
+                        <label for="fullDescription">Full Description</label>
+                        <textarea className={errorForm?.fullDescription ? `form-control is-invalid` : `form-control`} id="fullDescription" rows="3" name="fullDescription" value={formData.fullDescription} onChange={handleChange} placeholder="Full Description" />
+                        {errorForm.fullDescription ? (
+                          <div class="invalid-feedback">{errorForm.fullDescription}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
                         <label for="category">Category</label>
                         <select className={errorForm?.category ? `custom-select is-invalid` : `custom-select`} id="category" name="category" value={formData.category} onChange={handleChange}>
                           <option value="" selected>Choose...</option>
@@ -198,6 +236,40 @@ const CreateProductPage = () => {
                         <input type="number" name="price" className={errorForm?.price ? `form-control is-invalid` : `form-control`} value={formData.price} onChange={handleChange} id="price" placeholder="Price" />
                         {errorForm.price ? (
                           <div class="invalid-feedback">{errorForm.price}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="quote">Quote</label>
+                        <input type="text" name="quote" className={errorForm?.quote ? `form-control is-invalid` : `form-control`} value={formData.quote} onChange={handleChange} id="quote"
+                        placeholder="quis nostrud exerci tation ullamcorper suscipit lob- ortis nisl ut aliquip ex ea commodo consequat. Duis" />
+                        {errorForm.quote ? (
+                          <div class="invalid-feedback">{errorForm.quote}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="dimension">Dimensions</label>
+                        <input type="text" name="dimension" className={errorForm?.dimension ? `form-control is-invalid` : `form-control`} value={formData.dimension} onChange={handleChange} id="dimension" placeholder="40 x 80 cm" />
+                        {errorForm.dimension ? (
+                          <div class="invalid-feedback">{errorForm.dimension}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="material">Materials</label>
+                        <input type="text" name="material" className={errorForm?.material ? `form-control is-invalid` : `form-control`} value={formData.material} onChange={handleChange} id="material" placeholder="oil on canvas" />
+                        {errorForm.material ? (
+                          <div class="invalid-feedback">{errorForm.material}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="technique">Technique</label>
+                        <input type="text" name="technique" className={errorForm?.technique ? `form-control is-invalid` : `form-control`} value={formData.technique} onChange={handleChange} id="technique" placeholder="oil" />
+                        {errorForm.technique ? (
+                          <div class="invalid-feedback">{errorForm.technique}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="note">Notes</label>
+                        <input type="text" name="note" className={`form-control`} value={formData.note} onChange={handleChange} id="material" placeholder="note" />
                       </div>
 
                       <div class="form-group">

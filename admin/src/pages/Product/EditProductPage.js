@@ -19,7 +19,13 @@ const EditProductPage = () => {
     description: "",
     category: "",
     price: "",
-    count: ""
+    count: "",
+    quote: "",
+    fullDescription: "",
+    dimension: "",
+    material: "",
+    technique: "",
+    image: null
   });
   const [formData, setFormData] = React.useState({
     name: "",
@@ -28,6 +34,13 @@ const EditProductPage = () => {
     artistName: "",
     price: "",
     count: "",
+    quote: "",
+    fullDescription: "",
+    dimension: "",
+    material: "",
+    technique: "",
+    note: "",
+    image: null,
     status: "available"
   });
 
@@ -42,7 +55,14 @@ const EditProductPage = () => {
         artistName: dist?.data?.data?.artistName,
         price: dist?.data?.data?.price,
         count: dist?.data?.data?.count,
-        status: dist?.data?.data?.status
+        quote: dist?.data?.data?.quote,
+        fullDescription: dist?.data?.data?.fullDescription,
+        dimension: dist?.data?.data?.dimension,
+        material: dist?.data?.data?.material,
+        technique: dist?.data?.data?.technique,
+        note: dist?.data?.data?.note,
+        image: dist?.data?.data?.image,
+        status: "available"
       });
       setInitCategoryName(dist?.data?.data?.category?.name);
       setLoading(false);
@@ -117,6 +137,17 @@ const EditProductPage = () => {
         formParam.append('artistName', formData.artistName);
       }
       formParam.append('category', formData.category);
+
+      formParam.append('quote', formData.quote);
+      formParam.append('fullDescription', formData.fullDescription);
+      formParam.append('dimension', formData.dimension);
+      formParam.append('material', formData.material);
+      formParam.append('technique', formData.technique);
+
+      if (formData?.note) {
+        formParam.append('note', formData.note);
+      }
+
       formParam.append('created_user_id', user._id);
       formParam.append('status', formData.status);
       axios.post(`/product/${id}`, formParam,
@@ -194,6 +225,13 @@ const EditProductPage = () => {
                       </div>
 
                       <div class="form-group">
+                        <label for="fullDescription">Full Description</label>
+                        <textarea className={errorForm?.fullDescription ? `form-control is-invalid` : `form-control`} id="fullDescription" rows="3" name="fullDescription" value={formData.fullDescription} onChange={handleChange} placeholder="Full Description" />
+                        {errorForm.fullDescription ? (
+                          <div class="invalid-feedback">{errorForm.fullDescription}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
                         <label for="category">Category</label>
                         <select
                           disabled={initCategoryName === "Home"}
@@ -229,6 +267,40 @@ const EditProductPage = () => {
                         <input type="number" name="price" className={errorForm?.price ? `form-control is-invalid` : `form-control`} value={formData.price} onChange={handleChange} id="price" placeholder="Price" />
                         {errorForm.price ? (
                           <div class="invalid-feedback">{errorForm.price}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="quote">Quote</label>
+                        <input type="text" name="quote" className={errorForm?.quote ? `form-control is-invalid` : `form-control`} value={formData.quote} onChange={handleChange} id="quote"
+                        placeholder="quis nostrud exerci tation ullamcorper suscipit lob- ortis nisl ut aliquip ex ea commodo consequat. Duis" />
+                        {errorForm.quote ? (
+                          <div class="invalid-feedback">{errorForm.quote}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="dimension">Dimensions</label>
+                        <input type="text" name="dimension" className={errorForm?.dimension ? `form-control is-invalid` : `form-control`} value={formData.dimension} onChange={handleChange} id="dimension" placeholder="40 x 80 cm" />
+                        {errorForm.dimension ? (
+                          <div class="invalid-feedback">{errorForm.dimension}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="material">Materials</label>
+                        <input type="text" name="material" className={errorForm?.material ? `form-control is-invalid` : `form-control`} value={formData.material} onChange={handleChange} id="material" placeholder="oil on canvas" />
+                        {errorForm.material ? (
+                          <div class="invalid-feedback">{errorForm.material}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="technique">Technique</label>
+                        <input type="text" name="technique" className={errorForm?.technique ? `form-control is-invalid` : `form-control`} value={formData.technique} onChange={handleChange} id="technique" placeholder="oil" />
+                        {errorForm.technique ? (
+                          <div class="invalid-feedback">{errorForm.technique}</div>) : ''}
+                      </div>
+
+                      <div class="form-group">
+                        <label for="note">Notes</label>
+                        <input type="text" name="note" className={`form-control`} value={formData.note} onChange={handleChange} id="material" placeholder="note" />
                       </div>
 
                       <div class="form-group">

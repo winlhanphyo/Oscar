@@ -215,7 +215,7 @@ const UserPage = () => {
                                       class="btn btn-social-icon btn-outline-facebook"
                                       data-toggle="modal"
                                       data-target="#confirmModal"
-                                      disabled={data._id.toString() === user._id.toString()}
+                                      disabled={data?._id.toString() === user?._id.toString()}
                                       onClick={() => showDeleteDialog(data._id)}>
                                         <i class="mdi mdi-delete"></i>
                                     </button>

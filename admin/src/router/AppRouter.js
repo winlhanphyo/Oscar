@@ -44,9 +44,9 @@ const AppRouter = withRouter(({ location }) => {
         <PrivateRoute path="/admin/product/:id/edit" component={EditProductPage} />
         <PrivateRoute path="/admin/product/create" component={CreateProductPage} />
         <PrivateRoute path="/admin/product" component={ProductPage} />
-        <PrivateRoute path="/admin/user/:id/edit" component={EditUserPage} />
-        <PrivateRoute path="/admin/user/create" component={CreateUserPage} />
-        <PrivateRoute path="/admin/user" component={UserPage} />
+        <PublicRoute path="/admin/user/:id/edit" component={EditUserPage} />
+        <PublicRoute path="/admin/user/create" component={CreateUserPage} />
+        <PublicRoute path="/admin/user" component={UserPage} />
         <PrivateRoute path="/admin/password-change" component={PasswordChange} />
         <PrivateRoute path="/admin/order/:id/edit" component={EditOrderPage} />
         <PublicRoute path="/admin/order/:id" component={OrderDetailPage} />
@@ -54,7 +54,6 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/admin/login" component={LoginPage} />
         <PublicRoute path="/admin/forget-password" component={ForgetPassword} />
         <PublicRoute path="/admin/forget-password-update/:userId/:token" component={ForgetPasswordUpdate} />
-        <PrivateRoute path="/admin/users" component={UserPage} />
         <PrivateRoute path="/admin/profile" component={ProfilePage} />
         <PublicRoute path="/admin/home" component={HomePage} />
 

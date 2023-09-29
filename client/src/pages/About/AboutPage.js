@@ -1,86 +1,109 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
+import axios from '../../axios/index';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
-import styles from "./AboutPage.module.scss";
+import { imageURL } from '../../utils/constants/constant';
+// import styles from "./AboutPage.module.scss";
 
 const AboutPage = () => {
+  const [loading, setLoading] = React.useState(false);
+  const [productList, setProductList] = React.useState([]);
+
+  React.useEffect(() => {
+    setLoading(true);
+    axios.get("/product/top").then((dist) => {
+      console.log('dist', dist?.data?.data);
+      setProductList(dist?.data?.data);
+      setLoading(false);
+    }).catch((err) => {
+      swal("Oops!", "Product List Page API Error", "error");
+      setLoading(false);
+    });
+  }, []);
+
+
   return (
     <>
       <Header />
       <Cart />
 
       {/* <!-- Title page --> */}
-      <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{ backgroundImage: "url('poto/a3.jpg')" }}>
+      {/* <section class="bg-img1 txt-center p-lr-15 p-tb-92" style={{ backgroundImage: "url('poto/a3.jpg')" }}>
         <h2 class="ltext-105 cl0 txt-center">
           About
         </h2>
-      </section>
+      </section> */}
+      {loading && <LoadingSpinner />}
 
       {/* <!-- Content page --> */}
-      <section class="bg0 p-t-75 p-b-100">
-        <div class="container">
-          <div class="row p-b-148">
-            <div class="col-md-8 col-lg-8 col-sm-12">
-              <div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
-                <h3 class="mtext-111 cl2 p-b-16">
-                  Our Story
-                </h3>
+      <section class="p-t-250">
+        <div class="bg3">
+          {/* <!-- Containter --> */}
+          <div class="container">
 
-                <p class="stext-113 cl6 p-b-26">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas varius egestas diam, eu sodales metus scelerisque congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas gravida justo eu arcu egestas convallis. Nullam eu erat bibendum, tempus ipsum eget, dictum enim. Donec non neque ut enim dapibus tincidunt vitae nec augue. Suspendisse potenti. Proin ut est diam. Donec condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
-                </p>
-
-                <p class="stext-113 cl6 p-b-26">
-                  Donec gravida lorem elit, quis condimentum ex semper sit amet. Fusce eget ligula magna. Aliquam aliquam imperdiet sodales. Ut fringilla turpis in vehicula vehicula. Pellentesque congue ac orci ut gravida. Aliquam erat volutpat. Donec iaculis lectus a arcu facilisis, eu sodales lectus sagittis. Etiam pellentesque, magna vel dictum rutrum, neque justo eleifend elit, vel tincidunt erat arcu ut sem. Sed rutrum, turpis ut commodo efficitur, quam velit convallis ipsum, et maximus enim ligula ac ligula.
-                </p>
-
-                <p class="stext-113 cl6 p-b-26">
-                  Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
-                </p>
-              </div>
-            </div>
-
-            <div class="col-11 col-md-5 col-lg-4 col-md-4 col-sm-12 m-lr-auto">
-              <div class="how-bor1 ">
-                <div class="hov-img0">
-                  <img src="poto/a5.jpg" alt="IMG" className={styles.img} />
+            <div class="row">
+              <div class="col-sm-12 col-md-4 col-lg-4">
+                <div class="flex-col-l-m p-t-100 p-b-30 respon5">
+                  <div class="layer-slick1 animated" data-appear="fadeInDown" data-delay="0">
+                    <h2 class="mtext-111 cl0 p-t-19 p-b-20">
+                      about
+                    </h2>
+                  </div>
+                  <div class="layer-slick1 animated p-b-40" data-appear="fadeInUp" data-delay="800">
+                    <span class="stext-115 cl0 respon2">
+                      rem ipsum dolor sit amet, cons ectetuer adipiscing ut
+                      laoreet dolore magna aliquam erat volutpat. Ut wisi
+                      enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+                      consedolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim Lorem ipsum dolor
+                      sit
+                      amet, consectetuer adipiscing elit, sed diam nonummy
+                      nibh euismod tincidunt ut laoreet dolore magna aliquam
+                      erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl
+                      ut
+                      aliquip ex ea commodo consequat. Duis autem vel eum
+                      iriure dolor in hendrerit in vulputate velit esse molestie
+                      consequat, vel illum dolore eu feugiat nulla facilisis at <br /><br />
+                        rem ipsum dolor sit amet, cons ectetuer adipiscing ut
+                        laoreet dolore magna aliquam erat volutpat. Ut wisi
+                        enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+                        consedolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim Lorem ipsum dolor
+                        sit
+                        amet, consectetuer adi
+                      </span>
+                        <div class="w-full p-t-45">
+                          <div></div>
+                          <a href="product-detail.html" target="_blank" class="dis-block stext-103 cl0 p-b-15 trans-04">
+                            <span class="p-r-5"><img src="images/icons/icon-file.png" alt="icon-file" /></span>
+                            View Curriculum Vitae.pdf
+                          </a>
+                          <a href="product-detail.html" target="_blank" class="dis-block stext-103 cl0 trans-04">
+                            <span class="p-r-5"><img src="images/icons/icon-download.png" alt="icon-download" /></span>
+                            Download Press Kit.zip
+                          </a>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-8 col-lg8 m-t--125">
+                  <div class="blog-item">
+                    <div class="hov-img0 bor2">
+                      <a href="product-detail.html">
+                        <img src={imageURL + productList[0]?.image} alt="IMG-BLOG" />
+                      </a>
+                    </div>
+                  </div>
+                  <h4 class="p-b-15 p-t-100 text-center">
+                    <Link to={`/product/${productList[0]?._id}`} class="ltext-108 cl0 hov-cl1 trans-04">
+                      "{productList[0]?.quote}"
+                    </Link>
+                  </h4>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="row">
-            <div class="order-md-2 col-md-7 col-lg-8 p-b-30">
-              <div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
-                <h3 class="mtext-111 cl2 p-b-16">
-                  Our Mission
-                </h3>
-
-                <p class="stext-113 cl6 p-b-26">
-                  Mauris non lacinia magna. Sed nec lobortis dolor. Vestibulum rhoncus dignissim risus, sed consectetur erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam maximus mauris sit amet odio convallis, in pharetra magna gravida. Praesent sed nunc fermentum mi molestie tempor. Morbi vitae viverra odio. Pellentesque ac velit egestas, luctus arcu non, laoreet mauris. Sed in ipsum tempor, consequat odio in, porttitor ante. Ut mauris ligula, volutpat in sodales in, porta non odio. Pellentesque tempor urna vitae mi vestibulum, nec venenatis nulla lobortis. Proin at gravida ante. Mauris auctor purus at lacus maximus euismod. Pellentesque vulputate massa ut nisl hendrerit, eget elementum libero iaculis.
-                </p>
-
-                <div class="bor16 p-l-29 p-b-9 m-t-22">
-                  <p class="stext-114 cl6 p-r-40 p-b-11">
-                    Creativity is just connecting things. When you ask creative people how they did something, they feel a little guilty because they didn't really do it, they just saw something. It seemed obvious to them after a while.
-                  </p>
-
-                  <span class="stext-111 cl8">
-                    - Steve Job’s
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
-              <div class="how-bor2">
-                <div class="hov-img0">
-                  <img src="poto/a6.jpg" alt="IMG" className={styles.img} />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

@@ -69,7 +69,7 @@ const CreateUserPage = () => {
         email: formData.email,
         password: formData.password,
         type: formData.type,
-        created_user_id: user._id
+        created_user_id: user?._id
       };
       axios.post("/user", data,
       {

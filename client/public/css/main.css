@@ -50,20 +50,6 @@ z-index: 1;
     text-align: start;
   }
 
-  .img-size{
-    height: 350px !important;
-    object-fit: cover;
-  }
-
-  .img-size-sm{
-    height: 85px;
-  }
-
-  .img-size-xl{
-    width: 400px !important;
-    height: 600px;
-  }
-
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
@@ -2088,8 +2074,7 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .block2-txt-child1 {
-  /* width: calc(100% - 30px); */
-  margin: 0 auto;
+  width: calc(100% - 30px);
 }
 
 .block2-txt-child2 {
@@ -3093,14 +3078,11 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .hov-img0 img{
-  /* width: 100%; */
+  width: 100%;
   -webkit-transition: transform 0.9s ease;
   -o-transition: transform 0.9s ease;
   -moz-transition: transform 0.9s ease;
   transition: transform 0.9s ease;
-
-  margin: 0 auto;
-  display: block;
 }
 
 .hov-img0:hover img {
@@ -3281,6 +3263,11 @@ input.num-product::-webkit-inner-spin-button {
 
   .w-full-md {width: 100%;}
 
+  .p-t-250 { padding-top: 100px;}
+  .m-t--125 {
+    margin-top: -50px;
+  }
+
   /*---------------------------------------------*/
   .respon4 {
     width: 100%;
@@ -3312,12 +3299,12 @@ input.num-product::-webkit-inner-spin-button {
 
   /*---------------------------------------------*/
   .respon1 {
-    height: 600px;
+    font-size: 40px;
   }
   
   /*---------------------------------------------*/
   .respon2 {
-    padding-top: 0;
+    font-size: 20px;
   }
 
   /*---------------------------------------------*/
@@ -3362,26 +3349,6 @@ input.num-product::-webkit-inner-spin-button {
   /*---------------------------------------------*/
   .respon3 {
     padding: 20px;
-  }
-
-  .respon8{
-    display: none;
-  }
-
-  .oscar-center{
-    justify-content: center !important;
-    -ms-align-items: center !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
-
-  .oscar-padding-top{
-    padding-top: 80px;
-  }
-
-  .oscar-item-size{
-    height: 350px !important;
-    width: 260px !important;
   }
 
 }

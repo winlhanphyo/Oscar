@@ -1,10 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import styles from './HomePage.module.scss';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
 import Footer from '../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { imageURL } from '../../utils/constants/constant';
@@ -78,22 +78,22 @@ const HomePage = () => {
                   </span>
                 </div>
                 <div class="flex-c-m flex-w w-full p-t-15">
-                  <a href="#" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                  <Link to="/about" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                     READ MORE
-                  </a>
+                  </Link>
                 </div>
-                <div class="flex-r-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? {paddingTop: "100px"}: {}} data-appear="fadeInDown" data-delay="0">
-                  <h2 class="ltext-109 cl2  text-end oscar-center" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <div class="flex-r-m flex-w w-full p-t-100" style={windowSize?.width < 400 ? { paddingTop: "100px" } : {}} data-appear="fadeInDown" data-delay="0">
+                  <h2 class="ltext-109 cl2  text-end oscar-center" style={windowSize?.width < 400 ? { textAlign: "center" } : {}}>
                     {/* TITOLONE GRANDE<br/>SU DUE RIGHE */}
                     {productList[0]?.name}
                   </h2>
                 </div>
-                <div class="flex-r-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-appear="fadeInDown" data-delay="0">
+                <div class="flex-r-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? { justifyContent: "center", paddingTop: "50px" } : {}} data-appear="fadeInDown" data-delay="0">
                   <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end oscar-center"}>
                     Muputo<br />2023
                   </h5>
                 </div>
-                <div class="flex-r-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+                <div class="flex-r-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? { justifyContent: "center" } : {}}>
                   <Link to={`/product/${productList[0]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04 oscar-center">
                     Art Details
                   </Link>
@@ -147,13 +147,13 @@ const HomePage = () => {
                   </Link>
                 </div>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {paddingTop: "100px"}: {}}>
-                <h2 class="ltext-109 cl2  text-end oscar-center" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+              <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? { paddingTop: "100px" } : {}}>
+                <h2 class="ltext-109 cl2  text-end oscar-center" style={windowSize?.width < 400 ? { textAlign: "center" } : {}}>
                   {/* TITOLONE GRANDE<br/>SU DUE RIGHE */}
                   {productList[1]?.name}
                 </h2>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50 oscar-center" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}}>
+              <div class="flex-r-m flex-w w-full p-t-50 oscar-center" data-appear="fadeInDown" data-delay="0" style={windowSize?.width < 400 ? { justifyContent: "center", paddingTop: "50px" } : {}}>
                 <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end oscar-center"}>
                   Muputo<br />2023
                 </h5>
@@ -220,13 +220,13 @@ const HomePage = () => {
           <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4">
               <div class="flex-r-m flex-w w-full p-t-100 respon2" data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-end oscar-center" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <h2 class="ltext-109 cl2  text-end oscar-center" style={windowSize?.width < 400 ? { textAlign: "center" } : {}}>
                   {/* TITOLONE GRANDE<br/>SU DUE RIGHE */}
                   {productList[5]?.name}
                 </h2>
               </div>
               <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
-                <h2 class="mtext-110 cl2  text-end oscar-center" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+                <h2 class="mtext-110 cl2  text-end oscar-center" style={windowSize?.width < 400 ? { textAlign: "center" } : {}}>
                   {/* quis nostrud exerci<br/>
 							tation ullamcorper<br/>
 							suscipit lobortis nisl<br/>
@@ -234,12 +234,12 @@ const HomePage = () => {
                   {productList[5]?.description}
                 </h2>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-50 oscar-center" data-appear="fadeInDown" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-delay="0">
+              <div class="flex-r-m flex-w w-full p-t-50 oscar-center" data-appear="fadeInDown" style={windowSize?.width < 400 ? { justifyContent: "center", paddingTop: "50px" } : {}} data-delay="0">
                 <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end oscar-center"}>
                   Muputo<br />2023
                 </h5>
               </div>
-              <div class="flex-r-m flex-w w-full p-t-100 p-b-50 oscar-center" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+              <div class="flex-r-m flex-w w-full p-t-100 p-b-50 oscar-center" style={windowSize?.width < 400 ? { justifyContent: "center" } : {}}>
                 <Link to={`/product/${productList[5]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04 ">
                   Art Details
                 </Link>
@@ -260,7 +260,7 @@ const HomePage = () => {
                   <img className={styles.img}
                     src={imageURL + productList[3]?.image}
                     class="img-fluid p-t-50 rounded"
-                    style={windowSize?.width < 400 ? { margin: "30px 0", width: "300px" } : {width: "300px"}} />
+                    style={windowSize?.width < 400 ? { margin: "30px 0", width: "300px" } : { width: "300px" }} />
                   <Link to={`/product/${productList[3]?._id}`} target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
                   </Link>
@@ -286,8 +286,8 @@ const HomePage = () => {
               </div>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4">
-              <div class="flex-l-m flex-w w-full p-t-200 respon3" style={windowSize?.width < 400 ? {paddingTop: "100px"}: {}} data-appear="fadeInDown" data-delay="0">
-                <h2 class="ltext-109 cl2  text-start oscar-center" style={windowSize?.width < 400 ? {textAlign: "center"}: {}}>
+              <div class="flex-l-m flex-w w-full p-t-200 respon3" style={windowSize?.width < 400 ? { paddingTop: "100px" } : {}} data-appear="fadeInDown" data-delay="0">
+                <h2 class="ltext-109 cl2  text-start oscar-center" style={windowSize?.width < 400 ? { textAlign: "center" } : {}}>
                   {/* TITOLONE GRANDE */}
                   {productList[2]?.name}
                 </h2>
@@ -297,17 +297,17 @@ const HomePage = () => {
 							SU DUE RIGHE
 						</h2>
 					</div> */}
-              <div class="flex-l-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? {justifyContent: "center", paddingTop: "50px"} : {}} data-appear="fadeInDown" data-delay="0">
+              <div class="flex-l-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? { justifyContent: "center", paddingTop: "50px" } : {}} data-appear="fadeInDown" data-delay="0">
                 <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end oscar-center"}>
                   Muputo
                 </h5>
               </div>
-              <div class="flex-l-m flex-w w-full oscar-center" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}} data-appear="fadeInDown" data-delay="0">
+              <div class="flex-l-m flex-w w-full oscar-center" style={windowSize?.width < 400 ? { justifyContent: "center" } : {}} data-appear="fadeInDown" data-delay="0">
                 <h5 className={windowSize?.width < 400 ? `mtext-103 cl2  text-end ${styles.productLabel}` : "mtext-103 cl2  text-end oscar-center"}>
                   2023
                 </h5>
               </div>
-              <div class="flex-l-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? {justifyContent: "center"}: {}}>
+              <div class="flex-l-m flex-w w-full p-t-50 oscar-center" style={windowSize?.width < 400 ? { justifyContent: "center" } : {}}>
                 <Link to={`/product/${productList[2]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Art Details
                 </Link>
