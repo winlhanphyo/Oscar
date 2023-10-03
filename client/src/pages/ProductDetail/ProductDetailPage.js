@@ -145,17 +145,6 @@ const ProductDetailPage = () => {
                 </p>
 
                 <div class="p-t-33">
-                  {product?.artistName &&
-                    <div class="flex-w flex-r-m p-b-10">
-                      <div className={`size-205 flex-l-m respon6 stext-301 ${styles.artInfoRespon}`}>
-                        Artista Name
-                      </div>
-
-                      <div class="size-206 stext-110">
-                        {product.artistName}
-                      </div>
-                    </div>
-                  }
 
                   <div class="flex-w flex-l-m p-b-10">
                     <div className={`size-205 flex-l-m respon6 stext-301 ${styles.artInfoRespon}`}>

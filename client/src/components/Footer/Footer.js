@@ -1,9 +1,81 @@
+import React from 'react';
+import swal from 'sweetalert';
+import axios from '../../axios/index';
 import { Container, Navbar } from 'react-bootstrap';
 import $ from "jquery";
 import { useHistory, useLocation } from 'react-router-dom';
 import styles from './Footer.module.scss';
 
 const Footer = () => {
+  const [loading, setLoading] = React.useState(false);
+  const [errorForm, setErrorForm] = React.useState({
+    email: "",
+    msg: ""
+  });
+  const [formData, setFormData] = React.useState({
+    email: "",
+    msg: ""
+  });
+  const history = useHistory();
+
+  const validation = () => {
+    const errorMsg = {
+      email: "Email is required",
+      msg: "Message is required"
+    };
+
+    let preErrorForm = errorForm;
+    let validate = true;
+    Object.keys(errorMsg).map((dist) => {
+      console.log('validate', formData[dist]);
+      if (!formData[dist]) {
+        preErrorForm[dist] = errorMsg[dist];
+        validate = false;
+      } else {
+        preErrorForm[dist] = null;
+      }
+    });
+    console.log('preErrorForm', preErrorForm);
+    setErrorForm({ ...preErrorForm });
+    return validate;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validate = validation();
+    if (validate) {
+      setLoading(true);
+      axios.post("/contact", formData).then((dist) => {
+        console.log("Created Product")
+        setLoading(false);
+        swal("Success", "Thank you for contact mail", "success").then(() => {
+          history.push("/home");
+        });
+      }).catch((err) => {
+        swal("Oops!", err.toString(), "error");
+        setLoading(false);
+      })
+    }
+  }
+
+  /**
+  * handle textbox change contact page.
+  */
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    let preFormData = formData;
+    const preErrorForm = errorForm;
+    preFormData[name] = value;
+    setFormData({ ...preFormData });
+
+    if (preFormData[name] && preErrorForm[name]) {
+      preErrorForm[name] = null;
+    }
+    setErrorForm({
+      ...preErrorForm
+    });
+  };
 
   const backToTop = () => {
     $('html, body').animate({scrollTop: 0}, 300);
@@ -15,38 +87,36 @@ const Footer = () => {
         <div class="container">
           <div class="row">
             <div class="col-sm-6 col-lg-3 p-b-50">
-              <h4 class="stext-301 cl0 p-b-30">
-                Categories
-              </h4>
+            <form>
+						<h4 class="mtext-105 cl2 txt-center p-b-30">
+							Send Us A Message
+						</h4>
 
-              <ul>
-                <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    Item One
-                  </a>
-                </li>
+                <div className={errorForm?.email ? "bor8 m-b-20 how-pos4-parent is-invalid" : "bor8 m-b-20 how-pos4-parent"}>
+                  <input
+                    className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                    name="email" onChange={handleChange} placeholder="Your Email Address" />
+                  <i class="zmdi zmdi-email how-pos4 pointer-none"></i>
+                </div>
+                {errorForm.email ? (
+                  <div class="invalid-form">{errorForm.email}</div>) : ''}
 
-                <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    Item Two
-                  </a>
-                </li>
+                <div className={errorForm?.msg ? "bor8 m-b-30 is-invalid" : "bor8 m-b-30"}>
+                  <textarea
+                    className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25"
+                    name="msg" onChange={handleChange}
+                    value={formData.msg} placeholder="How Can We Help?"></textarea>
+                </div>
+                {errorForm.msg ? (
+                  <div class="invalid-form">{errorForm.msg}</div>) : ''}
 
-                <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    Item Three
-                  </a>
-                </li>
-
-                <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    Item Four
-                  </a>
-                </li>
-              </ul>
+                <button onClick={handleSubmit} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                  Submit
+                </button>
+              </form>
             </div>
 
-            <div class="col-sm-6 col-lg-3 p-b-50">
+            {/* <div class="col-sm-6 col-lg-3 p-b-50">
               <h4 class="stext-301 cl0 p-b-30">
                 Help
               </h4>
@@ -76,7 +146,7 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
             <div class="col-sm-6 col-lg-3 p-b-50">
               <h4 class="stext-301 cl0 p-b-30">
