@@ -21,8 +21,8 @@ const sendEmail = async (email, subject, text) => {
       port: 465,
       secure: true,
       auth: {
-        user: "support@gigger-api.orionmmtecheng.com",
-        pass: "BX0DVrLuJddK"
+        user: "support@oscar-admin.orionmmtecheng.com",
+        pass: "he&#5nvAtZ%J"
       },
     });
 

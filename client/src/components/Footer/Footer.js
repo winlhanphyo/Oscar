@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useCategory } from "../../store/actions/category.action";
 import axios from '../../axios/index';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function useQuery() {
   const { search } = useLocation();
@@ -64,12 +65,14 @@ const Footer = () => {
         <div class="container">
           <div class="row">
             {/* <!-- Col --> */}
+            {window.location.href.indexOf("/about") === -1 &&
             <div class="col-sm-12 col-md-12 col-lg-12 p-b-50">
               <h4 class="p-b-15 text-center ltext-108 text-white">
                 "quis nostrud exerci tation ullamcorper suscipit<br />
                 lobortis nisl ut aliquip ex ea commodo conse-"
               </h4>
             </div>
+            }
             <div class="col-sm-12 col-md-12 col-lg-12 bor3 ">
               <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0">
                 <h2 class="p-b-15 ltext-108 text-white">
@@ -103,27 +106,27 @@ const Footer = () => {
 
               <ul>
                 <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                  <Link to="/home" class="stext-107 cl7 hov-cl1 trans-04">
                     Home
-                  </a>
+                  </Link>
                 </li>
 
                 <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                  <Link to="shop" class="stext-107 cl7 hov-cl1 trans-04">
                     Shop
-                  </a>
+                  </Link>
                 </li>
 
                 <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                  <Link to="/about" class="stext-107 cl7 hov-cl1 trans-04">
                     About
-                  </a>
+                  </Link>
                 </li>
 
                 <li class="p-b-10">
-                  <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                  <Link to="/contact" class="stext-107 cl7 hov-cl1 trans-04">
                     Contact
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -176,25 +179,25 @@ const Footer = () => {
 
           <div class="p-t-40">
             <div class="flex-c-m flex-w p-b-18">
-              <a href="#" class="m-all-1">
+              <span class="m-all-1">
                 <img src="images/icons/icon-pay-01.png" alt="ICON-PAY" />
-              </a>
+              </span>
 
-              <a href="#" class="m-all-1">
+              <span class="m-all-1">
                 <img src="images/icons/icon-pay-02.png" alt="ICON-PAY" />
-              </a>
+              </span>
 
-              <a href="#" class="m-all-1">
+              <span class="m-all-1">
                 <img src="images/icons/icon-pay-03.png" alt="ICON-PAY" />
-              </a>
+              </span>
 
-              <a href="#" class="m-all-1">
+              <span class="m-all-1">
                 <img src="images/icons/icon-pay-04.png" alt="ICON-PAY" />
-              </a>
+              </span>
 
-              <a href="#" class="m-all-1">
+              <span class="m-all-1">
                 <img src="images/icons/icon-pay-05.png" alt="ICON-PAY" />
-              </a>
+              </span>
             </div>
 
             <p class="stext-107 cl6 txt-center">

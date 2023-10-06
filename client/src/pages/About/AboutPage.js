@@ -91,9 +91,9 @@ const AboutPage = () => {
                 <div class="col-sm-12 col-md-8 col-lg8 m-t--125">
                   <div class="blog-item">
                     <div class="hov-img0 bor2">
-                      <a href="product-detail.html">
+                      <Link to={`/product/${productList[0]?._id}`}>
                         <img src={imageURL + productList[0]?.image} alt="IMG-BLOG" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <h4 class="p-b-15 p-t-100 text-center">
