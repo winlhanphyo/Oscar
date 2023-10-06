@@ -445,10 +445,6 @@ const HomePage = () => {
             {/* <!-- page-body-wrapper ends --> */}
           </div>
         </div>
-
-
-
-
       </div>
     </>
   )

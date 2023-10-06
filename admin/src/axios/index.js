@@ -10,7 +10,7 @@ const getToken = () => {
   }
 }
 const instance = axios.create({
-  baseURL: "https://oscar-api.orionmmtecheng.com/api/"
+  baseURL: "http://localhost:4000/api/"
 });
 
 instance.defaults.headers.common['Authorization'] = getToken();

@@ -10,7 +10,7 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 import { imageURL } from '../../utils/constants/constant';
 
-const CheckoutPage = () => {
+const CheckoutPage = ({addCategory}) => {
   const [loading, setLoading] = React.useState(false);
   const cart = JSON.parse(localStorage.getItem("cart"));
   const [cartData, setCartData] = React.useState(null);
@@ -358,7 +358,7 @@ const CheckoutPage = () => {
         </div>
       </form>
 
-      <Footer />
+
 
       <div class="btn-back-to-top" id="myBtn">
         <span class="symbol-btn-back-to-top">

@@ -7,7 +7,7 @@ import Footer from '../../components/Footer/Footer';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
-const ForgetPasswordUpdatePage = () => {
+const ForgetPasswordUpdatePage = ({addCategory}) => {
   const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
     password: '',
@@ -163,7 +163,7 @@ const ForgetPasswordUpdatePage = () => {
         </div>
       </section>
 
-      <Footer />
+
 
       <div class="btn-back-to-top" id="myBtn">
         <span class="symbol-btn-back-to-top">

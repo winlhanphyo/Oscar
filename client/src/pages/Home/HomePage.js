@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
-import styles from './HomePage.module.scss';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
-import Footer from '../../components/Footer/Footer';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { imageURL } from '../../utils/constants/constant';
@@ -19,12 +17,16 @@ const HomePage = () => {
   ]);
   const [loading, setLoading] = React.useState(false);
   const [productList, setProductList] = React.useState([]);
+  const [videoUrl, setVideoUrl] = React.useState(null);
 
   React.useEffect(() => {
     setLoading(true);
-    axios.get("/product/top").then((dist) => {
-      // $(".odd").empty();
+    axios.get("/product/top").then(async (dist) => {
       setProductList(dist?.data?.data);
+      const video = await axios.get("/video/top");
+      if (video?.data?.data?.length > 0) {
+        setVideoUrl(video?.data?.data[0]?.url);
+      }
       setLoading(false);
     }).catch((err) => {
       swal("Oops!", "Product List Page API Error", "error");
@@ -153,9 +155,9 @@ const HomePage = () => {
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
               <div class="flex-c-m flex-w w-full p-t-100">
-                <a href="product.html" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                <Link to="/shop" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                   Visit To Gallery
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -239,29 +241,19 @@ const HomePage = () => {
       </section>
 
       {/* <!--- Section 4 --> */}
-      <section class="p-t-740">
-        <div class="bg3">
-          <div class="container">
-            <div class="row video-iframe">
-              <div class="col-sm-12 col-md-12 col-lg-12 text-center m-t--470">
-                <iframe width="100%" height="600" src="https://www.youtube.com/embed/TcqAu8VyjZA" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12">
-                <h4 class="p-b-15 p-t-100 text-center">
-                  <a href="#" class="ltext-108 cl0 hov-cl1 trans-04">
-                    "quis nostrud exerci tation ullamcorper suscipit lobortis<br />
-                    nisl ut aliquip ex ea commodo consequat. Duis"
-                  </a>
-                </h4>
+      {videoUrl &&
+        <section class="p-t-740">
+          <div class="bg3">
+            <div class="container">
+              <div class="row video-iframe">
+                <div class="col-sm-12 col-md-12 col-lg-12 text-center m-t--470">
+                  <iframe width="100%" height="600" src={`https://www.youtube.com/embed/${videoUrl?.split('v=')[1]}`} class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <Footer />
+        </section>
+      }
     </>
   )
 }

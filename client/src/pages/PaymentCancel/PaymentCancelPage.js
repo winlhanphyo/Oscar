@@ -21,7 +21,7 @@ const PaymentCancelPage = () => {
 		</div>
 	</section>	
 
-      <Footer />
+
 
 
     </>

@@ -1,152 +1,132 @@
 import React from 'react';
-import swal from 'sweetalert';
-import axios from '../../axios/index';
-import { Container, Navbar } from 'react-bootstrap';
 import $ from "jquery";
-import { useHistory, useLocation } from 'react-router-dom';
-import styles from './Footer.module.scss';
+import swal from 'sweetalert';
+import { useDispatch } from "react-redux";
+import { useLocation } from 'react-router-dom';
+import { useCategory } from "../../store/actions/category.action";
+import axios from '../../axios/index';
+
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const Footer = () => {
-  const [loading, setLoading] = React.useState(false);
-  const [errorForm, setErrorForm] = React.useState({
-    email: "",
-    msg: ""
-  });
-  const [formData, setFormData] = React.useState({
-    email: "",
-    msg: ""
-  });
-  const history = useHistory();
+  let query = useQuery();
+  const dispatch = useDispatch();
+  const category = useCategory();
 
-  const validation = () => {
-    const errorMsg = {
-      email: "Email is required",
-      msg: "Message is required"
-    };
-
-    let preErrorForm = errorForm;
-    let validate = true;
-    Object.keys(errorMsg).map((dist) => {
-      console.log('validate', formData[dist]);
-      if (!formData[dist]) {
-        preErrorForm[dist] = errorMsg[dist];
-        validate = false;
-      } else {
-        preErrorForm[dist] = null;
-      }
-    });
-    console.log('preErrorForm', preErrorForm);
-    setErrorForm({ ...preErrorForm });
-    return validate;
+  const backToTop = () => {
+    $('html, body').animate({ scrollTop: 0 }, 300);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validate = validation();
-    if (validate) {
-      setLoading(true);
-      axios.post("/contact", formData).then((dist) => {
-        console.log("Created Product")
-        setLoading(false);
-        swal("Success", "Thank you for contact mail", "success").then(() => {
-          history.push("/home");
-        });
-      }).catch((err) => {
-        swal("Oops!", err.toString(), "error");
-        setLoading(false);
-      })
-    }
+  React.useEffect(() => {
+    getCategoryList();
+  }, []);
+
+  /**
+   * get category list.
+   */
+  const getCategoryList = () => {
+    axios.get("/category").then((dist) => {
+      console.log('dist?.data?.data', dist?.data?.data);
+      // setCategoryList(dist?.data?.data);
+      dispatch({
+        type: "ADD_CATEGORY",
+        payload: {
+          categories: dist?.data?.data
+        }
+      });
+    }).catch((err) => {
+      console.log('Get Category API error', err);
+      swal("Oops!", "Get Category API error", "error");
+    });
   }
 
   /**
-  * handle textbox change contact page.
-  */
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    let preFormData = formData;
-    const preErrorForm = errorForm;
-    preFormData[name] = value;
-    setFormData({ ...preFormData });
-
-    if (preFormData[name] && preErrorForm[name]) {
-      preErrorForm[name] = null;
+   * go to product page.
+   * @param {*} catId 
+   */
+  const goProductWithCategoryList = (catId = null) => {
+    let searchNameData = query.get("page") ? "&page=" + query.get("page") : "";
+    searchNameData += query.get("searchName") ? "searchName=" + query.get("searchName") : "";
+    if (catId) {
+      window.location.href = "/shop?catId=" + catId + "&" + searchNameData;
+    } else {
+      window.location.href = "/shop?" + searchNameData;
     }
-    setErrorForm({
-      ...preErrorForm
-    });
-  };
-
-  const backToTop = () => {
-    $('html, body').animate({scrollTop: 0}, 300);
   }
 
   return (
     <>
+      {/* <!-- Footer --> */}
       <footer class="bg3 p-t-75 p-b-32">
         <div class="container">
           <div class="row">
+            {/* <!-- Col --> */}
+            <div class="col-sm-12 col-md-12 col-lg-12 p-b-50">
+              <h4 class="p-b-15 text-center ltext-108 text-white">
+                "quis nostrud exerci tation ullamcorper suscipit<br />
+                lobortis nisl ut aliquip ex ea commodo conse-"
+              </h4>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 bor3 ">
+              <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0">
+                <h2 class="p-b-15 ltext-108 text-white">
+                  OSCAR<span class="text-muted">DANILO</span><br />
+                  CHAVARRIA<span class="text-muted">GOMEZ</span>
+                </h2>
+              </div>
+            </div>
             <div class="col-sm-6 col-lg-3 p-b-50">
-            <form>
-						<h4 class="mtext-105 cl2 txt-center p-b-30">
-							Send Us A Message
-						</h4>
+              <h4 class="stext-301 cl0 p-b-30">
+                Categories
+              </h4>
 
-                <div className={errorForm?.email ? "bor8 m-b-20 how-pos4-parent is-invalid" : "bor8 m-b-20 how-pos4-parent"}>
-                  <input
-                    className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
-                    name="email" onChange={handleChange} placeholder="Your Email Address" />
-                  <i class="zmdi zmdi-email how-pos4 pointer-none"></i>
-                </div>
-                {errorForm.email ? (
-                  <div class="invalid-form">{errorForm.email}</div>) : ''}
-
-                <div className={errorForm?.msg ? "bor8 m-b-30 is-invalid" : "bor8 m-b-30"}>
-                  <textarea
-                    className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25"
-                    name="msg" onChange={handleChange}
-                    value={formData.msg} placeholder="How Can We Help?"></textarea>
-                </div>
-                {errorForm.msg ? (
-                  <div class="invalid-form">{errorForm.msg}</div>) : ''}
-
-                <button onClick={handleSubmit} class="flex-c-m stext-101 cl0 size-121 bg1 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-                  Submit
-                </button>
-              </form>
+              <ul>
+                {category.map((data) => {
+                  return (
+                    <li class="p-b-10">
+                      <a onClick={() => goProductWithCategoryList(data._id)} class="stext-107 cl7 hov-cl1 trans-04">
+                        {data.name}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
 
-            {/* <div class="col-sm-6 col-lg-3 p-b-50">
+            <div class="col-sm-6 col-lg-3 p-b-50">
               <h4 class="stext-301 cl0 p-b-30">
-                Help
+                Useful Links
               </h4>
 
               <ul>
                 <li class="p-b-10">
                   <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    Track Order
+                    Home
                   </a>
                 </li>
 
                 <li class="p-b-10">
                   <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    Returns
+                    Shop
                   </a>
                 </li>
 
                 <li class="p-b-10">
                   <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    Shipping
+                    About
                   </a>
                 </li>
 
                 <li class="p-b-10">
                   <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                    FAQs
+                    Contact
                   </a>
                 </li>
               </ul>
-            </div> */}
+            </div>
 
             <div class="col-sm-6 col-lg-3 p-b-50">
               <h4 class="stext-301 cl0 p-b-30">
@@ -179,9 +159,10 @@ const Footer = () => {
 
               <form>
                 <div class="wrap-input1 w-full p-b-4">
-                  {/* <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com" />
+                  {/* <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="support@oscar-admin.orionmmtecheng.com" />
                   <div class="focus-input1 trans-04"></div> */}
                   <label>support@oscar-admin.orionmmtecheng.com</label>
+
                 </div>
 
                 {/* <div class="p-t-18">
@@ -217,14 +198,17 @@ const Footer = () => {
             </div>
 
             <p class="stext-107 cl6 txt-center">
+              {/* <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> */}
               Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#" target="_blank">OSCAR D.CHAVARRIA</a>
+              {/* <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> */}
+
             </p>
           </div>
         </div>
       </footer>
 
       {/* <!-- Back to top --> */}
-            <div class="btn-back-to-top" id="myBtn" onClick={backToTop}>
+      <div class="btn-back-to-top" id="myBtn" onClick={backToTop}>
         <span class="symbol-btn-back-to-top">
           <i class="zmdi zmdi-chevron-up"></i>
         </span>

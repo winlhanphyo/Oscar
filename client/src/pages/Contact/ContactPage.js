@@ -7,7 +7,7 @@ import Footer from '../../components/Footer/Footer';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 
-const ContactPage = () => {
+const ContactPage = ({addCategory}) => {
   const [loading, setLoading] = React.useState(false);
   const [errorForm, setErrorForm] = React.useState({
     email: "",
@@ -185,7 +185,7 @@ const ContactPage = () => {
         <div class="size-303" id="google_map" data-map-x="40.691446" data-map-y="-73.886787" data-pin="images/icons/pin.png" data-scrollwhell="0" data-draggable="1" data-zoom="11"></div>
       </div>
 
-      <Footer />
+
 
 
     </>

@@ -14,41 +14,33 @@ const ProductDetailPage = () => {
   const history = useHistory();
   const [loading, setLoading] = React.useState(false);
   const [product, setProduct] = React.useState();
-  const [relatedProduct, setRelatedProduct] = React.useState([]);
+  const [firstPartDescription, setFirstPartDescription] = React.useState("");
+  const [secondPartDescription, setSecondPartDescription] = React.useState("");
 
   React.useEffect(() => {
     let id = param['id'];
     axios.get(`/product/${id}`).then((dist) => {
       console.log("dist", dist?.data?.data);
       setProduct(dist?.data?.data);
-      getRelatedProduct(dist?.data?.data?.category?._id);
+      if (dist?.data?.data?.fullDescription?.length > 500) {
+        let fullDescription = dist?.data?.data?.fullDescription;
+        const midpoint = Math.ceil(fullDescription.length / 2);
+        // Split the text into two halves
+        const firstHalf = fullDescription.slice(0, midpoint);
+        const secondHalf = fullDescription.slice(midpoint);
+        setFirstPartDescription(firstHalf);
+        setSecondPartDescription(secondHalf);
+      } else {
+        setFirstPartDescription(dist?.data?.data?.fullDescription);
+      }
     });
   }, []);
 
-  const getRelatedProduct = async (catId) => {
-    let params = {
-      size: 5,
-      page: 0
-    };
-    axios.get(`/product/category/${catId}`, {
-      params
-    }).then((dist) => {
-      setLoading(false);
-      const productData = [];
-      for (let i = 0; i < dist.data?.data?.length; i++) {
-        if (dist.data?.data[i]?.id !== param['id']) {
-          productData.push(dist.data?.data[i]);
-        }
-      }
-
-      setRelatedProduct(productData);
-    }).catch((err) => {
-      setLoading(false);
-      console.log('Get Category API error', err);
-      swal("Oops!", "Get Category API error", "error");
-    });
-  }
-
+  /**
+   * add new product.
+   * @param {*} dist 
+   * @param {*} cart 
+   */
   const addNewProduct = (dist, cart) => {
     const param = {
       id: dist?.data.data._id,
@@ -92,6 +84,38 @@ const ProductDetailPage = () => {
     });
   }
 
+  const downloadImage = () => {
+    const imageUrl = product?.image;
+    console.log('image url', imageUrl);
+    const imgName = product?.image?.split('/');
+    axios.get(`/product/${imgName[imgName.length - 1]}/download`, { responseType: 'blob' }) // Set responseType to 'blob'
+    .then((response) => {
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+
+        // Create a temporary anchor element
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+
+        // Extract the filename from the URL
+        const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+
+        // Set the download attribute and filename
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+
+        // Simulate a click on the anchor element to start the download
+        link.click();
+
+        // Clean up the temporary anchor element and URL object
+        link.parentNode.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        console.error('Error downloading image:', error);
+    });
+  }
+
   return (
     <>
       <Header />
@@ -119,7 +143,7 @@ const ProductDetailPage = () => {
       </div>
 
       {/* <!-- Product Detail --> */}
-      <section class="sec-product-detail bg0 p-t-65 p-b-60">
+      {/* <section class="sec-product-detail bg0 p-t-65 p-b-60">
         <div class="container">
           <div class="row">
             <div class="col-md-6 col-lg-7 p-b-30">
@@ -167,7 +191,7 @@ const ProductDetailPage = () => {
                   </div>
                   <hr />
                   <div class="flex-w flex-c-m p-b-10">
-								    <div class="size-204 flex-w flex-c-m respon6-next">
+                    <div class="size-204 flex-w flex-c-m respon6-next">
                       {product?.status === "available" &&
                         <button
                           onClick={addToCart}
@@ -180,7 +204,7 @@ const ProductDetailPage = () => {
                 </div>
 
                 <div class="flex-w flex-c-m p-t-40">
-							    <div class="flex-m bor9 p-r-10 m-r-11">
+                  <div class="flex-m bor9 p-r-10 m-r-11">
                     <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
                       <i class="zmdi zmdi-favorite"></i>
                     </a>
@@ -201,157 +225,11 @@ const ProductDetailPage = () => {
               </div>
             </div>
           </div>
-
-          {/* <div class="bor10 m-t-50 p-t-43 p-b-40">
-            <div class="tab01">
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item p-b-10">
-                  <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
-                </li>
-
-                <li class="nav-item p-b-10">
-                  <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
-                </li>
-
-                <li class="nav-item p-b-10">
-                  <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
-                </li>
-              </ul>
-
-              <div class="tab-content p-t-43">
-                <div class="tab-pane fade show active" id="description" role="tabpanel">
-                  <div class="how-pos2 p-lr-15-md">
-                    <p class="stext-102 cl6">
-                      Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="tab-pane fade" id="information" role="tabpanel">
-                  <div class="row">
-                    <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                      <ul class="p-lr-28 p-lr-15-sm">
-                        <li class="flex-w flex-t p-b-7">
-                          <span class="stext-102 cl3 size-205">
-                            Date Of Art
-                          </span>
-
-                          <span class="stext-102 cl6 size-206">
-                            11-03-2021
-                          </span>
-                        </li>
-
-                        <li class="flex-w flex-t p-b-7">
-                          <span class="stext-102 cl3 size-205">
-                            Dimensions
-                          </span>
-
-                          <span class="stext-102 cl6 size-206">
-                            110 x 33 x 100 cm
-                          </span>
-                        </li>
-
-                        <li class="flex-w flex-t p-b-7">
-                          <span class="stext-102 cl3 size-205">
-                            Art Idea
-                          </span>
-
-                          <span class="stext-102 cl6 size-206">
-                            Personal
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="tab-pane fade" id="reviews" role="tabpanel">
-                  <div class="row">
-                    <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                      <div class="p-b-30 m-lr-15-sm">
-                        <div class="flex-w flex-t p-b-68">
-                          <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                            <img src={imageURL + product?.image} alt="AVATAR" />
-                          </div>
-
-                          <div class="size-207">
-                            <div class="flex-w flex-sb-m p-b-17">
-                              <span class="mtext-107 cl2 p-r-20">
-                                Ariana Grande
-                              </span>
-
-                              <span class="fs-18 cl11">
-                                <i class="zmdi zmdi-star"></i>
-                                <i class="zmdi zmdi-star"></i>
-                                <i class="zmdi zmdi-star"></i>
-                                <i class="zmdi zmdi-star"></i>
-                                <i class="zmdi zmdi-star-half"></i>
-                              </span>
-                            </div>
-
-                            <p class="stext-102 cl6">
-                              Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
-                            </p>
-                          </div>
-                        </div>
-
-                        <form class="w-full">
-                          <h5 class="mtext-108 cl2 p-b-7">
-                            Add a review
-                          </h5>
-
-                          <p class="stext-102 cl6">
-                            Your email address will not be published. Required fields are marked *
-                          </p>
-
-                          <div class="flex-w flex-m p-t-50 p-b-23">
-                            <span class="stext-102 cl3 m-r-16">
-                              Your Rating
-                            </span>
-
-                            <span class="wrap-rating fs-18 cl11 pointer">
-                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                              <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                              <input class="dis-none" type="number" name="rating" />
-                            </span>
-                          </div>
-
-                          <div class="row p-b-25">
-                            <div class="col-12 p-b-5">
-                              <label class="stext-102 cl3" htmlFor="review">Your review</label>
-                              <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
-                            </div>
-
-                            <div class="col-sm-6 p-b-10 p-t-20">
-                              <label class="stext-102 cl3" htmlFor="name">Name</label>
-                              <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name" />
-                            </div>
-
-                            <div class="col-sm-6 p-b-10 p-t-20">
-                              <label class="stext-102 cl3" htmlFor="email">Email</label>
-                              <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email" />
-                            </div>
-                          </div>
-
-                          <button class="flex-c-m stext-101 cl0 size-112 bg1 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-                            Submit
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
-      </section>
+      </section> */}
 
       {/* <!-- Related Products --> */}
-      <section class="sec-relate-product bg0 p-t-20 p-b-105">
+      {/* <section class="sec-relate-product bg0 p-t-20 p-b-105">
         <div class="container">
           <div class="p-b-45">
             <h3 class="ltext-106 cl5 txt-center">
@@ -405,106 +283,147 @@ const ProductDetailPage = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      <Footer />
+      </section> */}
 
 
-
-      {/* <!-- Modal1 --> */}
-      {/* <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
-        <div class="overlay-modal1 js-hide-modal1"></div>
-
+      {/* <!-- Section 1 --> */}
+      <section>
         <div class="container">
-          <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-            <button class="how-pos3 hov3 trans-04 js-hide-modal1">
-              <img src="images/icons/icon-close.png" alt="CLOSE" />
-            </button>
-            <div class="row">
-              <div class="col-md-6 col-lg-7 p-b-30 flex-c-m">
-                <img src="poto/a5.jpg" alt="IMG-BLOG" class="img-fluid rounded" style={{ width: "300px" }} />
+          <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-8 flex-c-m">
+              <div class="blog-item p-t-100 respon2 img-size-xxl">
+                <div class="hov-img0 bor2 text-center">
+                  <img src={imageURL + product?.image} alt="IMG-BLOG" class="" />
+                </div>
               </div>
-
-              <div class="col-md-6 col-lg-5 p-b-30">
-                <div class="p-r-50 p-t-5 p-lr-0-lg">
-                  <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                    Item One
-                  </h4>
-
-                  <span class="mtext-106 cl2">
-                    $58.79
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-4">
+              <div class="flex-col-l-m p-t-100 p-b-30 respon5">
+                <div class="layer-slick1 animated" data-appear="fadeInDown" data-delay="0">
+                  <h2 class="ltext-109 cl2 p-t-19 p-b-43 text-dark text-uppercase">
+                    {product?.name}
+                  </h2>
+                </div>
+                <div class="flex-l-m flex-w w-full p-t-10" data-appear="fadeInDown" data-delay="0">
+                  <h5 class="mtext-103 cl2 text-start">
+                    Muputo<br />2023
+                  </h5>
+                </div>
+                <div class="layer-slick1 animated p-t-40" data-appear="fadeInUp" data-delay="800">
+                  <span class="stext-108 cl2">
+                    {product?.description}
                   </span>
-
-                  <p class="stext-102 cl3 p-t-23">
-                    Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-                  </p>
-
-
-                  <div class="p-t-33">
-                    <div class="flex-w flex-r-m p-b-10">
-                      <div class="size-205 flex-l-m respon6 stext-301">
-                        Artista Name
-                      </div>
-
-                      <div class="size-206 respon6-next stext-110">
-                        Item One
-                      </div>
-                    </div>
-
-                    <div class="flex-w flex-l-m p-b-10">
-                      <div class="size-205 flex-c-m respon6 stext-301">
-                        Category
-                      </div>
-
-                      <div class="size-206 respon6-next stext-110">
-                        Category One
-                      </div>
-                    </div>
-
-                    <div class="flex-w flex-l-m p-b-10">
-                      <div class="size-205 flex-c-m respon6 stext-301">
-                        Status
-                      </div>
-
-                      <div class="size-206 respon6-next stext-110">
-                        Available
-                      </div>
-                    </div>
-                    <hr />
-                    <div class="flex-w flex-r-m p-b-10">
-                      <div class="size-204 flex-w flex-m respon6-next">
-                        <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                </div>
+              </div>
+              <div class="flex-w flex-c-m p-b-10">
+                    <div class="size-204 flex-w flex-c-m respon6-next">
+                      {product?.status === "available" &&
+                        <button
+                          onClick={addToCart}
+                          class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                           Add to cart
                         </button>
-                      </div>
+                      }
                     </div>
                   </div>
+            </div>
+          </div>
+          <div class="row p-t-50">
+            <div class="col-sm-12 col-md-8 col-lg-8 flex-c-m">
+              <ul class="p-lr-28 p-lr-15-sm bor16">
+                <li class="flex-w flex-t p-b-7">
+                  <span class="stext-105 cl3 size-205">
+                    Dimension
+                  </span>
 
-                  <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                    <div class="flex-m bor9 p-r-10 m-r-11">
-                      <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-                        <i class="zmdi zmdi-favorite"></i>
-                      </a>
-                    </div>
+                  <span class="stext-105 cl6 size-206">
+                    {product?.dimension}
+                  </span>
+                </li>
 
-                    <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
-                      <i class="fa fa-facebook"></i>
-                    </a>
+                <li class="flex-w flex-t p-b-7">
+                  <span class="stext-105 cl3 size-205">
+                    Materials
+                  </span>
 
-                    <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
-                      <i class="fa fa-twitter"></i>
-                    </a>
+                  <span class="stext-105 cl6 size-206">
+                    {product?.material}
+                  </span>
+                </li>
 
-                    <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-                      <i class="fa fa-google-plus"></i>
-                    </a>
-                  </div>
-                </div>
+                <li class="flex-w flex-t p-b-7">
+                  <span class="stext-105 cl3 size-205">
+                    Technique
+                  </span>
+
+                  <span class="stext-105 cl6 size-206">
+                    {product?.technique}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-4">
+              <h4 class="p-b-15 p-t-20 stext-105">
+                Notes: {product?.note}
+              </h4>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* <!--Section 2--> */}
+      <section class="p-t-50 respon2">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+              <div class="flex-l-m flex-w w-full" data-appear="fadeInDown" data-delay="0">
+                <h2 class="ltext-109 cl2 p-b-43  text-start">
+                  Full Description
+                </h2>
+              </div>
+            </div>
+            {firstPartDescription &&
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                {firstPartDescription}
+              </div>
+            }
+            {secondPartDescription &&
+            <div class="col-sm-12 col-md-6 col-lg-6">
+              {secondPartDescription}
+				    </div>
+            }
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <div class="flex-l-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
+              <div onClick={downloadImage} style={{cursor: "pointer"}} target="_blank" class="flex-c-m mtext-103 cl5 size-102 p-lr-15 trans-04">
+                <i class="zmdi zmdi-download zmdi-hc-lg p-r-10"></i>Download a free Jpeg of this painting
               </div>
             </div>
           </div>
         </div>
-      </div> */}
+      </section>
+
+      {/* <!-- Section 8 --> */}
+      <section class="p-b-50 p-t-100" >
+        <div class="container bg3 bor2">
+          <div class="row">
+            {/* <!-- Col --> */}
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <h4 class="p-b-15 p-t-100 text-center ltext-108 text-white">
+                "quis nostrud exerci tation ullamcorper suscipit<br />
+                lobortis nisl ut aliquip ex ea commodo conse-"
+              </h4>
+              <div class="flex-c-m flex-w w-full p-t-45 p-b-50">
+                <a href="#" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                  CTA
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
     </>
   )
 }

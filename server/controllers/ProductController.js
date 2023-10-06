@@ -41,7 +41,7 @@ const getTopProduct = async (req, res) => {
       { $sample: { size: 10 } }, // Specify the number of random documents you want to retrieve
     ]);
     
-    console.log('Random documents:', randomDocuments);
+    console.log('Random documents:', randomDocuments.length);
 
     return res.json({
       data: randomDocuments,

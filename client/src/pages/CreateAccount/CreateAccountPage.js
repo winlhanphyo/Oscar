@@ -7,7 +7,7 @@ import Footer from '../../components/Footer/Footer';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
-const CreateAccountPage = () => {
+const CreateAccountPage = ({addCategory}) => {
   const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
     firstName: '',
@@ -198,7 +198,7 @@ const CreateAccountPage = () => {
       </section>
 
 
-      <Footer />
+
 
 
     </>

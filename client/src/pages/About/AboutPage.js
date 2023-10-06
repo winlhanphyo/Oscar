@@ -106,10 +106,6 @@ const AboutPage = () => {
             </div>
         </div>
       </section>
-
-      <Footer />
-
-
     </>
   )
 }

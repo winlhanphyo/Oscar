@@ -21,11 +21,14 @@ import OrderPage from "../pages/Order/OrderPage";
 import EditOrderPage from "../pages/Order/EditOrderPage";
 import OrderDetailPage from "../pages/Order/OrderDetailPage";
 import PasswordChange from "../pages/PasswordChange/PasswordChange";
+import VideoPage from "../pages/Video/VideoPage";
 
 import StripePayment from "../pages/Stripe/StripePayment";
 import Success from "../pages/Stripe/Success";
 import Cancel from "../pages/Stripe/Cancel";
 import Stripe from "../pages/Stripe/Stripe";
+import CreateVideoPage from "../pages/Video/CreateVideoPage";
+import EditVideoPage from "../pages/Video/EditVideoPage";
 
 const AppRouter = withRouter(({ location }) => {
 
@@ -56,6 +59,9 @@ const AppRouter = withRouter(({ location }) => {
         <PublicRoute path="/admin/forget-password-update/:userId/:token" component={ForgetPasswordUpdate} />
         <PrivateRoute path="/admin/profile" component={ProfilePage} />
         <PrivateRoute path="/admin/home" component={HomePage} />
+        <PrivateRoute path="/admin/video/create" component={CreateVideoPage} />
+        <PrivateRoute path="/admin/video/:id/edit" component={EditVideoPage} />
+        <PrivateRoute path="/admin/video" component={VideoPage} />
 
         <PrivateRoute path="/success" component={Success} />
         <PrivateRoute path="/cancel" component={Cancel} />
