@@ -12,8 +12,6 @@ export const categoryReducer = (state = initState, action) => {
     case "PERSIST_CATEGORIES":
       const categories = JSON.parse(window.localStorage.getItem("categories2"));
       return { ...state, categories: categories ? categories : [] };
-    case "ADD_TEXT":
-      return { ...state, text: action.payload };
     case "ADD_CATEGORY":
       // const categories2 = state.categories.concat(action.payload);
       const categories2 = action.payload.categories;

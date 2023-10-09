@@ -4,11 +4,6 @@ export const persistCategories = () => ({
   type: "PERSIST_CATEGORIES"
 });
 
-export const addText = value => ({
-  type: "ADD_TEXT",
-  payload: value
-});
-
 export const addCategory = categories => ({
   type: "ADD_CATEGORY",
   payload: categories

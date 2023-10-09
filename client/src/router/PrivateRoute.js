@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { addCategory, addText, editAddCategory } from "../store/actions/category.action";
+import { addCategory, editAddCategory } from "../store/actions/category.action";
 import Footer from "../components/Footer/Footer";
 
 const PrivateRoute = ({ isLoggedIn, categories, addCategory, component: Component, ...rest }) => (
@@ -26,7 +26,6 @@ const PrivateRoute = ({ isLoggedIn, categories, addCategory, component: Componen
 
 const mapDispatchToProps = dispatch => ({
   addCategory: category => dispatch(addCategory(category)),
-  addText: value => dispatch(addText(value)),
   editAddCategory: obj => dispatch(editAddCategory(obj))
 });
 

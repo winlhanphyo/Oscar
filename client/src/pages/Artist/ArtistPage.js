@@ -213,60 +213,60 @@ const ArtistPage = ({addCategory}) => {
 
       {/* <!-- Section 5 --> */}
       <section class="p-t-100">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6 col-md-2 col-lg-2">
-              <div class="flex-r-m flex-w w-full p-t-50 respon2" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
-                <h2 class="ltext-109 cl2 text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
-                  {productList[4]?.name}
-                </h2>
-              </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
-                <h2 class="mtext-110 cl2 text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
-                  {productList[4]?.description}
-                </h2>
-              </div>
-              <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
-                <h5 class="mtext-103 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
-                  Muputo<br />2023
-                </h5>
-              </div>
-              <div class="flex-r-m flex-w w-full p-t-50" style={windowSize?.width <= 575 ? { justifyContent: "center", marginBottom: "30px" } : {}}>
-                <Link to={`/product/${productList[3]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                  Art Details
-                </Link>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 text-center">
-              <div class="blog-item">
-                <div class="hov-img0 ">
-                  <Link to={`/product/${productList[4]?._id}`}>
-                    <img src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
-                  </Link>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-md-2 col-lg-2">
+					<div class="flex-r-m flex-w w-full p-t-50 respon2" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+						<h2 class="ltext-109 cl2 text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
+              {productList[4]?.name}
+						</h2>
+					</div>
+					<div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+						<h2 class="mtext-110 cl2  text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
+              {productList[4]?.description}
+						</h2>
+					</div>
+					<div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0 "style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+						<h5 class="mtext-103 cl2 text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
+							Muputo<br />2023
+						</h5>
+					</div>
+					<div class="flex-r-m flex-w w-full p-t-50" style={windowSize?.width <= 575 ? { justifyContent: "center", marginBottom: "30px" } : {}}>
+						<Link to={`/product/${productList[4]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+							Art Details
+						</Link>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6 col-lg-6 text-center">
+					<div class="blog-item">
+						<div class="hov-img0 ">
+              <Link to={`/product/${productList[4]?._id}`}>
+								<img src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
+							</Link>
+						</div>
+					</div>
+					<div class="block2 p-t-50">
+						<div class="block2-pic hov-img0 bor2">
+							<img src={imageURL + productList[5]?.image} class="img-fluid" style={{width: "300px"}} />
+							<Link to={`/product/${productList[5]?._id}`}target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+								Art Details
+							</Link>
+						</div>
+					</div>
+				</div>
+                <div class="col-sm-6 col-md-4 col-lg-4 text-center">
+                    <div class="block2 p-t-50">
+						<div class="block2-pic hov-img0 bor2">
+							<img src={imageURL + productList[6]?.image} class="img-fluid" style={{width: "300px"}} />
+							<Link to={`/product/${productList[6]?._id}`} target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+								Art Details
+							</Link>
+						</div>
+					</div>
                 </div>
-              </div>
-              <div class="block2 p-t-50">
-                <div class="block2-pic hov-img0 bor2">
-                  <img src={imageURL + productList[5]?.image} class="img-fluid" style={{ width: "300px" }} />
-                    <Link to={`/product/${productList[5]?._id}`}  target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                      Art Details
-                    </Link>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-4 text-center">
-              <div class="block2 p-t-50">
-                <div class="block2-pic hov-img0 bor2">
-                  <img src={imageURL + productList[6]?.image} class="img-fluid" style={{ width: "300px" }} />
-                  <Link to={`/product/${productList[6]?._id}`}  target="_blank" class="block2-btn flex-c-m stext-104 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                    Art Details
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+			</div>
+		</div>
+	</section>
 
       {/* <!-- Section 6 --> */}
       <section class="p-t-100 p-b-50">

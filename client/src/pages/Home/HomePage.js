@@ -79,19 +79,19 @@ const HomePage = () => {
                 </h3>
               </div>
               <div class="col-sm-6 col-md-4 col-lg-4">
-                <div class="flex-col-l-m p-t-100 p-b-30 respon5">
-                  <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0">
+                <div class="flex-col-l-m p-t-100 p-b-30 respon5" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+                  <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                     <h2 class="ltext-109 cl2  text-end">
                       {/* TITOLO<br />OPERA */}
                       {productList[0]?.name}
                     </h2>
                   </div>
-                  <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0">
-                    <h5 class="mtext-103 cl2  text-end">
+                  <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
+                    <h5 class="mtext-103 cl2 text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                       Muputo<br />2023
                     </h5>
                   </div>
-                  <div class="flex-r-m flex-w w-full p-t-100">
+                  <div class="flex-r-m flex-w w-full p-t-100" style={windowSize?.width <= 575 ? { justifyContent: "center", marginBottom: "30px" } : {}}>
                     <Link to={`/product/${productList[0]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                       Art Details
                     </Link>
