@@ -41,7 +41,7 @@ const getTopProduct = async (req, res) => {
       { $sample: { size: 10 } }, // Specify the number of random documents you want to retrieve
     ]);
     
-    console.log('Random documents:', randomDocuments);
+    console.log('Random documents:', randomDocuments.length);
 
     return res.json({
       data: randomDocuments,
@@ -93,7 +93,6 @@ const createProduct = async (req, res) => {
       name: req.body.name,
       description: req.body.description,
       category: req.body.category,
-      artistName: req.body.artistName,
       price: req.body.price,
       count: req.body.count,
       image,
@@ -152,7 +151,6 @@ const updateProduct = async (req, res) => {
     req.body?.name ? product.name = req.body.name : null;
     req.body.description ? product.description = req.body.description : null;
     req.body?.category ? product.category = req.body.category : null;
-    req.body?.artistName ? product.artistName = req.body.artistName : null;
     req.body?.price ? product.price = req.body.price : null;
     req.body?.count ? product.count = req.body.count : null;
     product.updated_user_id = req.body.updated_user_id;

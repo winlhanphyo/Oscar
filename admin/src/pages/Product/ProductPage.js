@@ -228,7 +228,6 @@ const ProductPage = () => {
                                   <td>{data?.count}</td>
                                   <td>{data?.status}</td>
                                   <td><img onClick={() => showImageModal(imageURL + data.image)} src={imageURL + data.image} /></td>
-                                  <td style={{width: "10%"}}>{data?.artistName}</td>
                                   <td>{moment(data.createdAt).format('YYYY-MM-DD')}</td>
                                   <td>{moment(data.updatedAt).format('YYYY-MM-DD')}</td>
                                   <td>
@@ -237,7 +236,6 @@ const ProductPage = () => {
                                       type="button"
                                       class="btn btn-social-icon btn-outline-facebook"
                                       data-toggle="modal" data-target="#confirmModal"
-                                      disabled={data.category.name === "Home"}
                                       onClick={() => showDeleteDialog(data._id)}><i class="mdi mdi-delete"></i></button>
                                     <button type="button" class="btn btn-social-icon btn-outline-facebook"
                                       data-toggle="modal"

@@ -6,7 +6,7 @@ const PublicRoute = ({ isLoggedIn, component: Component, ...rest }) => (
   <Route
     {...rest}
     component={props => (
-        <Component {...props} />
+        <Component {...props}  />
     )}
   />
 );

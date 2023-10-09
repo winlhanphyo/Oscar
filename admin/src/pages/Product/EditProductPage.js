@@ -31,7 +31,6 @@ const EditProductPage = () => {
     name: "",
     description: "",
     category: "",
-    artistName: "",
     price: "",
     count: "",
     quote: "",
@@ -52,7 +51,6 @@ const EditProductPage = () => {
         name: dist?.data?.data?.name,
         description: dist?.data?.data?.description,
         category: dist?.data?.data?.category?._id,
-        artistName: dist?.data?.data?.artistName,
         price: dist?.data?.data?.price,
         count: dist?.data?.data?.count,
         quote: dist?.data?.data?.quote,
@@ -133,9 +131,7 @@ const EditProductPage = () => {
       if (formData?.image) {
         formParam.append('image', formData.image);
       }
-      if (formData?.artistName) {
-        formParam.append('artistName', formData.artistName);
-      }
+
       formParam.append('category', formData.category);
 
       formParam.append('quote', formData.quote);
@@ -234,7 +230,7 @@ const EditProductPage = () => {
                       <div class="form-group">
                         <label for="category">Category</label>
                         <select
-                          disabled={initCategoryName === "Home"}
+                          // disabled={initCategoryName === "Home"}
                           className={errorForm?.category ? `custom-select is-invalid` : `custom-select`}
                           id="category"
                           name="category"
@@ -245,8 +241,7 @@ const EditProductPage = () => {
                             return (
                               <>
                               {
-                                ((initCategoryName === "Home" && data.name === "Home") || (initCategoryName !== "Home" && data.name !== "Home")) &&
-                              <option value={data.id}>{data.name}</option>
+                                <option value={data.id}>{data.name}</option>
                               }
                               </>
                             )
@@ -255,11 +250,6 @@ const EditProductPage = () => {
                         </select>
                         {errorForm.category ? (
                           <div class="invalid-feedback">{errorForm.category}</div>) : ''}
-                      </div>
-
-                      <div class="form-group">
-                        <label for="artistName">Artist Name</label>
-                        <input type="text" name="artistName" className={`form-control`} value={formData.artistName} onChange={handleChange} id="name" placeholder="artist name"/>
                       </div>
 
                       <div class="form-group">
@@ -326,7 +316,7 @@ const EditProductPage = () => {
                             name="image"
                             className="custom-file-input"
                             id="image"
-                            disabled={initCategoryName === "Home"}
+                            // disabled={initCategoryName === "Home"}
                             onChange={handleFileSelected}
                             required />
                           <label class="custom-file-label" for="validatedCustomFile">{formData?.image?.name ? formData.image.name : "Choose file..."}</label>

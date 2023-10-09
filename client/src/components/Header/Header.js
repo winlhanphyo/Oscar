@@ -62,16 +62,18 @@ const Header = () => {
 
   return (
     <>
+      {/* <!-- Header --> */}
       <header class="header-v2">
         {/* <!-- Header desktop --> */}
         <div class="container-menu-desktop trans-03">
           <div class="wrap-menu-desktop">
             <nav class="limiter-menu-desktop p-l-45">
 
-              {/* <!-- Logo desktop -->		 */}
+              {/* <!-- Logo desktop --> */}
               <Link to="/home">
                 <p class="mtext-103 cl2">
-                  OSCAR D.CHAVARRIA
+                  OSCAR<span class="text-muted">DANILO</span><br />
+                  CHAVARRIA<span class="text-muted">GOMEZ</span>
                 </p>
               </Link>
 
@@ -118,12 +120,12 @@ const Header = () => {
 
                 <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
                   <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={cartCount}>
-                    <Link to="/cart"><i class="zmdi zmdi-shopping-cart text-dark"></i></Link>
+                    <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
                   </div>
                 </div>
                 <div class="flex-c-m h-full p-l-18 p-r-25">
                   <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
-                    <Link to="/login"><i class="zmdi zmdi-account-o text-dark"></i></Link>
+                    <Link to="/login" alt="Login"><i class="zmdi zmdi-account-o text-dark"></i></Link>
                   </div>
                 </div>
               </div>
@@ -133,36 +135,29 @@ const Header = () => {
 
         {/* <!-- Header Mobile --> */}
         <div class="wrap-header-mobile">
-          {/* <!-- Logo moblie -->		 */}
+          {/* <!-- Logo moblie --> */}
           <div class="logo-mobile">
-            <Link to="/home">
-              <p class="mtext-103 cl2">
-                OSCAR D.CHAVARRIA
-              </p>
-            </Link>
+            <p class="mtext-103 cl2">
+              OSCAR<span class="text-muted">DANILO</span><br />
+              CHAVARRIA<span class="text-muted">GOMEZ</span>
+            </p>
           </div>
-
           {/* <!-- Icon header --> */}
-          <div style={{ display: "flex" }}>
-            <div class="flex-c-m h-full p-r-10">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-5 js-show-modal-search" onClick={searchModal}>
-                <i class="zmdi zmdi-search"></i>
-              </div>
+          <div class="wrap-icon-header flex-w flex-r-m m-r-15" onClick={searchModal}>
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+              <i class="zmdi zmdi-search"></i>
             </div>
 
-            <div class="flex-c-m h-full p-lr-10 bor5">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-5 icon-header-noti js-show-cart" data-notify={cartCount}>
-                <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
-              </div>
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify={cartCount}>
+              <Link to="/cart"><i class="zmdi zmdi-shopping-cart"></i></Link>
             </div>
 
-            {/* <div class="flex-c-m h-full p-lr-10 bor5">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
-                <Link to="/login" alt="Login"><i class="zmdi zmdi-account-o text-dark"></i></Link>
-              </div>
-            </div> */}
+            {/* <!--<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11">
+					<a href="login.html" alt="Login">
+						<i class="zmdi zmdi-account-o text-dark"></i>
+					</a>
+				</div>--> */}
           </div>
-
           {/* <!-- Button show menu --> */}
           <div class="btn-show-menu-mobile hamburger hamburger--squeeze" onClick={showMenu}>
             <span class="hamburger-box">

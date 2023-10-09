@@ -7,7 +7,7 @@ import Footer from '../../components/Footer/Footer';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
-const ForgetPasswordPage = () => {
+const ForgetPasswordPage = ({addCategory}) => {
   const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: ''
@@ -130,7 +130,7 @@ const ForgetPasswordPage = () => {
         </div>
       </section>
 
-      <Footer />
+
 
       <div class="btn-back-to-top" id="myBtn">
         <span class="symbol-btn-back-to-top">

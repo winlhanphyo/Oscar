@@ -45,6 +45,12 @@ const Sidebar = () => {
             <span className="menu-title">User</span>
           </a>
         </li>
+        <li className={`nav-item ${checkActiveClass('video') ? "active" : ""}`}>
+          <a className="nav-link" href="/admin/video">
+            <i className="mdi mdi-video menu-icon"></i>
+            <span className="menu-title">Video</span>
+          </a>
+        </li>
         {/* <li class="nav-item">
           <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
             <i class="mdi mdi-account menu-icon"></i>
@@ -61,7 +67,7 @@ const Sidebar = () => {
             </ul>
           </div>
         </li> */}
-        <li className="nav-item">
+        <li className={`nav-item ${checkActiveClass('password-change') ? "active" : ""}`}>
           <a className="nav-link" href="/admin/password-change">
             <i className="mdi mdi-file-document-box-outline menu-icon"></i>
             <span className="menu-title">Password Change</span>

@@ -10,6 +10,7 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import axios from '../../axios/index';
 import OscarPagination from '../../components/OscarPagination/OscarPagination';
 import { imageURL } from '../../utils/constants/constant';
+import { useCategory } from "../../store/actions/category.action";
 import styles from './ProductPage.module.scss';
 
 function useQuery() {
@@ -18,11 +19,12 @@ function useQuery() {
 }
 
 const ProductPage = () => {
+  const category = useCategory();
   let query = useQuery();
   const paginateSize = 8;
   const [loading, setLoading] = React.useState(false);
   const [activeCategory, setActiveCategory] = React.useState("all");
-  const [categoryList, setCategoryList] = React.useState([]);
+  // const [categoryList, setCategoryList] = React.useState([]);
   const [productList, setProductList] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [paginationData, setPaginationData] = React.useState({
@@ -35,7 +37,7 @@ const ProductPage = () => {
   const searchName = React.createRef();
 
   React.useEffect(() => {
-    getCategoryList();
+    // getCategoryList();
     const catId = query.get("catId");
     if (catId) {
       getProductWithCategoryList(catId);
@@ -46,25 +48,10 @@ const ProductPage = () => {
 
   /**
    * get category list.
-   * @param {*} offsetData 
    */
-  const getCategoryList = (offsetData = 0) => {
-    let params = {
-      size: 8,
-      page: offsetData
-    };
-    if (searchName.current?.value) {
-      params.name = searchName.current.value
-    }
-    axios.get("/category", {
-      params
-    }).then((dist) => {
-      setCategoryList(dist?.data?.data);
-    }).catch((err) => {
-      console.log('Get Category API error', err);
-      swal("Oops!", "Get Category API error", "error");
-    });
-  }
+  // const getCategoryList = () => {
+    
+  // }
 
   const goProductWithCategoryList = (catId=null) => {
     let searchNameData = query.get("page") ? "&page=" + query.get("page") : "";
@@ -300,7 +287,7 @@ const ProductPage = () => {
                             : "flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10"}>
                     All
                   </a>
-                  {categoryList.map((dist) => {
+                  {category?.map((dist) => {
                     return (
                       <>
                         <a onClick={() => goProductWithCategoryList(dist._id)}
@@ -392,7 +379,7 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <Footer />
+
     </>
   )
 }

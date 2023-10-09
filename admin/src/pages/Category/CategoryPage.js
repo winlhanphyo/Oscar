@@ -202,7 +202,7 @@ const CategoryPage = () => {
                                     <button
                                       type="button"
                                       class="btn btn-social-icon btn-outline-facebook"
-                                      disabled={data.name === "Home"}
+                                      disabled={categoryList?.length === 1}
                                       onClick={() => editCategory(data._id)}>
                                         <i class="mdi mdi-pencil"></i>
                                     </button>
@@ -211,7 +211,7 @@ const CategoryPage = () => {
                                       class="btn btn-social-icon btn-outline-facebook"
                                       data-toggle="modal"
                                       data-target="#confirmModal"
-                                      disabled={data.name === "Home"}
+                                      disabled={categoryList?.length === 1}
                                       onClick={() => showDeleteDialog(data._id)}>
                                         <i class="mdi mdi-delete"></i>
                                       </button>

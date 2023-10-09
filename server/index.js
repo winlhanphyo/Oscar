@@ -19,6 +19,7 @@ const contactRoute = require("./routes/contactRoutes");
 const userRoute = require("./routes/userRoutes");
 const orderRoute = require("./routes/orderRoutes");
 const dashboardRoute = require("./routes/dashboardRoutes");
+const videoRoute = require("./routes/videoRoutes");
 const orderController = require('./controllers/OrderController');
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -263,6 +264,7 @@ mongoose.connect("mongodb+srv://spprtoscar:M4tZjdsKYeTNKaWV@cluster0.fewiwtd.mon
   app.use('/api/user', userRoute);
   app.use('/api/order', orderRoute);
   app.use('/api/dashboard', dashboardRoute);
+  app.use('/api/video', videoRoute);
   app.use("/api", authRoute);
   
   app.listen(process.env.PORT || 4000, () => {

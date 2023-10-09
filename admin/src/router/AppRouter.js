@@ -21,11 +21,14 @@ import OrderPage from "../pages/Order/OrderPage";
 import EditOrderPage from "../pages/Order/EditOrderPage";
 import OrderDetailPage from "../pages/Order/OrderDetailPage";
 import PasswordChange from "../pages/PasswordChange/PasswordChange";
+import VideoPage from "../pages/Video/VideoPage";
 
 import StripePayment from "../pages/Stripe/StripePayment";
 import Success from "../pages/Stripe/Success";
 import Cancel from "../pages/Stripe/Cancel";
 import Stripe from "../pages/Stripe/Stripe";
+import CreateVideoPage from "../pages/Video/CreateVideoPage";
+import EditVideoPage from "../pages/Video/EditVideoPage";
 
 const AppRouter = withRouter(({ location }) => {
 
@@ -44,18 +47,21 @@ const AppRouter = withRouter(({ location }) => {
         <PrivateRoute path="/admin/product/:id/edit" component={EditProductPage} />
         <PrivateRoute path="/admin/product/create" component={CreateProductPage} />
         <PrivateRoute path="/admin/product" component={ProductPage} />
-        <PublicRoute path="/admin/user/:id/edit" component={EditUserPage} />
-        <PublicRoute path="/admin/user/create" component={CreateUserPage} />
-        <PublicRoute path="/admin/user" component={UserPage} />
+        <PrivateRoute path="/admin/user/:id/edit" component={EditUserPage} />
+        <PrivateRoute path="/admin/user/create" component={CreateUserPage} />
+        <PrivateRoute path="/admin/user" component={UserPage} />
         <PrivateRoute path="/admin/password-change" component={PasswordChange} />
         <PrivateRoute path="/admin/order/:id/edit" component={EditOrderPage} />
-        <PublicRoute path="/admin/order/:id" component={OrderDetailPage} />
+        <PrivateRoute path="/admin/order/:id" component={OrderDetailPage} />
         <PrivateRoute path="/admin/order" component={OrderPage} />
         <PublicRoute path="/admin/login" component={LoginPage} />
         <PublicRoute path="/admin/forget-password" component={ForgetPassword} />
         <PublicRoute path="/admin/forget-password-update/:userId/:token" component={ForgetPasswordUpdate} />
         <PrivateRoute path="/admin/profile" component={ProfilePage} />
-        <PublicRoute path="/admin/home" component={HomePage} />
+        <PrivateRoute path="/admin/home" component={HomePage} />
+        <PrivateRoute path="/admin/video/create" component={CreateVideoPage} />
+        <PrivateRoute path="/admin/video/:id/edit" component={EditVideoPage} />
+        <PrivateRoute path="/admin/video" component={VideoPage} />
 
         <PrivateRoute path="/success" component={Success} />
         <PrivateRoute path="/cancel" component={Cancel} />

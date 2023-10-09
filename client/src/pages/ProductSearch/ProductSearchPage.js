@@ -3,7 +3,6 @@ import swal from 'sweetalert';
 import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
-import Footer from '../../components/Footer/Footer';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import OscarPagination from '../../components/OscarPagination/OscarPagination';
 import axios from '../../axios/index';
@@ -186,7 +185,7 @@ const ProductSearchPage = () => {
         </div>
       </div>
 
-      <Footer />
+
     </>
   )
 }

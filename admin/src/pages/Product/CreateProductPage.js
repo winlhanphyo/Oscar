@@ -27,7 +27,6 @@ const CreateProductPage = () => {
     name: "",
     description: "",
     category: "",
-    artistName: "",
     price: "",
     count: "",
     quote: "",
@@ -114,9 +113,6 @@ const CreateProductPage = () => {
         formParam.append('note', formData.note);
       }
 
-      if (formData?.artistName) {
-        formParam.append('artistName', formData.artistName);
-      }
       formParam.append('status', formData.status);
       axios.post("/product", formParam,
       {
@@ -217,18 +213,13 @@ const CreateProductPage = () => {
                             return (
                               <>
                               {
-                                (data.name !== "Home") && <option value={data.id}>{data.name}</option>
+                                <option value={data.id}>{data.name}</option>
                               }
                               </>
                             )})}
                         </select>
                         {errorForm.category ? (
                           <div class="invalid-feedback">{errorForm.category}</div>) : ''}
-                      </div>
-
-                      <div class="form-group">
-                        <label for="artistName">Artist Name</label>
-                        <input type="text" name="artistName" className={`form-control`} value={formData.artistName} onChange={handleChange} id="name" placeholder="artist name"/>
                       </div>
 
                       <div class="form-group">
