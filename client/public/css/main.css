@@ -52,23 +52,23 @@ z-index: 1;
 
   .img-size{
     height: 400px;
-  }
-
-  .img-size{
-    height: 400px;
+    object-fit: cover;
   }
 
   .img-size-sm{
     height: 85px;
+    object-fit: cover;
   }
 
   .img-size-xl{
     width: 400px !important;
     height: 600px;
+    object-fit: cover;
   }
 
   .img-size-xxl{
     width: 520px !important;
+    object-fit: cover;
   }
 
 
