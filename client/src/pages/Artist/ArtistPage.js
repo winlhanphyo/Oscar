@@ -162,7 +162,7 @@ const ArtistPage = ({addCategory}) => {
               <div class="block2 p-t-100">
                 <div class="block2-pic hov-img0 bor2">
                   <img src={imageURL + productList[2]?.image} alt="IMG-PRODUCT" />
-                  <Link to={`/product/${productList[2]?._id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                  <Link to={`/product/${productList[2]?._id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 test">
                     Art Details
                   </Link>
                 </div>

@@ -313,7 +313,7 @@ const ProductPage = () => {
                     {/* <!-- Block2 --> */}
                     <div class="block2">
                       <div class="block2-pic hov-img0">
-                        <img src={imageURL + data.image} alt="IMG-PRODUCT" class="img-fluid img-size respon1 oscar-item-size" />
+                        <img src={imageURL + data.image} alt="IMG-PRODUCT" class="img-fluid respon1 img-size oscar-item-size" />
 
                         <Link to={`/product/${data._id}`} target="_blank" class="block2-btn flex-c-m stext-102 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
                           Detail

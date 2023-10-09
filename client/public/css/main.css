@@ -50,6 +50,27 @@ z-index: 1;
     text-align: start;
   }
 
+  .img-size{
+    height: 400px;
+  }
+
+  .img-size{
+    height: 400px;
+  }
+
+  .img-size-sm{
+    height: 85px;
+  }
+
+  .img-size-xl{
+    width: 400px !important;
+    height: 600px;
+  }
+
+  .img-size-xxl{
+    width: 520px !important;
+  }
+
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
