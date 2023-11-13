@@ -148,7 +148,6 @@ const resetPassword = async (req, res) => {
 
     user.password = await bcrypt.hash(req.body.password, 12);
     await user.save();
-    console.log('password reset', passwordReset);
     await passwordReset.deleteToken();
 
 

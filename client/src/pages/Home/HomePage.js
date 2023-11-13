@@ -6,6 +6,7 @@ import Cart from '../../components/Cart/Cart';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { imageURL } from '../../utils/constants/constant';
+import styles from './HomePage.module.scss';
 
 
 const HomePage = () => {
@@ -55,6 +56,7 @@ const HomePage = () => {
       <Header />
       <Cart />
       {loading && <LoadingSpinner />}
+
       {/* <!-- Section 1 --> */}
       <section>
         <div class="container">
@@ -83,16 +85,16 @@ const HomePage = () => {
                   <div class="flex-r-m flex-w w-full p-t-100" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
                     <h2 class="ltext-109 cl2  text-end">
                       {/* TITOLO<br />OPERA */}
-                      {productList[0]?.name}
+                      {productList?.length > 0 && productList[0]?.name}
                     </h2>
                   </div>
                   <div class="flex-r-m flex-w w-full p-t-50" data-appear="fadeInDown" data-delay="0" style={windowSize?.width <= 575 ? { justifyContent: "center" } : {}}>
                     <h5 class="mtext-103 cl2 text-end" style={windowSize?.width <= 575 ? { textAlign: "center" } : {}}>
-                      Muputo<br />2023
+                      {productList?.length > 0 && productList[0]?.name}
                     </h5>
                   </div>
                   <div class="flex-r-m flex-w w-full p-t-100" style={windowSize?.width <= 575 ? { justifyContent: "center", marginBottom: "30px" } : {}}>
-                    <Link to={`/product/${productList[0]?._id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                    <Link to={productList?.length > 0 && `/product/${productList[0]?.id}`} target="_blank" class="flex-c-m stext-101 cl5 size-102 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                       Art Details
                     </Link>
                   </div>
@@ -101,15 +103,15 @@ const HomePage = () => {
               <div class="col-sm-12 col-md-8 col-lg-8">
                 <div class="blog-item">
                   <div class="hov-img0 bor2">
-                    <Link to={`/product/${productList[0]?._id}`}>
-                      <img src={imageURL + productList[0]?.image} alt="IMG-BLOG" />
+                    <Link to={productList?.length > 1 && `/product/${productList[1]?.id}`}>
+                      <img src={productList?.length > 1 && imageURL + productList[1]?.image} alt="IMG-BLOG" />
                     </Link>
                   </div>
                 </div>
                 <h4 class="p-b-15 p-t-100 text-center">
-                  <a href="#" class="ltext-108 cl2 hov-cl1 trans-04">
-                    "{productList[0]?.quote}"
-                  </a>
+                  <Link to={productList?.length > 1 && `/product/${productList[1]?.id}`} class="ltext-108 cl2 hov-cl1 trans-04">
+                    "{productList?.length > 1 && productList[1]?.quote}"
+                  </Link>
                 </h4>
               </div>
             </div>
@@ -124,30 +126,30 @@ const HomePage = () => {
             <div class="col-sm-6 col-md-6 col-lg-4 p-t-20">
               <div class="block2">
                 <div class="block2-pic hov-img0 bor2">
-                  <img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid" />
-                  <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                  <img src={productList?.length > 2 && imageURL + productList[2]?.image} alt="IMG-PRODUCT" class="img-fluid" />
+                  <Link to={productList?.length > 2 && `/product/${productList[2]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4">
               <div class="block2 p-t-100">
                 <div class="block2-pic hov-img0 bor2">
-                  <img src="poto/a2.jpg" alt="IMG-PRODUCT" />
-                  <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                  <img src={productList?.length > 3 && imageURL + productList[3]?.image} alt="IMG-PRODUCT" />
+                  <Link to={productList?.length > 3 && `/product/${productList[3]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4">
               <div class="block2 p-t-50">
                 <div class="block2-pic hov-img0 bor2">
-                  <img src="poto/a6.jpg" alt="IMG-PRODUCT" />
-                  <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                  <img src={productList?.length > 4 && imageURL + productList[4]?.image} alt="IMG-PRODUCT" />
+                  <Link to={productList?.length > 4 && `/product/${productList[4]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                     Art Details
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -170,68 +172,67 @@ const HomePage = () => {
           <div class="row">
             <div class="p-b-50 col-sm-12 col-md-12 col-lg-12">
               <h3 class="ltext-105 cl5">
-                social<br />
-                updates
+                social updates
               </h3>
             </div>
             <div class="dis-flex flex-w p-l-30 p-r-30">
               <div class="col-sm-6 col-md-6 col-lg-4 p-t-20">
                 <div class="block2">
                   <div class="block2-pic hov-img0 bor2">
-                    <img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid" />
-                    <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    <img src={productList?.length > 5 && imageURL + productList[5]?.image} alt="IMG-PRODUCT" className={"img-fluid " + styles.img} />
+                    <Link to={productList?.length > 5 && `/product/${productList[5]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                       Art Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-md-6 col-lg-4 p-t-20">
                 <div class="block2">
                   <div class="block2-pic hov-img0 bor2">
-                    <img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid" />
-                    <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    <img src={productList?.length > 6 && imageURL + productList[6]?.image} alt="IMG-PRODUCT" className={"img-fluid " + styles.img} />
+                    <Link to={productList?.length > 6 && `/product/${productList[6]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                       Art Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-md-6 col-lg-4 p-t-20">
                 <div class="block2">
                   <div class="block2-pic hov-img0 bor2">
-                    <img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid" />
-                    <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    <img src={productList?.length > 7 && imageURL + productList[7]?.image} alt="IMG-PRODUCT" className={"img-fluid " + styles.img} />
+                    <Link to={productList?.length > 7 && `/product/${productList[7]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                       Art Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-md-6 col-lg-4 p-t-30">
                 <div class="block2">
                   <div class="block2-pic hov-img0 bor2">
-                    <img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid" />
-                    <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    <img src={imageURL + productList[8]?.image} alt="IMG-PRODUCT" className={"img-fluid " + styles.img} />
+                    <Link to={productList?.length > 8 && `/product/${productList[8]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                       Art Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-md-6 col-lg-4 p-t-30">
                 <div class="block2">
                   <div class="block2-pic hov-img0 bor2">
-                    <img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid" />
-                    <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    <img src={productList?.length > 9 && imageURL + productList[9]?.image} alt="IMG-PRODUCT" className={"img-fluid " + styles.img} />
+                    <Link to={productList?.length > 9 && `/product/${productList[9]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                       Art Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-md-6 col-lg-4 p-t-30">
                 <div class="block2">
                   <div class="block2-pic hov-img0 bor2">
-                    <img src="poto/a5.jpg" alt="IMG-PRODUCT" class="img-fluid" />
-                    <a href="product-detail.html" target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    <img src={productList?.length > 10 && imageURL + productList[10]?.image} alt="IMG-PRODUCT" className={"img-fluid " + styles.img} />
+                    <Link to={productList?.length > 10 && `/product/${productList[10]?.id}`} target="_blank" class="block2-btn flex-c-m stext-103 cl2 size-104 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                       Art Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

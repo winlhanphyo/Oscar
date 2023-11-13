@@ -92,13 +92,13 @@ const AboutPage = () => {
                   <div class="blog-item">
                     <div class="hov-img0 bor2">
                       <Link to={`/product/${productList[0]?._id}`}>
-                        <img src={imageURL + productList[0]?.image} alt="IMG-BLOG" />
+                        <img src={productList?.length > 0 && imageURL + productList[0]?.image} alt="IMG-BLOG" />
                       </Link>
                     </div>
                   </div>
                   <h4 class="p-b-15 p-t-100 text-center">
                     <Link to={`/product/${productList[0]?._id}`} class="ltext-108 cl0 hov-cl1 trans-04">
-                      "{productList[0]?.quote}"
+                      "{productList?.length > 0 && productList[0]?.quote}"
                     </Link>
                   </h4>
                 </div>

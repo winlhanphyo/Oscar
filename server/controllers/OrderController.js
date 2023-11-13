@@ -121,6 +121,7 @@ const createOrder = async (req, res) => {
         price_data: {
           currency: "usd",
           product_data: {
+            id: product._id,
             name: product.name,
           },
           unit_amount: product.price * 100,
@@ -222,12 +223,10 @@ const deleteOrder = async (req, res) => {
 
 const checkOut = async (productList, orderData, orderDetailData, res) => {
   try {
-    console.log('product', productList);
     const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
     const domainUrl = orderData.domainUrl;
     delete orderData?.domainUrl;
     const result = await orderCreateData(orderData, orderDetailData);
-    console.log('order result', result[0]._id.toString());
     
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

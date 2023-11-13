@@ -2,11 +2,12 @@ import React from 'react';
 import swal from 'sweetalert';
 import Header from '../../components/Header/Header';
 import Cart from '../../components/Cart/Cart';
-import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import axios from '../../axios/index';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { imageURL } from '../../utils/constants/constant';
+import styles from "./ArtistPage.module.scss";
+
 
 const ArtistPage = ({ addCategory }) => {
   const [windowSize, setWindowSize] = React.useState([
@@ -241,7 +242,7 @@ const ArtistPage = ({ addCategory }) => {
               <div class="blog-item">
                 <div class="hov-img0 ">
                   <Link to={`/product/${productList[4]?._id}`}>
-                    <img src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
+                    <img className={styles.productImg} src={imageURL + productList[4]?.image} alt="IMG-BLOG" />
                   </Link>
                 </div>
               </div>
@@ -277,7 +278,7 @@ const ArtistPage = ({ addCategory }) => {
                 <div class="block2">
                   <div class="hov-img0 bor2">
                     <Link to={`/product/${productList[7]?._id}`}>
-                      <img src={imageURL + productList[7]?.image} alt="IMG-BLOG" class="img-fluid " />
+                      <img className={styles.productImg1} src={imageURL + productList[7]?.image} alt="IMG-BLOG" class="img-fluid " />
                     </Link>
                   </div>
                 </div>

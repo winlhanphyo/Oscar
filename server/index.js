@@ -53,7 +53,7 @@ const fileFilter = (_req, file, cb) => {
 // mongodb://localhost:27017/Oscar
 // mongodb+srv://spprtoscar:M4tZjdsKYeTNKaWV@cluster0.fewiwtd.mongodb.net/Oscar?retryWrites=true&w=majority
 
-mongoose.connect("mongodb+srv://spprtoscar:M4tZjdsKYeTNKaWV@cluster0.fewiwtd.mongodb.net/Oscar?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://spprtoscar:M4tZjdsKYeTNKaWV@cluster0.fewiwtd.mongodb.net/onlineOscar?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {

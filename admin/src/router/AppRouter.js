@@ -26,7 +26,6 @@ import VideoPage from "../pages/Video/VideoPage";
 import StripePayment from "../pages/Stripe/StripePayment";
 import Success from "../pages/Stripe/Success";
 import Cancel from "../pages/Stripe/Cancel";
-import Stripe from "../pages/Stripe/Stripe";
 import CreateVideoPage from "../pages/Video/CreateVideoPage";
 import EditVideoPage from "../pages/Video/EditVideoPage";
 

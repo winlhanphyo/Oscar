@@ -34,23 +34,23 @@ Paragrap        : 18px/1.6 '', Arial, sans-serif;
 Input, textarea : 14px/1.6 '', Arial, sans-serif;
 -------------------------------------------------------------------*/
 
-/* ---------- Custom ------------------------*/
-.over-image {
-  position: absolute;
-  top: 30px;
-  left: 122vh;
-z-index: 1;
+  /* ---------- Custom ------------------------*/
+  .over-image {
+    position: absolute;
+    top: 30px;
+    left: 122vh;
+    z-index: 1;
   }
 
-  .text-end{
+  .text-end {
     text-align: end;
   }
 
-  .text-start{
+  .text-start {
     text-align: start;
   }
 
-  .img-size{
+  .img-size {
     height: 400px;
     object-fit: cover;
   }
@@ -60,7 +60,7 @@ z-index: 1;
     object-fit: cover;
   }
 
-  .img-size-xl{
+  .img-size-xl {
     width: 400px !important;
     height: 600px;
     object-fit: cover;
